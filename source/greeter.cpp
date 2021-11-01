@@ -1,11 +1,11 @@
-#include <bingo/greeter.h>
+#include <csd/greeter.h>
 #include <fmt/format.h>
 
-using namespace bingo;
+using namespace csd;
 
-Bingo::Bingo(std::string _name) : name(std::move(_name)) {}
+Csd::Csd(std::string _name) : name(std::move(_name)) {}
 
-std::string Bingo::greet(LanguageCode lang) const {
+std::string Csd::greet(LanguageCode lang) const {
     switch (lang) {
         default:
         case LanguageCode::EN:
