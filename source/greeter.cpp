@@ -1,5 +1,7 @@
 #include <csd/greeter.h>
-#include <fmt/format.h>
+#include <fmt/format.h>  // for format
+
+#include <type_traits>  // for move
 
 using namespace csd;
 
