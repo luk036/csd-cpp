@@ -17,7 +17,6 @@
 #include <cmath>        // for fabs, pow, ceil, log2
 #include <iosfwd>       // for string
 #include <string>       // for basic_string
-#include <string_view>  // for string_view, basic_string_view
 
 using std::ceil;
 using std::fabs;
@@ -70,7 +69,7 @@ auto to_csd(double num, int places = 0) -> string {
  * @param csd_str
  * @return double
  */
-auto to_decimal(std::string_view csd_str) -> double {
+auto to_decimal(const std::string& csd_str) -> double {
     auto num = 0.0;
     auto loc = 0U;
     auto i = 0U;

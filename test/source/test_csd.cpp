@@ -2,10 +2,9 @@
 
 #include <iosfwd>       // for string
 #include <string>       // for basic_string, operator==, operator<<
-#include <string_view>  // for string_view
 
 extern auto to_csd(double num, int places) -> std::string;
-extern auto to_decimal(std::string_view csd_str) -> double;
+extern auto to_decimal(const std::string& csd_str) -> double;
 extern auto to_csdfixed(double num, unsigned int nnz) -> std::string;
 
 TEST_CASE("test to_csd") {
