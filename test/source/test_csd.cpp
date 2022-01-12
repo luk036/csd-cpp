@@ -1,7 +1,7 @@
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK, TEST_CASE
 
-#include <iosfwd>       // for string
-#include <string>       // for basic_string, operator==, operator<<
+#include <iosfwd>  // for string
+#include <string>  // for basic_string, operator==, operator<<
 
 extern auto to_csd(double num, int places) -> std::string;
 extern auto to_decimal(const std::string& csd_str) -> double;
