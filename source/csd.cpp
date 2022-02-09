@@ -35,20 +35,22 @@ using std::string;
  * @param places
  * @return string
  */
-auto to_csd(double num, int places = 0) -> string {
-    if (num == 0) {
-        return "0";
+auto to_csd(double num, const int places) -> string {
+    if (num == 0.0) {
+        return string("0");
     }
-    auto absnum = fabs(num);
-    auto n = absnum < 1 ? 0 : int(ceil(log2(absnum * 1.5)));
-    auto csd_str = string{absnum < 1 ? "0" : ""};
-    auto pow2n = pow(2., n - 1);
+    auto const absnum = fabs(num);
+    auto const nn = int(ceil(log2(absnum * 1.5)));
+    auto n = absnum < 1.0 ? 0 : nn;
+    auto const str = absnum < 1.0 ? "0" : "";
+    auto csd_str = string(str);
+    auto pow2n = pow(2.0, double(n - 1));
     while (n > -places) {
         if (n == 0) {
             csd_str += '.';
         }
         n -= 1;
-        auto d = 1.5 * num;
+        auto const d = 1.5 * num;
         if (d > pow2n) {
             csd_str += '+';
             num -= pow2n;
@@ -69,27 +71,24 @@ auto to_csd(double num, int places = 0) -> string {
  * @param csd_str
  * @return double
  */
-auto to_decimal(const std::string& csd_str) -> double {
+auto to_decimal(const string& csd_str) -> double {
     auto num = 0.0;
     auto loc = 0U;
     auto i = 0U;
     for (auto c : csd_str) {
-        if (c == '.') {
+        if (c == '0') {
+            num *= 2.0;
+        } else if (c == '+') {
+            num = num * 2.0 + 1.0;
+        } else if (c == '-') {
+            num = num * 2.0 - 1.0;
+        } else if (c == '.') {
             loc = i + 1;
-        } else {
-            num *= 2;
-            if (c != '0') {
-                if (c == '+')
-                    num += 1;
-                else if (c == '-')
-                    num -= 1;
-                // else unknown character
-            }
-        }
+        }  // else unknown character
         ++i;
     }
-    if (loc != 0U) {
-        num /= pow(2.0, csd_str.size() - loc);
+    if (loc != 0) {
+        num /= pow(2.0, double(csd_str.size() - loc));
     }
     return num;
 }
@@ -101,20 +100,22 @@ auto to_decimal(const std::string& csd_str) -> double {
  * @param[in] nnz number of non-zero
  * @return string
  */
-auto to_csdfixed(double num, unsigned int nnz = 4) -> string {
-    if (num == 0) {
-        return "0";
+auto to_csdfixed(double num, unsigned int nnz) -> string {
+    if (num == 0.0) {
+        return string("0");
     }
-    auto absnum = fabs(num);
-    auto n = absnum < 1 ? 0 : int(ceil(log2(absnum * 1.5)));
-    auto csd_str = string{absnum < 1 ? "0" : ""};
-    auto pow2n = pow(2., n - 1);
+    auto const absnum = fabs(num);
+    auto const nn = int(ceil(log2(absnum * 1.5)));
+    auto n = absnum < 1.0 ? 0 : nn;
+    auto const str = absnum < 1.0 ? "0" : "";
+    auto csd_str = string(str);
+    auto pow2n = pow(2.0, double(n - 1));
     while (n > 0 || (nnz > 0 && fabs(num) > 1e-100)) {
         if (n == 0) {
             csd_str += '.';
         }
         n -= 1;
-        auto d = 1.5 * num;
+        auto const d = 1.5 * num;
         if (d > pow2n) {
             csd_str += '+';
             num -= pow2n;
@@ -128,7 +129,7 @@ auto to_csdfixed(double num, unsigned int nnz = 4) -> string {
         }
         pow2n /= 2.0;
         if (nnz == 0) {
-            num = 0;
+            num = 0.0;
         }
     }
     return csd_str;
