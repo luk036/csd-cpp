@@ -19,7 +19,7 @@ extern auto to_csd_i(int num) -> std::string;
  * @param csd
  * @return int
  */
-[[nodiscard]] inline auto to_decimal_i(char const *csd) -> int {
+inline auto to_decimal_i(char const *csd) -> int {
   auto num = 0;
   for (;; ++csd) {
     auto digit = *csd;

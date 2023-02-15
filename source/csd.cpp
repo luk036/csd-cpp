@@ -38,7 +38,7 @@ namespace csd {
  * @param places
  * @return string
  */
-[[nodiscard]] auto to_csd(double num, const int places) -> string {
+auto to_csd(double num, const int places) -> string {
   if (num == 0.0) {
     return "0";
   }
@@ -84,7 +84,7 @@ namespace csd {
  * @param places
  * @return string
  */
-[[nodiscard]] auto to_csd_i(int num) -> string {
+auto to_csd_i(int num) -> string {
   if (num == 0) {
     return "0";
   }
@@ -113,7 +113,7 @@ namespace csd {
  * @param csd
  * @return double
  */
-[[nodiscard]] auto to_decimal_using_switch(const char *csd) -> double {
+auto to_decimal_using_switch(const char *csd) -> double {
   static const auto null_char = '\0'; // avoid nullptr
   const auto *loc_ptr = &null_char;
   auto num = 0.0;
@@ -148,7 +148,7 @@ namespace csd {
  * @param csd
  * @return double
  */
-[[nodiscard]] auto to_decimal(const char *csd) -> double {
+auto to_decimal(const char *csd) -> double {
   static const auto null_char = '\0'; // avoid nullptr
   const auto *loc_ptr = &null_char;
   auto num = 0.0;
@@ -181,7 +181,7 @@ namespace csd {
  * @param[in] nnz number of non-zero
  * @return string
  */
-[[nodiscard]] auto to_csdfixed(double num, unsigned int nnz) -> string {
+auto to_csdfixed(double num, unsigned int nnz) -> string {
   if (num == 0.0) {
     return "0";
   }
