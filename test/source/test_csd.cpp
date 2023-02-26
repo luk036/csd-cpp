@@ -1,7 +1,7 @@
 #include <doctest/doctest.h> // for ResultBuilder, CHECK_EQ, TEST_CASE
 #include <fmt/core.h>
 
-#include <csd/csd.hpp> // for to_csd, to_decimal, to_csdfixed
+#include <csd/csd.hpp> // for to_csd, to_decimal, to_csdfixed, to_decimal_using_switch
 
 using namespace csd;
 
@@ -14,6 +14,11 @@ TEST_CASE("test to_csd") {
 TEST_CASE("test to_decimal") {
   CHECK_EQ(to_decimal("+00-00.+"), 28.5);
   CHECK_EQ(to_decimal("0.-"), -0.5);
+}
+
+TEST_CASE("test to_decimal_using_switch") {
+  CHECK_EQ(to_decimal_using_switch("+00-00.+"), 28.5);
+  CHECK_EQ(to_decimal_using_switch("0.-"), -0.5);
 }
 
 TEST_CASE("test to_csdfixed") {
