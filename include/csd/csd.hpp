@@ -14,13 +14,19 @@ extern auto longest_repeated_substring(const char *sv, size_t n) -> std::string;
 // extern auto to_decimal_using_switch(const char *csd) -> double;
 extern auto to_csd_i(int num) -> std::string;
 
+#if __cpp_constexpr >= 201304
+#define CONSTEXPR14 constexpr
+#else
+#define CONSTEXPR14 inline
+#endif
+
 /**
  * @brief Convert the CSD string to a decimal
  *
  * @param csd
  * @return double
  */
-constexpr auto to_decimal_using_switch(const char *csd) -> double {
+CONSTEXPR14 auto to_decimal_using_switch(const char *csd) -> double {
   const char *loc_ptr = 0;
   auto num = 0.0;
   for (; *csd != '\0'; ++csd) {
@@ -53,7 +59,7 @@ constexpr auto to_decimal_using_switch(const char *csd) -> double {
  * @param csd
  * @return double
  */
-constexpr auto to_decimal(const char *csd) -> double {
+CONSTEXPR14 auto to_decimal(const char *csd) -> double {
   const char *loc_ptr = 0;
   auto num = 0.0;
   for (;; ++csd) {
@@ -84,7 +90,7 @@ constexpr auto to_decimal(const char *csd) -> double {
  * @param csd
  * @return int
  */
-constexpr inline auto to_decimal_i(char const *csd) -> int {
+CONSTEXPR14 auto to_decimal_i(char const *csd) -> int {
   auto num = 0;
   for (;; ++csd) {
     auto digit = *csd;
