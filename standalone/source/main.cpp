@@ -46,8 +46,8 @@ auto main(int argc, char **argv) -> int {
     return 1;
   }
 
-  csd::Csd csd(name);
-  std::cout << csd.greet(langIt->second) << std::endl;
+  // csd::Csd csd(name);
+  // std::cout << csd.greet(langIt->second) << std::endl;
 
   return 0;
 }

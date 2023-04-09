@@ -29,9 +29,7 @@ foreach(ONE_BENCH_CPP ${ALL_BENCH_CPP})
   set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME ${ONE_BENCH_EXEC})
   set_target_properties(${TARGET_NAME} PROPERTIES CXX_STANDARD 17)
 
-  target_link_libraries(
-    ${TARGET_NAME} benchmark::benchmark ${PROJECT_NAME}::${PROJECT_NAME} fmt::fmt
-  )
+  target_link_libraries(${TARGET_NAME} benchmark::benchmark ${PROJECT_NAME}::${PROJECT_NAME})
 
   # add_test(${TARGET_NAME} ${ONE_BENCH_EXEC})
   add_test(NAME ${ONE_BENCH_EXEC} COMMAND ${TARGET_NAME})
