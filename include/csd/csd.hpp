@@ -3,15 +3,12 @@
 #include <cmath>  // for fabs, pow, ceil, log2
 #include <iosfwd> // for string
 #include <string> // for basic_string, operator==, operator<<
-// #include <string_view> // for string_view
 
 namespace csd {
 
 extern auto to_csd(double num, int places) -> std::string;
 extern auto to_csdfixed(double num, unsigned int nnz) -> std::string;
 extern auto longest_repeated_substring(const char *sv, size_t n) -> std::string;
-// extern auto to_decimal(const char *csd) -> double;
-// extern auto to_decimal_using_switch(const char *csd) -> double;
 extern auto to_csd_i(int num) -> std::string;
 
 #if __cpp_constexpr >= 201304
@@ -41,14 +38,14 @@ CONSTEXPR14 auto to_decimal_using_switch(const char *csd) -> double {
       num = 2.0 * num - 1.0;
       break;
     case '.':
-      loc_ptr = csd + 1;
+      loc_ptr = csd;
       break;
     default:
       exit(1); // unknown character
     }
   }
   if (loc_ptr != (const char *)0) {
-    num /= std::pow(2.0, csd - loc_ptr);
+    num /= std::pow(2.0, (csd - loc_ptr) - 1);
   }
   return num;
 }
@@ -71,7 +68,7 @@ CONSTEXPR14 auto to_decimal(const char *csd) -> double {
     } else if (digit == '-') {
       num = 2.0 * num - 1.0;
     } else if (digit == '.') {
-      loc_ptr = csd + 1;
+      loc_ptr = csd;
     } else if (digit == '\0') {
       break;
     } else {
@@ -79,7 +76,7 @@ CONSTEXPR14 auto to_decimal(const char *csd) -> double {
     }
   }
   if (loc_ptr != (const char *)0) {
-    num /= std::pow(2.0, csd - loc_ptr);
+    num /= std::pow(2.0, (csd - loc_ptr) - 1);
   }
   return num;
 }
