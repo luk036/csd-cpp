@@ -24,12 +24,12 @@ extern auto to_csd_i(int num) -> std::string;
  * @return double
  */
 CONSTEXPR14 auto to_decimal_using_switch(const char *csd) -> double {
-  const char *loc_ptr = 0;
   auto num = 0.0;
-  for (; *csd != '\0'; ++csd) {
+  // Handle integral part
+  for (; *csd != '.' && *csd != '\0'; ++csd) {
     switch (*csd) {
     case '0':
-      num = 2.0 * num;
+      num *= 2.0;
       break;
     case '+':
       num = 2.0 * num + 1.0;
@@ -38,14 +38,34 @@ CONSTEXPR14 auto to_decimal_using_switch(const char *csd) -> double {
       num = 2.0 * num - 1.0;
       break;
     case '.':
-      loc_ptr = csd;
+      break;
+    case '\0':
       break;
     default:
       exit(1); // unknown character
     }
   }
-  if (loc_ptr != (const char *)0) {
-    num /= std::pow(2.0, (csd - loc_ptr) - 1);
+  if (*csd == '\0') {
+    return num;
+  }
+  // Handle fractional part
+  auto scale = 0.5;
+  for (++csd; *csd != '\0'; ++csd) {
+    switch (*csd) {
+    case '0':
+      break;
+    case '+':
+      num += scale;
+      break;
+    case '-':
+      num -= scale;
+      break;
+    case '\0':
+      break;
+    default:
+      exit(1); // unknown character
+    }
+    scale /= 2;
   }
   return num;
 }
@@ -57,26 +77,40 @@ CONSTEXPR14 auto to_decimal_using_switch(const char *csd) -> double {
  * @return double
  */
 CONSTEXPR14 auto to_decimal(const char *csd) -> double {
-  const char *loc_ptr = 0;
   auto num = 0.0;
+  // Handle integral part
   for (;; ++csd) {
     auto digit = *csd;
     if (digit == '0') {
-      num = 2.0 * num;
+      num *= 2.0;
     } else if (digit == '+') {
       num = 2.0 * num + 1.0;
     } else if (digit == '-') {
       num = 2.0 * num - 1.0;
-    } else if (digit == '.') {
-      loc_ptr = csd;
-    } else if (digit == '\0') {
+    } else if (digit == '.' || digit == '\0') {
       break;
     } else {
       exit(1); // unknown character
     }
   }
-  if (loc_ptr != (const char *)0) {
-    num /= std::pow(2.0, (csd - loc_ptr) - 1);
+  if (*csd == '\0') {
+    return num;
+  }
+  // Handle fractional part
+  auto scale = 0.5;
+  for (++csd;; ++csd) {
+    auto digit = *csd;
+    if (digit == '0') {
+    } else if (digit == '+') {
+      num += scale;
+    } else if (digit == '-') {
+      num -= scale;
+    } else if (digit == '\0') {
+      break;
+    } else {
+      exit(1); // unknown character
+    }
+    scale /= 2;
   }
   return num;
 }
