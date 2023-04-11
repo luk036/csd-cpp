@@ -26,6 +26,19 @@ using std::log2;
 using std::pow;
 using std::string;
 
+/**
+ * https://thecodingbot.com/find-the-greatest-power-of-2-less-than-or-equal-to-a-given-number/
+ *
+ */
+inline uint32_t highestPowerOfTwoIn(uint32_t x) {
+  x |= x >> 1;
+  x |= x >> 2;
+  x |= x >> 4;
+  x |= x >> 8;
+  x |= x >> 16;
+  return x ^ (x >> 1);
+}
+
 namespace csd {
 /**
  * @brief Convert to CSD (Canonical Signed Digit) string representation
@@ -88,7 +101,8 @@ auto to_csd_i(int num) -> string {
   if (num == 0) {
     return "0";
   }
-  auto p2n = int(pow(2.0, ceil(log2(abs(num) * 1.5))));
+  // auto p2n = int(pow(2.0, ceil(log2(abs(num) * 1.5))));
+  int p2n = 2 * highestPowerOfTwoIn(abs(num) * 3 / 2);
   string csd("");
   while (p2n > 1) {
     auto const p2n_half = p2n / 2;
