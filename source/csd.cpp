@@ -30,7 +30,7 @@ using std::string;
  * https://thecodingbot.com/find-the-greatest-power-of-2-less-than-or-equal-to-a-given-number/
  *
  */
-inline uint32_t highestPowerOfTwoIn(uint32_t x) {
+inline uint32_t highest_power_of_two_in(uint32_t x) {
   x |= x >> 1;
   x |= x >> 2;
   x |= x >> 4;
@@ -102,8 +102,8 @@ auto to_csd_i(int num) -> string {
     return "0";
   }
   // auto p2n = int(pow(2.0, ceil(log2(abs(num) * 1.5))));
-  auto temp = uint32_t(abs(num) * 3 / 2);
-  auto p2n = int(2 * highestPowerOfTwoIn(temp));
+  auto temp = abs(num) * 3 / 2;
+  int p2n = 2 * int(highest_power_of_two_in(uint32_t(temp)));
   string csd("");
   while (p2n > 1) {
     auto const p2n_half = p2n / 2;
