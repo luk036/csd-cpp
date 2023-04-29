@@ -56,20 +56,21 @@ auto to_csd(double num, const int places) -> string {
     return "0";
   }
   auto absnum = fabs(num);
-  double rem{0.0};
+  int rem{0};
   string csd{"0"};
   if (absnum >= 1.0) {
-    rem = ceil(log2(absnum * 1.5));
+    rem = int(ceil(log2(absnum * 1.5)));
     csd = string{""};
   }
 
   auto p2n = pow(2.0, rem);
-  auto const eps = pow(2.0, -places);
-  while (p2n > eps) {
-    if (p2n == 1.0) {
+  // auto const eps = pow(2.0, -places);
+  while (rem > -places) {
+    if (rem == 0) {
       csd += '.';
     }
     p2n /= 2.0;
+    rem -= 1;
     auto const det = 1.5 * num;
     if (det > p2n) {
       csd += '+';
@@ -102,16 +103,16 @@ auto to_csd_i(int num) -> string {
     return "0";
   }
   // auto p2n = int(pow(2.0, ceil(log2(abs(num) * 1.5))));
-  auto temp = abs(num) * 3 / 2;
-  int p2n = 2 * int(highest_power_of_two_in(uint32_t(temp)));
+  auto temp = uint32_t(abs(num)) * 3 / 2;
+  auto p2n = highest_power_of_two_in(temp) * 2;
   string csd("");
   while (p2n > 1) {
     auto const p2n_half = p2n / 2;
     auto const det = 3 * num;
-    if (det > p2n) {
+    if (det > int(p2n)) {
       csd += '+';
       num -= p2n_half;
-    } else if (det < -p2n) {
+    } else if (det < -int(p2n)) {
       csd += '-';
       num += p2n_half;
     } else {
@@ -134,19 +135,20 @@ auto to_csdfixed(double num, unsigned int nnz) -> string {
     return "0";
   }
   auto const absnum = fabs(num);
-  double rem{0.0};
+  int rem{0};
   string csd{"0"};
   if (absnum >= 1.0) {
-    rem = ceil(log2(absnum * 1.5));
+    rem = int(ceil(log2(absnum * 1.5)));
     csd = string{""};
   }
 
   auto p2n = pow(2.0, rem);
-  while (p2n > 1.0 || (nnz > 0 && fabs(num) > 1e-100)) {
-    if (p2n == 1.0) {
+  while (rem > 0 || (nnz > 0 && fabs(num) > 1e-100)) {
+    if (rem == 0) {
       csd += '.';
     }
     p2n /= 2.0;
+    rem -= 1;
     auto const det = 1.5 * num;
     if (det > p2n) {
       csd += '+';
