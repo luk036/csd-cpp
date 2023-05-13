@@ -15,9 +15,10 @@
  License: GPL2
 */
 
-#include <cmath>  // for fabs, pow, ceil, log2
-#include <iosfwd> // for string
-#include <string> // for basic_string
+#include <cmath>   // for fabs, pow, ceil, log2
+#include <cstdint> // for uint32_t
+#include <iosfwd>  // for string
+#include <string>  // for basic_string
 
 using std::abs;
 using std::ceil;
