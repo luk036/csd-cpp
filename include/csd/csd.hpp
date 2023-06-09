@@ -3,6 +3,7 @@
 #include <cmath>  // for fabs, pow, ceil, log2
 #include <iosfwd> // for string
 #include <string> // for basic_string, operator==, operator<<
+#include <stdexcept> // for invalid_argument
 
 namespace csd {
 
@@ -42,7 +43,7 @@ CONSTEXPR14 auto to_decimal_using_switch(const char *csd) -> double {
     case '\0':
       break;
     default:
-      exit(1); // unknown character
+      throw std::invalid_argument("Work with 0, +, -, . only");
     }
   }
   if (*csd == '\0') {
@@ -63,7 +64,7 @@ CONSTEXPR14 auto to_decimal_using_switch(const char *csd) -> double {
     case '\0':
       break;
     default:
-      exit(1); // unknown character
+      throw std::invalid_argument("Fractional part work with 0, +, - only");
     }
     scale /= 2;
   }
@@ -90,7 +91,7 @@ CONSTEXPR14 auto to_decimal(const char *csd) -> double {
     } else if (digit == '.' || digit == '\0') {
       break;
     } else {
-      exit(1); // unknown character
+      throw std::invalid_argument("Work with 0, +, -, . only");
     }
   }
   if (*csd == '\0') {
@@ -108,7 +109,7 @@ CONSTEXPR14 auto to_decimal(const char *csd) -> double {
     } else if (digit == '\0') {
       break;
     } else {
-      exit(1); // unknown character
+      throw std::invalid_argument("Fractional part work with 0, +, - only");
     }
     scale /= 2;
   }
@@ -134,7 +135,7 @@ CONSTEXPR14 auto to_decimal_i(char const *csd) -> int {
     } else if (digit == '\0') {
       break;
     } else {
-      exit(1); // unknown character
+      throw std::invalid_argument("Integer conversion work with 0, +, - only");
     }
   }
   return num;
