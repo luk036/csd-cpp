@@ -21,6 +21,9 @@ extern auto to_csd_i(int num) -> std::string;
 /**
  * @brief Convert the CSD string to a decimal
  *
+ * The function `to_decimal_using_switch` takes a CSD (Canonical Signed Digit)
+ * string as input and converts it to a decimal number using a switch statement.
+ *
  * @param csd
  * @return double
  */
@@ -74,6 +77,11 @@ CONSTEXPR14 auto to_decimal_using_switch(const char *csd) -> double {
 /**
  * @brief Convert the CSD string to a decimal
  *
+ * The function `to_decimal` takes a CSD (Canonical Signed Digit) string as
+ * input and converts it to a decimal number. It iterates through the characters
+ * of the string and performs the corresponding operations based on the
+ * character.
+ *
  * @param csd
  * @return double
  */
@@ -118,6 +126,10 @@ CONSTEXPR14 auto to_decimal(const char *csd) -> double {
 
 /**
  * @brief Convert the CSD string to a decimal
+ *
+ * The function `to_decimal_i` takes a CSD (Canonical Signed Digit) string as
+ * input and converts it to an integer. It iterates through the characters of
+ * the string and performs the corresponding operations based on the character.
  *
  * @param csd
  * @return int

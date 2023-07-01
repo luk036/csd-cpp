@@ -28,8 +28,15 @@ using std::pow;
 using std::string;
 
 /**
- * https://thecodingbot.com/find-the-greatest-power-of-2-less-than-or-equal-to-a-given-number/
+ * @brief the highest power of two
  *
+ * https://thecodingbot.com/find-the-greatest-power-of-2-less-than-or-equal-to-a-given-number/
+ * 
+ * The function calculates the highest power of two that is less than or equal to a given number.
+ * 
+ * @param x The parameter `x` is an unsigned 32-bit integer.
+ * 
+ * @return the highest power of two that is less than or equal to the input number.
  */
 inline uint32_t highest_power_of_two_in(uint32_t x) {
   x |= x >> 1;
@@ -48,9 +55,16 @@ namespace csd {
  * https://sourceforge.net/projects/pycsd/
  * License: GPL2
  *
- * @param num
- * @param places
- * @return string
+ * The function `to_csd` converts a given number to its Canonical Signed Digit (CSD) representation
+ * with a specified number of decimal places.
+ * 
+ * @param num The `num` parameter is a double precision floating-point number that represents the value
+ * to be converted to CSD (Canonic Signed Digit) representation.
+ * @param places The `places` parameter in the `to_csd` function represents the number of decimal
+ * places to include in the CSD (Canonical Signed Digit) representation of the given `num`.
+ * 
+ * @return The function `to_csd` returns a string representation of the given `num` in Canonical Signed
+ * Digit (CSD) format.
  */
 auto to_csd(double num, const int places) -> string {
   if (num == 0.0) {
@@ -95,9 +109,12 @@ auto to_csd(double num, const int places) -> string {
  * https://sourceforge.net/projects/pycsd/
  * License: GPL2
  *
- * @param num
- * @param places
- * @return string
+ * The function converts a given integer into a Canonical Signed Digit (CSD) representation.
+ * 
+ * @param num The parameter `num` is an integer that represents the number for which we want to
+ * generate the CSD (Canonical Signed Digit) representation.
+ * 
+ * @return The function `to_csd_i` returns a string.
  */
 auto to_csd_i(int num) -> string {
   if (num == 0) {
@@ -127,9 +144,17 @@ auto to_csd_i(int num) -> string {
 /**
  * @brief Convert to CSD (Canonical Signed Digit) string representation
  *
- * @param[in] num
- * @param[in] nnz number of non-zero
- * @return string
+ * The function `to_csdfixed` converts a given number into a CSD (Canonic Signed Digit) representation
+ * with a specified number of non-zero digits.
+ * 
+ * @param num The parameter `num` is a double precision floating-point number that represents the input
+ * value for conversion to CSD (Canonic Signed Digit) fixed-point representation.
+ * @param nnz The parameter `nnz` stands for "number of non-zero bits". It represents the maximum
+ * number of non-zero bits allowed in the output CSD (Canonical Signed Digit) representation of the
+ * given `num`.
+ * 
+ * @return The function `to_csdfixed` returns a string representation of the given `num` in Canonical
+ * Signed Digit (CSD) format.
  */
 auto to_csdfixed(double num, unsigned int nnz) -> string {
   if (num == 0.0) {

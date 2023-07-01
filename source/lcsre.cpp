@@ -6,11 +6,19 @@ using std::string;
 using std::vector;
 
 namespace csd {
-// C++ program to find the longest repeated
-// non-overlapping substring
-
-// Returns the longest repeating non-overlapping
-// substring in sv
+/**
+ * @brief Longest repeated non-overlapping substring
+ * 
+ * The function `longest_repeated_substring` takes a string and its length as input and returns the
+ * longest repeated substring in the string.
+ * 
+ * @param sv The parameter `sv` is a pointer to a character array, which represents the input string.
+ * It is assumed that the string is null-terminated.
+ * @param n The parameter `n` represents the length of the input string `sv`.
+ * 
+ * @return The function `longest_repeated_substring` returns a string, which is the longest repeated
+ * substring in the given input string `sv`.
+ */
 auto longest_repeated_substring(const char *sv, size_t n) -> string {
   auto lcsre =
       vector<vector<unsigned int>>(n + 1, vector<unsigned int>(n + 1, 0U));
