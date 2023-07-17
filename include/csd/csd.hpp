@@ -21,16 +21,18 @@ namespace csd {
  * https://sourceforge.net/projects/pycsd/
  * License: GPL2
  *
- * The function `to_csd` converts a given number to its Canonical Signed Digit (CSD) representation
- * with a specified number of decimal places.
- * 
- * @param num The `num` parameter is a double precision floating-point number that represents the value
- * to be converted to CSD (Canonic Signed Digit) representation.
- * @param places The `places` parameter in the `to_csd` function represents the number of decimal
- * places to include in the CSD (Canonical Signed Digit) representation of the given `num`.
- * 
- * @return The function `to_csd` returns a string representation of the given `num` in Canonical Signed
- * Digit (CSD) format.
+ * The function `to_csd` converts a given number to its Canonical Signed Digit
+ * (CSD) representation with a specified number of decimal places.
+ *
+ * @param num The `num` parameter is a double precision floating-point number
+ * that represents the value to be converted to CSD (Canonic Signed Digit)
+ * representation.
+ * @param places The `places` parameter in the `to_csd` function represents the
+ * number of decimal places to include in the CSD (Canonical Signed Digit)
+ * representation of the given `num`.
+ *
+ * @return The function `to_csd` returns a string representation of the given
+ * `num` in Canonical Signed Digit (CSD) format.
  */
 extern auto to_csd(double num, int places) -> std::string;
 
@@ -41,11 +43,12 @@ extern auto to_csd(double num, int places) -> std::string;
  * https://sourceforge.net/projects/pycsd/
  * License: GPL2
  *
- * The function converts a given integer into a Canonical Signed Digit (CSD) representation.
- * 
- * @param num The parameter `num` is an integer that represents the number for which we want to
- * generate the CSD (Canonical Signed Digit) representation.
- * 
+ * The function converts a given integer into a Canonical Signed Digit (CSD)
+ * representation.
+ *
+ * @param num The parameter `num` is an integer that represents the number for
+ * which we want to generate the CSD (Canonical Signed Digit) representation.
+ *
  * @return The function `to_csd_i` returns a string.
  */
 extern auto to_csd_i(int num) -> std::string;
@@ -53,32 +56,34 @@ extern auto to_csd_i(int num) -> std::string;
 /**
  * @brief Convert to CSD (Canonical Signed Digit) string representation
  *
- * The function `to_csdfixed` converts a given number into a CSD (Canonic Signed Digit) representation
- * with a specified number of non-zero digits.
- * 
- * @param num The parameter `num` is a double precision floating-point number that represents the input
- * value for conversion to CSD (Canonic Signed Digit) fixed-point representation.
- * @param nnz The parameter `nnz` stands for "number of non-zero bits". It represents the maximum
- * number of non-zero bits allowed in the output CSD (Canonical Signed Digit) representation of the
- * given `num`.
- * 
- * @return The function `to_csdfixed` returns a string representation of the given `num` in Canonical
- * Signed Digit (CSD) format.
+ * The function `to_csdfixed` converts a given number into a CSD (Canonic Signed
+ * Digit) representation with a specified number of non-zero digits.
+ *
+ * @param num The parameter `num` is a double precision floating-point number
+ * that represents the input value for conversion to CSD (Canonic Signed Digit)
+ * fixed-point representation.
+ * @param nnz The parameter `nnz` stands for "number of non-zero bits". It
+ * represents the maximum number of non-zero bits allowed in the output CSD
+ * (Canonical Signed Digit) representation of the given `num`.
+ *
+ * @return The function `to_csdfixed` returns a string representation of the
+ * given `num` in Canonical Signed Digit (CSD) format.
  */
 extern auto to_csdfixed(double num, unsigned int nnz) -> std::string;
 
 /**
  * @brief Longest repeated non-overlapping substring
- * 
- * The function `longest_repeated_substring` takes a string and its length as input and returns the
- * longest repeated substring in the string.
- * 
- * @param sv The parameter `sv` is a pointer to a character array, which represents the input string.
- * It is assumed that the string is null-terminated.
+ *
+ * The function `longest_repeated_substring` takes a string and its length as
+ * input and returns the longest repeated substring in the string.
+ *
+ * @param sv The parameter `sv` is a pointer to a character array, which
+ * represents the input string. It is assumed that the string is
+ * null-terminated.
  * @param n The parameter `n` represents the length of the input string `sv`.
- * 
- * @return The function `longest_repeated_substring` returns a string, which is the longest repeated
- * substring in the given input string `sv`.
+ *
+ * @return The function `longest_repeated_substring` returns a string, which is
+ * the longest repeated substring in the given input string `sv`.
  */
 extern auto longest_repeated_substring(const char *sv, size_t n) -> std::string;
 
