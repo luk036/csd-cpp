@@ -93,21 +93,21 @@
               <span class="m-doc-wrap-bumper">auto <a href="#ab43324d127b11048f1267e9a6ba71e3c" class="m-doc">to_csd</a>(</span><span class="m-doc-wrap">double num,
               int places) -&gt; std::string -&gt; auto</span>
             </dt>
-            <dd><span></span></dd>
+            <dd>Convert to CSD (Canonical Signed Digit) string representation.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab33a725e97c0029f51b6eaa05a713476" class="m-doc">to_csd_i</a>(</span><span class="m-doc-wrap">int num) -&gt; std::string -&gt; auto</span>
+            </dt>
+            <dd>Convert to CSD (Canonical Signed Digit) string representation.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a8388f136d90dfc9112d494cbbc0501a6" class="m-doc">to_csdfixed</a>(</span><span class="m-doc-wrap">double num,
               unsigned int nnz) -&gt; std::string -&gt; auto</span>
             </dt>
-            <dd><span></span></dd>
+            <dd>Convert to CSD (Canonical Signed Digit) string representation.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a6f770f30fd6b0132d1892e7a9d30b411" class="m-doc">longest_repeated_substring</a>(</span><span class="m-doc-wrap">const char* sv,
               size_t n) -&gt; std::string -&gt; auto</span>
             </dt>
-            <dd><span></span></dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#ab33a725e97c0029f51b6eaa05a713476" class="m-doc">to_csd_i</a>(</span><span class="m-doc-wrap">int num) -&gt; std::string -&gt; auto</span>
-            </dt>
-            <dd><span></span></dd>
+            <dd>Longest repeated non-overlapping substring.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a40ee1446e4a25bc4dc32099f8112dbd3" class="m-doc">to_decimal_using_switch</a>(</span><span class="m-doc-wrap">const char* csd) -&gt; double -&gt; <a href="csd_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
             </dt>
@@ -140,7 +140,54 @@
               int places) -&gt; std::string</span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="csd_8hpp.html">&lt;csd/csd.hpp&gt;</a></div>
             </h3>
-            <p><span></span></p>
+            <p>Convert to CSD (Canonical Signed Digit) string representation.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">num</td>
+                  <td>The <code>num</code> parameter is a double precision floating-point number that represents the value to be converted to CSD (Canonic Signed Digit) representation.</td>
+                </tr>
+                <tr>
+                  <td>places</td>
+                  <td>The <code>places</code> parameter in the <code>to_csd</code> function represents the number of decimal places to include in the CSD (Canonical Signed Digit) representation of the given <code>num</code>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The function <code>to_csd</code> returns a string representation of the given <code>num</code> in Canonical Signed Digit (CSD) format.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Original author: Harnesser <a href="https://sourceforge.net/projects/pycsd/">https:/<wbr />/<wbr />sourceforge.net/<wbr />projects/<wbr />pycsd/<wbr /></a> License: GPL2</p><p>The function <code>to_csd</code> converts a given number to its Canonical Signed Digit (CSD) representation with a specified number of decimal places.</p>
+          </div></section>
+          <section class="m-doc-details" id="ab33a725e97c0029f51b6eaa05a713476"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">auto csd::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab33a725e97c0029f51b6eaa05a713476" class="m-doc-self">to_csd_i</a>(</span><span class="m-doc-wrap">int num) -&gt; std::string</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="csd_8hpp.html">&lt;csd/csd.hpp&gt;</a></div>
+            </h3>
+            <p>Convert to CSD (Canonical Signed Digit) string representation.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">num</td>
+                  <td>The parameter <code>num</code> is an integer that represents the number for which we want to generate the CSD (Canonical Signed Digit) representation.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The function <code>to_csd_i</code> returns a string.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Original author: Harnesser <a href="https://sourceforge.net/projects/pycsd/">https:/<wbr />/<wbr />sourceforge.net/<wbr />projects/<wbr />pycsd/<wbr /></a> License: GPL2</p><p>The function converts a given integer into a Canonical Signed Digit (CSD) representation.</p>
           </div></section>
           <section class="m-doc-details" id="a8388f136d90dfc9112d494cbbc0501a6"><div>
             <h3>
@@ -148,7 +195,29 @@
               unsigned int nnz) -&gt; std::string</span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="csd_8hpp.html">&lt;csd/csd.hpp&gt;</a></div>
             </h3>
-            <p><span></span></p>
+            <p>Convert to CSD (Canonical Signed Digit) string representation.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">num</td>
+                  <td>The parameter <code>num</code> is a double precision floating-point number that represents the input value for conversion to CSD (Canonic Signed Digit) fixed-point representation.</td>
+                </tr>
+                <tr>
+                  <td>nnz</td>
+                  <td>The parameter <code>nnz</code> stands for &quot;number of non-zero bits&quot;. It represents the maximum number of non-zero bits allowed in the output CSD (Canonical Signed Digit) representation of the given <code>num</code>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The function <code>to_csdfixed</code> returns a string representation of the given <code>num</code> in Canonical Signed Digit (CSD) format.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>The function <code>to_csdfixed</code> converts a given number into a CSD (Canonic Signed Digit) representation with a specified number of non-zero digits.</p>
           </div></section>
           <section class="m-doc-details" id="a6f770f30fd6b0132d1892e7a9d30b411"><div>
             <h3>
@@ -156,14 +225,29 @@
               size_t n) -&gt; std::string</span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="csd_8hpp.html">&lt;csd/csd.hpp&gt;</a></div>
             </h3>
-            <p><span></span></p>
-          </div></section>
-          <section class="m-doc-details" id="ab33a725e97c0029f51b6eaa05a713476"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">auto csd::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab33a725e97c0029f51b6eaa05a713476" class="m-doc-self">to_csd_i</a>(</span><span class="m-doc-wrap">int num) -&gt; std::string</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="csd_8hpp.html">&lt;csd/csd.hpp&gt;</a></div>
-            </h3>
-            <p><span></span></p>
+            <p>Longest repeated non-overlapping substring.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">sv</td>
+                  <td>The parameter <code>sv</code> is a pointer to a character array, which represents the input string. It is assumed that the string is null-terminated.</td>
+                </tr>
+                <tr>
+                  <td>n</td>
+                  <td>The parameter <code>n</code> represents the length of the input string <code>sv</code>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The function <code>longest_repeated_substring</code> returns a string, which is the longest repeated substring in the given input string <code>sv</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>The function <code>longest_repeated_substring</code> takes a string and its length as input and returns the longest repeated substring in the string.</p>
           </div></section>
           <section class="m-doc-details" id="a40ee1446e4a25bc4dc32099f8112dbd3"><div>
             <h3>
