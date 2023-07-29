@@ -97,50 +97,51 @@ extern auto longest_repeated_substring(const char *sv, size_t n) -> std::string;
  * @return double
  */
 CONSTEXPR14 auto to_decimal_using_switch(const char *csd) -> double {
-  auto num = 0.0;
-  // Handle integral part
-  for (; *csd != '.' && *csd != '\0'; ++csd) {
-    switch (*csd) {
-    case '0':
-      num *= 2.0;
-      break;
-    case '+':
-      num = 2.0 * num + 1.0;
-      break;
-    case '-':
-      num = 2.0 * num - 1.0;
-      break;
-    case '.':
-      break;
-    case '\0':
-      break;
-    default:
-      throw std::invalid_argument("Work with 0, +, -, . only");
+    auto num = 0.0;
+    // Handle integral part
+    for (; *csd != '.' && *csd != '\0'; ++csd) {
+        switch (*csd) {
+        case '0':
+            num *= 2.0;
+            break;
+        case '+':
+            num = 2.0 * num + 1.0;
+            break;
+        case '-':
+            num = 2.0 * num - 1.0;
+            break;
+        case '.':
+            break;
+        case '\0':
+            break;
+        default:
+            throw std::invalid_argument("Work with 0, +, -, . only");
+        }
     }
-  }
-  if (*csd == '\0') {
+    if (*csd == '\0') {
+        return num;
+    }
+    // Handle fractional part
+    auto scale = 0.5;
+    for (++csd; *csd != '\0'; ++csd) {
+        switch (*csd) {
+        case '0':
+            break;
+        case '+':
+            num += scale;
+            break;
+        case '-':
+            num -= scale;
+            break;
+        case '\0':
+            break;
+        default:
+            throw std::invalid_argument(
+                "Fractional part work with 0, +, - only");
+        }
+        scale /= 2;
+    }
     return num;
-  }
-  // Handle fractional part
-  auto scale = 0.5;
-  for (++csd; *csd != '\0'; ++csd) {
-    switch (*csd) {
-    case '0':
-      break;
-    case '+':
-      num += scale;
-      break;
-    case '-':
-      num -= scale;
-      break;
-    case '\0':
-      break;
-    default:
-      throw std::invalid_argument("Fractional part work with 0, +, - only");
-    }
-    scale /= 2;
-  }
-  return num;
 }
 
 /**
@@ -155,42 +156,43 @@ CONSTEXPR14 auto to_decimal_using_switch(const char *csd) -> double {
  * @return double
  */
 CONSTEXPR14 auto to_decimal(const char *csd) -> double {
-  auto num = 0.0;
-  // Handle integral part
-  for (;; ++csd) {
-    auto digit = *csd;
-    if (digit == '0') {
-      num *= 2.0;
-    } else if (digit == '+') {
-      num = 2.0 * num + 1.0;
-    } else if (digit == '-') {
-      num = 2.0 * num - 1.0;
-    } else if (digit == '.' || digit == '\0') {
-      break;
-    } else {
-      throw std::invalid_argument("Work with 0, +, -, . only");
+    auto num = 0.0;
+    // Handle integral part
+    for (;; ++csd) {
+        auto digit = *csd;
+        if (digit == '0') {
+            num *= 2.0;
+        } else if (digit == '+') {
+            num = 2.0 * num + 1.0;
+        } else if (digit == '-') {
+            num = 2.0 * num - 1.0;
+        } else if (digit == '.' || digit == '\0') {
+            break;
+        } else {
+            throw std::invalid_argument("Work with 0, +, -, . only");
+        }
     }
-  }
-  if (*csd == '\0') {
+    if (*csd == '\0') {
+        return num;
+    }
+    // Handle fractional part
+    auto scale = 0.5;
+    for (++csd;; ++csd) {
+        auto digit = *csd;
+        if (digit == '0') {
+        } else if (digit == '+') {
+            num += scale;
+        } else if (digit == '-') {
+            num -= scale;
+        } else if (digit == '\0') {
+            break;
+        } else {
+            throw std::invalid_argument(
+                "Fractional part work with 0, +, - only");
+        }
+        scale /= 2;
+    }
     return num;
-  }
-  // Handle fractional part
-  auto scale = 0.5;
-  for (++csd;; ++csd) {
-    auto digit = *csd;
-    if (digit == '0') {
-    } else if (digit == '+') {
-      num += scale;
-    } else if (digit == '-') {
-      num -= scale;
-    } else if (digit == '\0') {
-      break;
-    } else {
-      throw std::invalid_argument("Fractional part work with 0, +, - only");
-    }
-    scale /= 2;
-  }
-  return num;
 }
 
 /**
@@ -204,21 +206,22 @@ CONSTEXPR14 auto to_decimal(const char *csd) -> double {
  * @return int
  */
 CONSTEXPR14 auto to_decimal_i(char const *csd) -> int {
-  auto num = 0;
-  for (;; ++csd) {
-    auto digit = *csd;
-    if (digit == '0') {
-      num = 2 * num;
-    } else if (digit == '+') {
-      num = 2 * num + 1;
-    } else if (digit == '-') {
-      num = 2 * num - 1;
-    } else if (digit == '\0') {
-      break;
-    } else {
-      throw std::invalid_argument("Integer conversion work with 0, +, - only");
+    auto num = 0;
+    for (;; ++csd) {
+        auto digit = *csd;
+        if (digit == '0') {
+            num = 2 * num;
+        } else if (digit == '+') {
+            num = 2 * num + 1;
+        } else if (digit == '-') {
+            num = 2 * num - 1;
+        } else if (digit == '\0') {
+            break;
+        } else {
+            throw std::invalid_argument(
+                "Integer conversion work with 0, +, - only");
+        }
     }
-  }
-  return num;
+    return num;
 }
 } // namespace csd

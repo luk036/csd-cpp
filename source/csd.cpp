@@ -41,12 +41,12 @@ using std::string;
  * number.
  */
 inline uint32_t highest_power_of_two_in(uint32_t x) {
-  x |= x >> 1;
-  x |= x >> 2;
-  x |= x >> 4;
-  x |= x >> 8;
-  x |= x >> 16;
-  return x ^ (x >> 1);
+    x |= x >> 1;
+    x |= x >> 2;
+    x |= x >> 4;
+    x |= x >> 8;
+    x |= x >> 16;
+    return x ^ (x >> 1);
 }
 
 namespace csd {
@@ -71,39 +71,39 @@ namespace csd {
  * `num` in Canonical Signed Digit (CSD) format.
  */
 auto to_csd(double num, const int places) -> string {
-  if (num == 0.0) {
-    return "0";
-  }
-  auto absnum = fabs(num);
-  int rem{0};
-  string csd{"0"};
-  if (absnum >= 1.0) {
-    rem = int(ceil(log2(absnum * 1.5)));
-    csd = string{""};
-  }
+    if (num == 0.0) {
+        return "0";
+    }
+    auto absnum = fabs(num);
+    int rem{0};
+    string csd{"0"};
+    if (absnum >= 1.0) {
+        rem = int(ceil(log2(absnum * 1.5)));
+        csd = string{""};
+    }
 
-  auto p2n = pow(2.0, rem);
-  // auto const eps = pow(2.0, -places);
-  while (rem > -places) {
-    if (rem == 0) {
-      csd += '.';
+    auto p2n = pow(2.0, rem);
+    // auto const eps = pow(2.0, -places);
+    while (rem > -places) {
+        if (rem == 0) {
+            csd += '.';
+        }
+        p2n /= 2.0;
+        rem -= 1;
+        auto const det = 1.5 * num;
+        if (det > p2n) {
+            csd += '+';
+            num -= p2n;
+        } else {
+            if (det < -p2n) {
+                csd += '-';
+                num += p2n;
+            } else {
+                csd += '0';
+            }
+        }
     }
-    p2n /= 2.0;
-    rem -= 1;
-    auto const det = 1.5 * num;
-    if (det > p2n) {
-      csd += '+';
-      num -= p2n;
-    } else {
-      if (det < -p2n) {
-        csd += '-';
-        num += p2n;
-      } else {
-        csd += '0';
-      }
-    }
-  }
-  return csd;
+    return csd;
 }
 
 /**
@@ -122,28 +122,28 @@ auto to_csd(double num, const int places) -> string {
  * @return The function `to_csd_i` returns a string.
  */
 auto to_csd_i(int num) -> string {
-  if (num == 0) {
-    return "0";
-  }
-  // auto p2n = int(pow(2.0, ceil(log2(abs(num) * 1.5))));
-  auto temp = uint32_t(abs(num)) * 3 / 2;
-  auto p2n = highest_power_of_two_in(temp) * 2;
-  string csd("");
-  while (p2n > 1) {
-    auto const p2n_half = p2n / 2;
-    auto const det = 3 * num;
-    if (det > int(p2n)) {
-      csd += '+';
-      num -= p2n_half;
-    } else if (det < -int(p2n)) {
-      csd += '-';
-      num += p2n_half;
-    } else {
-      csd += '0';
+    if (num == 0) {
+        return "0";
     }
-    p2n = p2n_half;
-  }
-  return csd;
+    // auto p2n = int(pow(2.0, ceil(log2(abs(num) * 1.5))));
+    auto temp = uint32_t(abs(num)) * 3 / 2;
+    auto p2n = highest_power_of_two_in(temp) * 2;
+    string csd("");
+    while (p2n > 1) {
+        auto const p2n_half = p2n / 2;
+        auto const det = 3 * num;
+        if (det > int(p2n)) {
+            csd += '+';
+            num -= p2n_half;
+        } else if (det < -int(p2n)) {
+            csd += '-';
+            num += p2n_half;
+        } else {
+            csd += '0';
+        }
+        p2n = p2n_half;
+    }
+    return csd;
 }
 
 /**
@@ -163,42 +163,42 @@ auto to_csd_i(int num) -> string {
  * given `num` in Canonical Signed Digit (CSD) format.
  */
 auto to_csdfixed(double num, unsigned int nnz) -> string {
-  if (num == 0.0) {
-    return "0";
-  }
-  auto const absnum = fabs(num);
-  int rem{0};
-  string csd{"0"};
-  if (absnum >= 1.0) {
-    rem = int(ceil(log2(absnum * 1.5)));
-    csd = string{""};
-  }
+    if (num == 0.0) {
+        return "0";
+    }
+    auto const absnum = fabs(num);
+    int rem{0};
+    string csd{"0"};
+    if (absnum >= 1.0) {
+        rem = int(ceil(log2(absnum * 1.5)));
+        csd = string{""};
+    }
 
-  auto p2n = pow(2.0, rem);
-  while (rem > 0 || (nnz > 0 && fabs(num) > 1e-100)) {
-    if (rem == 0) {
-      csd += '.';
+    auto p2n = pow(2.0, rem);
+    while (rem > 0 || (nnz > 0 && fabs(num) > 1e-100)) {
+        if (rem == 0) {
+            csd += '.';
+        }
+        p2n /= 2.0;
+        rem -= 1;
+        auto const det = 1.5 * num;
+        if (det > p2n) {
+            csd += '+';
+            num -= p2n;
+            nnz -= 1;
+        } else {
+            if (det < -p2n) {
+                csd += '-';
+                num += p2n;
+                nnz -= 1;
+            } else {
+                csd += '0';
+            }
+        }
+        if (nnz == 0) {
+            num = 0.0;
+        }
     }
-    p2n /= 2.0;
-    rem -= 1;
-    auto const det = 1.5 * num;
-    if (det > p2n) {
-      csd += '+';
-      num -= p2n;
-      nnz -= 1;
-    } else {
-      if (det < -p2n) {
-        csd += '-';
-        num += p2n;
-        nnz -= 1;
-      } else {
-        csd += '0';
-      }
-    }
-    if (nnz == 0) {
-      num = 0.0;
-    }
-  }
-  return csd;
+    return csd;
 }
 } // namespace csd
