@@ -49,7 +49,8 @@ extern auto to_csd(double num, int places) -> std::string;
  * @param num The parameter `num` is an integer that represents the number for
  * which we want to generate the CSD (Canonical Signed Digit) representation.
  *
- * @return The function `to_csd_i` returns a string.
+ * @return The function `to_csd_i` returns a string representation of the given
+ * `num` in Canonical Signed Digit (CSD) format.
  */
 extern auto to_csd_i(int num) -> std::string;
 
@@ -72,29 +73,15 @@ extern auto to_csd_i(int num) -> std::string;
 extern auto to_csdfixed(double num, unsigned int nnz) -> std::string;
 
 /**
- * @brief Longest repeated non-overlapping substring
- *
- * The function `longest_repeated_substring` takes a string and its length as
- * input and returns the longest repeated substring in the string.
- *
- * @param sv The parameter `sv` is a pointer to a character array, which
- * represents the input string. It is assumed that the string is
- * null-terminated.
- * @param n The parameter `n` represents the length of the input string `sv`.
- *
- * @return The function `longest_repeated_substring` returns a string, which is
- * the longest repeated substring in the given input string `sv`.
- */
-extern auto longest_repeated_substring(const char *sv, size_t n) -> std::string;
-
-/**
  * @brief Convert the CSD string to a decimal
  *
  * The function `to_decimal_using_switch` takes a CSD (Canonical Signed Digit)
  * string as input and converts it to a decimal number using a switch statement.
  *
- * @param csd
- * @return double
+ * @param csd The parameter `csd` is a pointer to a character array, which
+ * represents the input string. It is assumed that the string is
+ * null-terminated.
+ * @return double decimal value of the CSD format
  */
 CONSTEXPR14 auto to_decimal_using_switch(const char *csd) -> double {
     auto num = 0.0;
@@ -152,8 +139,10 @@ CONSTEXPR14 auto to_decimal_using_switch(const char *csd) -> double {
  * of the string and performs the corresponding operations based on the
  * character.
  *
- * @param csd
- * @return double
+ * @param csd The parameter `csd` is a pointer to a character array, which
+ * represents the input string. It is assumed that the string is
+ * null-terminated.
+ * @return double decimal value of the CSD format
  */
 CONSTEXPR14 auto to_decimal(const char *csd) -> double {
     auto num = 0.0;
@@ -202,10 +191,12 @@ CONSTEXPR14 auto to_decimal(const char *csd) -> double {
  * input and converts it to an integer. It iterates through the characters of
  * the string and performs the corresponding operations based on the character.
  *
- * @param csd
- * @return int
+ * @param csd The parameter `csd` is a pointer to a character array, which
+ * represents the input string. It is assumed that the string is
+ * null-terminated.
+ * @return int decimal value of the CSD format
  */
-CONSTEXPR14 auto to_decimal_i(char const *csd) -> int {
+CONSTEXPR14 auto to_decimal_i(const char *csd) -> int {
     auto num = 0;
     for (;; ++csd) {
         auto digit = *csd;
