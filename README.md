@@ -1,9 +1,9 @@
-[![Actions Status](https://github.com/luk036/csd-cpp/workflows/MacOS/badge.svg)](https://github.com/luk036/lds-cpp/actions)
-[![Actions Status](https://github.com/luk036/csd-cpp/workflows/Windows/badge.svg)](https://github.com/luk036/lds-cpp/actions)
-[![Actions Status](https://github.com/luk036/csd-cpp/workflows/Ubuntu/badge.svg)](https://github.com/luk036/lds-cpp/actions)
-[![Actions Status](https://github.com/luk036/csd-cpp/workflows/Style/badge.svg)](https://github.com/luk036/lds-cpp/actions)
-[![Actions Status](https://github.com/luk036/csd-cpp/workflows/Install/badge.svg)](https://github.com/luk036/lds-cpp/actions)
-[![codecov](https://codecov.io/gh/luk036/csd-cpp/branch/master/graph/badge.svg)](https://codecov.io/gh/luk036/lds-cpp)
+[![Actions Status](https://github.com/luk036/csd-cpp/workflows/MacOS/badge.svg)](https://github.com/luk036/csd-cpp/actions)
+[![Actions Status](https://github.com/luk036/csd-cpp/workflows/Windows/badge.svg)](https://github.com/luk036/csd-cpp/actions)
+[![Actions Status](https://github.com/luk036/csd-cpp/workflows/Ubuntu/badge.svg)](https://github.com/luk036/csd-cpp/actions)
+[![Actions Status](https://github.com/luk036/csd-cpp/workflows/Style/badge.svg)](https://github.com/luk036/csd-cpp/actions)
+[![Actions Status](https://github.com/luk036/csd-cpp/workflows/Install/badge.svg)](https://github.com/luk036/csd-cpp/actions)
+[![codecov](https://codecov.io/gh/luk036/csd-cpp/branch/master/graph/badge.svg)](https://codecov.io/gh/luk036/csd-cpp)
 
 <p align="center">
   <img src="https://repository-images.githubusercontent.com/254842585/4dfa7580-7ffb-11ea-99d0-46b8fe2f4170" height="175" width="auto" />
