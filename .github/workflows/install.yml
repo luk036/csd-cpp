@@ -28,15 +28,17 @@ jobs:
 
       - name: build and install library
         run: |
-          cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release -DINSTALL_ONLY=ON
+          cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release
           sudo cmake --build build --target install
           rm -rf build
 
       - name: configure
-        run: cmake -Stest_installed -Bbuild
+        run: cmake -Stest -Bbuild -DTEST_INSTALLED_VERSION=1
 
       - name: build
         run: cmake --build build --config Debug -j4
 
-      - name: run
-        run: ./build/test_installed/Csd
+      - name: test
+        run: |
+          cd build
+          ctest --build-config Debug

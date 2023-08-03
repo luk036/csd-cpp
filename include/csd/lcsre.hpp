@@ -1,4 +1,4 @@
-/// @file csd.hpp
+/// @file lcsre.hpp
 #pragma once
 
 #include <iosfwd>    // for string

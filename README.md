@@ -1,9 +1,9 @@
-[![Actions Status](https://github.com/luk036/csd-cpp/workflows/MacOS/badge.svg)](https://github.com/luk036/csd-cpp/actions)
-[![Actions Status](https://github.com/luk036/csd-cpp/workflows/Windows/badge.svg)](https://github.com/luk036/csd-cpp/actions)
-[![Actions Status](https://github.com/luk036/csd-cpp/workflows/Ubuntu/badge.svg)](https://github.com/luk036/csd-cpp/actions)
-[![Actions Status](https://github.com/luk036/csd-cpp/workflows/Style/badge.svg)](https://github.com/luk036/csd-cpp/actions)
-[![Actions Status](https://github.com/luk036/csd-cpp/workflows/Install/badge.svg)](https://github.com/luk036/csd-cpp/actions)
-[![codecov](https://codecov.io/gh/luk036/csd-cpp/branch/master/graph/badge.svg)](https://codecov.io/gh/luk036/csd-cpp)
+[![Actions Status](https://github.com/TheLartians/ModernCppStarter/workflows/MacOS/badge.svg)](https://github.com/TheLartians/ModernCppStarter/actions)
+[![Actions Status](https://github.com/TheLartians/ModernCppStarter/workflows/Windows/badge.svg)](https://github.com/TheLartians/ModernCppStarter/actions)
+[![Actions Status](https://github.com/TheLartians/ModernCppStarter/workflows/Ubuntu/badge.svg)](https://github.com/TheLartians/ModernCppStarter/actions)
+[![Actions Status](https://github.com/TheLartians/ModernCppStarter/workflows/Style/badge.svg)](https://github.com/TheLartians/ModernCppStarter/actions)
+[![Actions Status](https://github.com/TheLartians/ModernCppStarter/workflows/Install/badge.svg)](https://github.com/TheLartians/ModernCppStarter/actions)
+[![codecov](https://codecov.io/gh/TheLartians/ModernCppStarter/branch/master/graph/badge.svg)](https://codecov.io/gh/TheLartians/ModernCppStarter)
 
 <p align="center">
   <img src="https://repository-images.githubusercontent.com/254842585/4dfa7580-7ffb-11ea-99d0-46b8fe2f4170" height="175" width="auto" />
@@ -48,7 +48,7 @@ This template is the result of learnings from many previous projects and should 
 Eventually, you can remove any unused files, such as the standalone directory or irrelevant github workflows for your project.
 Feel free to replace the License with one suited for your project.
 
-To cleanly separate the library and subproject code, the outer `CMakeList.txt` only defines the library itself while the tests and other subprojects are self-contained in their own directories.
+To cleanly separate the library and subproject code, the outer `CMakeList.txt` only defines the library itself while the tests and other subprojects are self-contained in their own directories. 
 During development it is usually convenient to [build all subprojects at once](#build-everything-at-once).
 
 ### Build and run the standalone target
@@ -56,8 +56,8 @@ During development it is usually convenient to [build all subprojects at once](#
 Use the following command to build and run the executable target.
 
 ```bash
-cmake -S. -B build
-cmake --build build
+cmake -S standalone -B build/standalone
+cmake --build build/standalone
 ./build/standalone/Csd --help
 ```
 
@@ -66,12 +66,11 @@ cmake --build build
 Use the following commands from the project's root directory to run the test suite.
 
 ```bash
-cmake -S. -B build
-cmake --build build
-cd build/test
-CTEST_OUTPUT_ON_FAILURE=1 ctest
+cmake -S test -B build/test
+cmake --build build/test
+CTEST_OUTPUT_ON_FAILURE=1 cmake --build build/test --target test
 
-# or maybe simply call the executable:
+# or simply call the executable: 
 ./build/test/CsdTests
 ```
 
@@ -83,30 +82,54 @@ Use the following commands from the project's root directory to check and fix C+
 This requires _clang-format_, _cmake-format_ and _pyyaml_ to be installed on the current system.
 
 ```bash
-cmake -S. -B build
+cmake -S test -B build/test
 
 # view changes
-cmake --build build --target format
+cmake --build build/test --target format
 
 # apply changes
-cmake --build build --target fix-format
+cmake --build build/test --target fix-format
 ```
 
 See [Format.cmake](https://github.com/TheLartians/Format.cmake) for details.
+These dependencies can be easily installed using pip.
+
+```bash
+pip install clang-format==14.0.6 cmake_format==0.6.11 pyyaml
+```
 
 ### Build the documentation
 
-The documentation is automatically built and [published](https://luk036.github.io/csd-cpp) whenever a [GitHub Release](https://help.github.com/en/github/administering-a-repository/managing-releases-in-a-repository) is created.
+The documentation is automatically built and [published](https://thelartians.github.io/ModernCppStarter) whenever a [GitHub Release](https://help.github.com/en/github/administering-a-repository/managing-releases-in-a-repository) is created.
 To manually build documentation, call the following command.
 
 ```bash
-cmake -S. -B build
-cmake --build build --target GenerateDocs
+cmake -S documentation -B build/doc
+cmake --build build/doc --target GenerateDocs
 # view the docs
-open build/documentation/doxygen/html/index.html
+open build/doc/doxygen/html/index.html
 ```
 
-To build the documentation locally, you will need Doxygen, jinja2 and Pygments on installed your system.
+To build the documentation locally, you will need Doxygen, jinja2 and Pygments installed on your system.
+
+### Build everything at once
+
+The project also includes an `all` directory that allows building all targets at the same time.
+This is useful during development, as it exposes all subprojects to your IDE and avoids redundant builds of the library.
+
+```bash
+cmake -S all -B build
+cmake --build build
+
+# run tests
+./build/test/CsdTests
+# format code
+cmake --build build --target fix-format
+# run standalone
+./build/standalone/Csd --help
+# build docs
+cmake --build build --target GenerateDocs
+```
 
 ### Additional tools
 
@@ -138,10 +161,17 @@ See [here](https://github.com/TheLartians/StaticTypeInfo) for an example header-
 
 Simply remove the standalone / documentation directory and according github workflow file.
 
+> Can I build the standalone and tests at the same time? / How can I tell my IDE about all subprojects?
+
+To keep the template modular, all subprojects derived from the library have been separated into their own CMake modules.
+This approach makes it trivial for third-party projects to re-use the projects library code.
+To allow IDEs to see the full scope of the project, the template includes the `all` directory that will create a single build for all subprojects.
+Use this as the main directory for best IDE support.
+
 > I see you are using `GLOB` to add source files in CMakeLists.txt. Isn't that evil?
 
 Glob is considered bad because any changes to the source file structure [might not be automatically caught](https://cmake.org/cmake/help/latest/command/file.html#filesystem) by CMake's builders and you will need to manually invoke CMake on changes.
-I personally prefer the `GLOB` solution for its simplicity, but feel free to change it to explicitly listing sources.
+  I personally prefer the `GLOB` solution for its simplicity, but feel free to change it to explicitly listing sources.
 
 > I want create additional targets that depend on my library. Should I modify the main CMakeLists to include them?
 
@@ -173,6 +203,10 @@ Perhaps the [MiniCppStarter](https://github.com/TheLartians/MiniCppStarter) is s
 ## Related projects and alternatives
 
 - [**ModernCppStarter & PVS-Studio Static Code Analyzer**](https://github.com/viva64/pvs-studio-cmake-examples/tree/master/modern-cpp-starter): Official instructions on how to use the ModernCppStarter with the PVS-Studio Static Code Analyzer.
-- [**lefticus/cpp_starter_project**](https://github.com/lefticus/cpp_starter_project/): A popular C++ starter project, created in 2017.
+- [**cpp-best-practices/gui_starter_template**](https://github.com/cpp-best-practices/gui_starter_template/): A popular C++ starter project, created in 2017.
 - [**filipdutescu/modern-cpp-template**](https://github.com/filipdutescu/modern-cpp-template): A recent starter using a more traditional approach for CMake structure and dependency management.
 - [**vector-of-bool/pitchfork**](https://github.com/vector-of-bool/pitchfork/): Pitchfork is a Set of C++ Project Conventions.
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=TheLartians/ModernCppStarter,cpp-best-practices/gui_starter_template,filipdutescu/modern-cpp-template&type=Date)](https://star-history.com/#TheLartians/ModernCppStarter&cpp-best-practices/gui_starter_template&filipdutescu/modern-cpp-template&Date)

@@ -1,6 +1,6 @@
 #include <benchmark/benchmark.h>
 
-#include <csd/csd.hpp>
+#include <csd/greeter.h>
 
 using namespace csd;
 
