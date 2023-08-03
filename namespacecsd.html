@@ -69,7 +69,7 @@
           <h2><a href="#nested-classes">Classes</a></h2>
           <dl class="m-doc">
             <dt>
-              class <a href="classcsd_1_1Csd.html" class="m-doc">Csd</a>
+              class <a href="classcsd_1_1_csd.html" class="m-doc">Csd</a>
             </dt>
             <dd>A class for saying hello in multiple languages.</dd>
           </dl>
@@ -104,11 +104,6 @@
             </dt>
             <dd>Convert to CSD (Canonical Signed Digit) string representation.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a6f770f30fd6b0132d1892e7a9d30b411" class="m-doc">longest_repeated_substring</a>(</span><span class="m-doc-wrap">const char* sv,
-              size_t n) -&gt; std::string -&gt; auto</span>
-            </dt>
-            <dd>Longest repeated non-overlapping substring.</dd>
-            <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a40ee1446e4a25bc4dc32099f8112dbd3" class="m-doc">to_decimal_using_switch</a>(</span><span class="m-doc-wrap">const char* csd) -&gt; double -&gt; <a href="csd_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
             </dt>
             <dd>Convert the CSD string to a decimal.</dd>
@@ -117,9 +112,14 @@
             </dt>
             <dd>Convert the CSD string to a decimal.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a6c95996ab480dc94eed400f3c0ca9763" class="m-doc">to_decimal_i</a>(</span><span class="m-doc-wrap">char const* csd) -&gt; int -&gt; <a href="csd_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a074473a5966090abd466c580417770f0" class="m-doc">to_decimal_i</a>(</span><span class="m-doc-wrap">const char* csd) -&gt; int -&gt; <a href="csd_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
             </dt>
             <dd>Convert the CSD string to a decimal.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a6f770f30fd6b0132d1892e7a9d30b411" class="m-doc">longest_repeated_substring</a>(</span><span class="m-doc-wrap">const char* sv,
+              size_t n) -&gt; std::string -&gt; auto</span>
+            </dt>
+            <dd>Longest repeated non-overlapping substring.</dd>
           </dl>
         </section>
         <section>
@@ -129,7 +129,7 @@
               enum class csd::<wbr /><a href="#af2b39f30aba7cf4a5d0c64e49bd72616" class="m-doc-self">LanguageCode</a>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="greeter_8h.html">&lt;csd/greeter.h&gt;</a></div>
             </h3>
-<p>Language codes to be used with the <a href="classcsd_1_1Csd.html" class="m-doc">Csd</a> class</p>
+<p>Language codes to be used with the <a href="classcsd_1_1_csd.html" class="m-doc">Csd</a> class</p>
           </div></section>
         </section>
         <section>
@@ -183,7 +183,7 @@
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>The function <code>to_csd_i</code> returns a string.</td>
+                  <td>The function <code>to_csd_i</code> returns a string representation of the given <code>num</code> in Canonical Signed Digit (CSD) format.</td>
                 </tr>
               </tfoot>
             </table>
@@ -219,11 +219,86 @@
             </table>
 <p>The function <code>to_csdfixed</code> converts a given number into a CSD (Canonic Signed Digit) representation with a specified number of non-zero digits.</p>
           </div></section>
+          <section class="m-doc-details" id="a40ee1446e4a25bc4dc32099f8112dbd3"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="csd_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto csd::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a40ee1446e4a25bc4dc32099f8112dbd3" class="m-doc-self">to_decimal_using_switch</a>(</span><span class="m-doc-wrap">const char* csd) -&gt; double</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="csd_8hpp.html">&lt;csd/csd.hpp&gt;</a></div>
+            </h3>
+            <p>Convert the CSD string to a decimal.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">csd</td>
+                  <td>The parameter <code>csd</code> is a pointer to a character array, which represents the input string. It is assumed that the string is null-terminated.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>double decimal value of the CSD format</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>The function <code>to_decimal_using_switch</code> takes a CSD (Canonical Signed Digit) string as input and converts it to a decimal number using a switch statement.</p>
+          </div></section>
+          <section class="m-doc-details" id="a7c7f78d90b854721226d9648b25af3a4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="csd_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto csd::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7c7f78d90b854721226d9648b25af3a4" class="m-doc-self">to_decimal</a>(</span><span class="m-doc-wrap">const char* csd) -&gt; double</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="csd_8hpp.html">&lt;csd/csd.hpp&gt;</a></div>
+            </h3>
+            <p>Convert the CSD string to a decimal.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">csd</td>
+                  <td>The parameter <code>csd</code> is a pointer to a character array, which represents the input string. It is assumed that the string is null-terminated.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>double decimal value of the CSD format</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>The function <code>to_decimal</code> takes a CSD (Canonical Signed Digit) string as input and converts it to a decimal number. It iterates through the characters of the string and performs the corresponding operations based on the character.</p>
+          </div></section>
+          <section class="m-doc-details" id="a074473a5966090abd466c580417770f0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="csd_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto csd::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a074473a5966090abd466c580417770f0" class="m-doc-self">to_decimal_i</a>(</span><span class="m-doc-wrap">const char* csd) -&gt; int</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="csd_8hpp.html">&lt;csd/csd.hpp&gt;</a></div>
+            </h3>
+            <p>Convert the CSD string to a decimal.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">csd</td>
+                  <td>The parameter <code>csd</code> is a pointer to a character array, which represents the input string. It is assumed that the string is null-terminated.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>int decimal value of the CSD format</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>The function <code>to_decimal_i</code> takes a CSD (Canonical Signed Digit) string as input and converts it to an integer. It iterates through the characters of the string and performs the corresponding operations based on the character.</p>
+          </div></section>
           <section class="m-doc-details" id="a6f770f30fd6b0132d1892e7a9d30b411"><div>
             <h3>
               <span class="m-doc-wrap-bumper">auto csd::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6f770f30fd6b0132d1892e7a9d30b411" class="m-doc-self">longest_repeated_substring</a>(</span><span class="m-doc-wrap">const char* sv,
               size_t n) -&gt; std::string</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="csd_8hpp.html">&lt;csd/csd.hpp&gt;</a></div>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="lcsre_8hpp.html">&lt;csd/lcsre.hpp&gt;</a></div>
             </h3>
             <p>Longest repeated non-overlapping substring.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -248,81 +323,6 @@
               </tfoot>
             </table>
 <p>The function <code>longest_repeated_substring</code> takes a string and its length as input and returns the longest repeated substring in the string.</p>
-          </div></section>
-          <section class="m-doc-details" id="a40ee1446e4a25bc4dc32099f8112dbd3"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="csd_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto csd::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a40ee1446e4a25bc4dc32099f8112dbd3" class="m-doc-self">to_decimal_using_switch</a>(</span><span class="m-doc-wrap">const char* csd) -&gt; double</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="csd_8hpp.html">&lt;csd/csd.hpp&gt;</a></div>
-            </h3>
-            <p>Convert the CSD string to a decimal.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">csd</td>
-                  <td></td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>double</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>The function <code>to_decimal_using_switch</code> takes a CSD (Canonical Signed Digit) string as input and converts it to a decimal number using a switch statement.</p>
-          </div></section>
-          <section class="m-doc-details" id="a7c7f78d90b854721226d9648b25af3a4"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="csd_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto csd::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7c7f78d90b854721226d9648b25af3a4" class="m-doc-self">to_decimal</a>(</span><span class="m-doc-wrap">const char* csd) -&gt; double</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="csd_8hpp.html">&lt;csd/csd.hpp&gt;</a></div>
-            </h3>
-            <p>Convert the CSD string to a decimal.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">csd</td>
-                  <td></td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>double</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>The function <code>to_decimal</code> takes a CSD (Canonical Signed Digit) string as input and converts it to a decimal number. It iterates through the characters of the string and performs the corresponding operations based on the character.</p>
-          </div></section>
-          <section class="m-doc-details" id="a6c95996ab480dc94eed400f3c0ca9763"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="csd_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto csd::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6c95996ab480dc94eed400f3c0ca9763" class="m-doc-self">to_decimal_i</a>(</span><span class="m-doc-wrap">char const* csd) -&gt; int</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="csd_8hpp.html">&lt;csd/csd.hpp&gt;</a></div>
-            </h3>
-            <p>Convert the CSD string to a decimal.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">csd</td>
-                  <td></td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>int</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>The function <code>to_decimal_i</code> takes a CSD (Canonical Signed Digit) string as input and converts it to an integer. It iterates through the characters of the string and performs the corresponding operations based on the character.</p>
           </div></section>
         </section>
       </div>
@@ -369,7 +369,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Csd. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Csd. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.7 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>
