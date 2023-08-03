@@ -1,8 +1,8 @@
 /// @file lcsre.hpp
 #pragma once
 
-#include <iosfwd>    // for string
-#include <string>    // for basic_string, operator==, operator<<
+#include <iosfwd> // for string
+#include <string> // for basic_string, operator==, operator<<
 
 namespace csd {
 
