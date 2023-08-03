@@ -18,6 +18,7 @@ target("Csd")
     set_kind("static")
     add_includedirs("include", {public = true})
     add_files("source/*.cpp")
+    add_packages("fmt")
 
 target("test_csd")
     set_kind("binary")
