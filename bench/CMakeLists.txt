@@ -54,4 +54,3 @@ foreach(ONE_BENCH_CPP ${ALL_BENCH_CPP})
   # add_test(${TARGET_NAME} ${ONE_BENCH_EXEC})
   add_test(NAME ${ONE_BENCH_EXEC} COMMAND ${TARGET_NAME})
 endforeach()
-
