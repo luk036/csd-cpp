@@ -2,7 +2,7 @@ set_languages("c++20")
 
 add_rules("mode.debug", "mode.release", "mode.coverage")
 add_requires("doctest", {alias = "doctest"})
-add_requires("fmt", {alias = "fmt"})
+add_requires("fmt 7.1.3", {alias = "fmt"})
 add_requires("benchmark", {alias = "benchmark"})
 
 if is_mode("coverage") then
