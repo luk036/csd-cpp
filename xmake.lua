@@ -2,7 +2,7 @@ set_languages("c++20")
 
 add_rules("mode.debug", "mode.release", "mode.coverage")
 add_requires("doctest", {alias = "doctest"})
--- add_requires("fmt 7.1.3", {alias = "fmt"})
+add_requires("fmt", {alias = "fmt"})
 add_requires("benchmark", {alias = "benchmark"})
 
 if is_mode("coverage") then
@@ -23,13 +23,13 @@ target("test_csd")
     set_kind("binary")
     add_deps("Csd")
     add_files("test/source/*.cpp")
-    add_packages("doctest")
+    add_packages("doctest", "fmt")
 
 target("test_switch")
     set_kind("binary")
     add_deps("Csd")
     add_files("bench/BM_switch.cpp")
-    add_packages("benchmark")
+    add_packages("benchmark", "fmt")
 
 
 -- If you want to known more usage about xmake, please see https://xmake.io
