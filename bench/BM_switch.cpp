@@ -1,11 +1,11 @@
 #include <benchmark/benchmark.h>
 
-#include <csd/greeter.h>
+#include <csd/csd.hpp>
 
 using namespace csd;
 
-extern auto to_decimal(const std::string &csd_str) -> double;
-extern auto to_decimal_using_switch(const std::string &csd_str) -> double;
+// extern auto to_decimal(const std::string &csd_str) -> double;
+// extern auto to_decimal_using_switch(const std::string &csd_str) -> double;
 
 static void using_if_else(benchmark::State &state) {
     // Code inside this loop is measured repeatedly
