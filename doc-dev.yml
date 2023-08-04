@@ -1,5 +1,0 @@
-name: csd-cpp
-channels:
-  - conda-forge
-dependencies:
-  - doxygen
