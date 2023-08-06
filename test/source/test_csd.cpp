@@ -1,6 +1,6 @@
-#include <doctest/doctest.h> // for ResultBuilder, CHECK_EQ, TEST_CASE
+#include <doctest/doctest.h>  // for ResultBuilder, CHECK_EQ, TEST_CASE
 
-#include <csd/csd.hpp> // for to_csd, to_decimal, to_csdfixed, to_decimal_using_switch
+#include <csd/csd.hpp>  // for to_csd, to_decimal, to_csdfixed, to_decimal_using_switch
 
 using namespace csd;
 
