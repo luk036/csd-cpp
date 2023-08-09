@@ -97,10 +97,10 @@ namespace csd {
                 case '-':
                     num = 2.0 * num - 1.0;
                     break;
-                case '.':
-                    break;
-                case '\0':
-                    break;
+                // case '.':
+                //     break;
+                // case '\0':
+                //     break;
                 default:
                     throw std::invalid_argument("Work with 0, +, -, . only");
             }
@@ -120,8 +120,8 @@ namespace csd {
                 case '-':
                     num -= scale;
                     break;
-                case '\0':
-                    break;
+                // case '\0':
+                //     break;
                 default:
                     throw std::invalid_argument("Fractional part work with 0, +, - only");
             }

@@ -6,4 +6,5 @@ using namespace csd;
 
 TEST_CASE("test lcsre") {  // Driver Code
     CHECK_EQ(longest_repeated_substring("+-00+-00+-00+-0", 15U), "+-00+-0");
+    CHECK_EQ(longest_repeated_substring("abcdefghijklmno", 15U), "");
 }
