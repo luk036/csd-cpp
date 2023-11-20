@@ -71,9 +71,9 @@ namespace csd {
      * `num` in Canonical Signed Digit (CSD) format.
      */
     auto to_csd(double num, const int places) -> string {
-        if (num == 0.0) {
-            return "0";
-        }
+        // if (num == 0.0) {
+        //     return "0";
+        // }
         auto absnum = fabs(num);
         int rem{0};
         string csd{"0"};
@@ -163,9 +163,9 @@ namespace csd {
      * given `num` in Canonical Signed Digit (CSD) format.
      */
     auto to_csdfixed(double num, unsigned int nnz) -> string {
-        if (num == 0.0) {
-            return "0";
-        }
+        // if (num == 0.0) {
+        //     return "0";
+        // }
         auto const absnum = fabs(num);
         int rem{0};
         string csd{"0"};
