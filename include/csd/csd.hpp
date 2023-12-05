@@ -24,10 +24,10 @@ namespace csd {
      * The function `to_csd` converts a given number to its Canonical Signed Digit
      * (CSD) representation with a specified number of decimal places.
      *
-     * @param num The `num` parameter is a double precision floating-point number
+     * @param[in] num The `num` parameter is a double precision floating-point number
      * that represents the value to be converted to CSD (Canonic Signed Digit)
      * representation.
-     * @param places The `places` parameter in the `to_csd` function represents the
+     * @param[in] places The `places` parameter in the `to_csd` function represents the
      * number of decimal places to include in the CSD (Canonical Signed Digit)
      * representation of the given `num`.
      *
@@ -46,7 +46,7 @@ namespace csd {
      * The function converts a given integer into a Canonical Signed Digit (CSD)
      * representation.
      *
-     * @param num The parameter `num` is an integer that represents the number for
+     * @param[in] num The parameter `num` is an integer that represents the number for
      * which we want to generate the CSD (Canonical Signed Digit) representation.
      *
      * @return The function `to_csd_i` returns a string representation of the given
@@ -60,10 +60,10 @@ namespace csd {
      * The function `to_csdfixed` converts a given number into a CSD (Canonic Signed
      * Digit) representation with a specified number of non-zero digits.
      *
-     * @param num The parameter `num` is a double precision floating-point number
+     * @param[in] num The parameter `num` is a double precision floating-point number
      * that represents the input value for conversion to CSD (Canonic Signed Digit)
      * fixed-point representation.
-     * @param nnz The parameter `nnz` stands for "number of non-zero bits". It
+     * @param[in] nnz The parameter `nnz` stands for "number of non-zero bits". It
      * represents the maximum number of non-zero bits allowed in the output CSD
      * (Canonical Signed Digit) representation of the given `num`.
      *
@@ -78,7 +78,7 @@ namespace csd {
      * The function `to_decimal_using_switch` takes a CSD (Canonical Signed Digit)
      * string as input and converts it to a decimal number using a switch statement.
      *
-     * @param csd The parameter `csd` is a pointer to a character array, which
+     * @param[in] csd The parameter `csd` is a pointer to a character array, which
      * represents the input string. It is assumed that the string is
      * null-terminated.
      * @return double decimal value of the CSD format
@@ -138,7 +138,7 @@ namespace csd {
      * of the string and performs the corresponding operations based on the
      * character.
      *
-     * @param csd The parameter `csd` is a pointer to a character array, which
+     * @param[in] csd The parameter `csd` is a pointer to a character array, which
      * represents the input string. It is assumed that the string is
      * null-terminated.
      * @return double decimal value of the CSD format
@@ -189,7 +189,7 @@ namespace csd {
      * input and converts it to an integer. It iterates through the characters of
      * the string and performs the corresponding operations based on the character.
      *
-     * @param csd The parameter `csd` is a pointer to a character array, which
+     * @param[in] csd The parameter `csd` is a pointer to a character array, which
      * represents the input string. It is assumed that the string is
      * null-terminated.
      * @return int decimal value of the CSD format

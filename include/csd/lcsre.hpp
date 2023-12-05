@@ -12,10 +12,10 @@ namespace csd {
      * The function `longest_repeated_substring` takes a string and its length as
      * input and returns the longest repeated substring in the string.
      *
-     * @param sv The parameter `sv` is a pointer to a character array, which
+     * @param[in] sv The parameter `sv` is a pointer to a character array, which
      * represents the input string. It is assumed that the string is
      * null-terminated.
-     * @param n The parameter `n` represents the length of the input string `sv`.
+     * @param[in] n The parameter `n` represents the length of the input string `sv`.
      *
      * @return The function `longest_repeated_substring` returns a string, which is
      * the longest repeated substring in the given input string `sv`.
