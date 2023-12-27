@@ -10,10 +10,11 @@ using namespace csd;
 /**
  * The function `using_if_else` repeatedly measures the time it takes to convert a given string to a
  * decimal number using the `to_decimal` function.
- * 
- * @param[in] state The `state` parameter in the `using_if_else` function is of type `benchmark::State`. It
- * is used by the Google Benchmark library to control the benchmarking process. It provides various
- * methods and properties to control the benchmark execution and to access the benchmark results.
+ *
+ * @param[in] state The `state` parameter in the `using_if_else` function is of type
+ * `benchmark::State`. It is used by the Google Benchmark library to control the benchmarking
+ * process. It provides various methods and properties to control the benchmark execution and to
+ * access the benchmark results.
  */
 static void using_if_else(benchmark::State &state) {
     // Code inside this loop is measured repeatedly
@@ -31,10 +32,11 @@ BENCHMARK(using_if_else);
 /**
  * The function `using_switch` repeatedly measures the time it takes to convert a given string to a
  * decimal number using the `to_decimal` function.
- * 
- * @param[in] state The `state` parameter in the `using_switch` function is of type `benchmark::State`. It
- * is used by the Google Benchmark library to control the benchmarking process. It provides various
- * methods and properties to control the benchmark execution and to access the benchmark results.
+ *
+ * @param[in] state The `state` parameter in the `using_switch` function is of type
+ * `benchmark::State`. It is used by the Google Benchmark library to control the benchmarking
+ * process. It provides various methods and properties to control the benchmark execution and to
+ * access the benchmark results.
  */
 static void using_switch(benchmark::State &state) {
     // Code inside this loop is measured repeatedly
