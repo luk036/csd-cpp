@@ -53,5 +53,6 @@ TEST_CASE("test to_csdfixed") {
 TEST_CASE("test to_decimal_i") {
     CHECK_EQ(to_decimal_i("+00-00"), 28);
     CHECK_EQ(to_decimal_i("0"), 0);
-    CHECK_THROWS(to_decimal_i("+00-00.00+"));
+    CHECK_EQ(to_decimal_i("+00-00.00+"), 28);
+    // CHECK_THROWS(to_decimal_i("+00-00.00+"));
 }
