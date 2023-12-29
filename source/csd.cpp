@@ -71,9 +71,6 @@ namespace csd {
      * `num` in Canonical Signed Digit (CSD) format.
      */
     auto to_csd(double num, const int places) -> string {
-        // if (num == 0.0) {
-        //     return "0";
-        // }
         auto absnum = fabs(num);
         int rem{0};
         string csd{"0"};
@@ -83,7 +80,7 @@ namespace csd {
         }
 
         auto p2n = pow(2.0, rem);
-        auto loop = [&](int value) {
+        auto loop_fn = [&](int value) {
             while (rem > value) {
                 p2n /= 2.0;
                 rem -= 1;
@@ -102,9 +99,9 @@ namespace csd {
             }
         };
 
-        loop(0);
+        loop_fn(0);
         csd += '.';
-        loop(-places);
+        loop_fn(-places);
         return csd;
     }
 
