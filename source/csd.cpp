@@ -83,26 +83,28 @@ namespace csd {
         }
 
         auto p2n = pow(2.0, rem);
-        // auto const eps = pow(2.0, -places);
-        while (rem > -places) {
-            if (rem == 0) {
-                csd += '.';
-            }
-            p2n /= 2.0;
-            rem -= 1;
-            auto const det = 1.5 * num;
-            if (det > p2n) {
-                csd += '+';
-                num -= p2n;
-            } else {
-                if (det < -p2n) {
-                    csd += '-';
-                    num += p2n;
+        auto loop = [&](int value) {
+            while (rem > value) {
+                p2n /= 2.0;
+                rem -= 1;
+                auto const det = 1.5 * num;
+                if (det > p2n) {
+                    csd += '+';
+                    num -= p2n;
                 } else {
-                    csd += '0';
+                    if (det < -p2n) {
+                        csd += '-';
+                        num += p2n;
+                    } else {
+                        csd += '0';
+                    }
                 }
             }
-        }
+        };
+
+        loop(0);
+        csd += '.';
+        loop(-places);
         return csd;
     }
 

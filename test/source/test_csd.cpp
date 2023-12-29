@@ -9,7 +9,7 @@ TEST_CASE("test to_csd") {
     CHECK_EQ(to_csd(28.5, 2), "+00-00.+0");
     CHECK_EQ(to_csd(-0.5, 2), "0.-0");
     CHECK_EQ(to_csd(0.0, 2), "0.00");
-    CHECK_EQ(to_csd(0.0, 0), "0");
+    CHECK_EQ(to_csd(0.0, 0), "0.");
 }
 
 TEST_CASE("test to_csd_i") {
