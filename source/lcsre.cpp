@@ -7,10 +7,17 @@ using std::vector;
 
 namespace csd {
     /**
-     * @brief Longest repeated non-overlapping substring
+     * Finds the longest repeated substring in the given string.
      *
-     * The function `longest_repeated_substring` takes a string and its length as
-     * input and returns the longest repeated substring in the string.
+     * This implements a dynamic programming algorithm to find the longest substring
+     * that appears at least twice in the input string. It builds a 2D table lcsre
+     * where lcsre[i][j] stores the length of longest common substring ending at
+     * indices i and j.
+     *
+     * It returns the longest repeated substring found. If no repeat is found,
+     * it returns an empty string.
+     *
+     * Time complexity is O(n^2) where n is length of input string.
      *
      * @param[in] sv The parameter `sv` is a pointer to a character array, which
      * represents the input string. It is assumed that the string is
