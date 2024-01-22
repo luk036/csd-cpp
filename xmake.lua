@@ -3,7 +3,7 @@ set_languages("c++11")
 add_rules("mode.debug", "mode.release", "mode.coverage")
 add_requires("doctest", {alias = "doctest"})
 add_requires("fmt 7.1.3", {alias = "fmt"})
-add_requires("benchmark", {alias = "benchmark"})
+add_requires("benchmark 1.8", {alias = "benchmark"})
 
 if is_mode("coverage") then
     add_cxflags("-ftest-coverage", "-fprofile-arcs", {force = true})
