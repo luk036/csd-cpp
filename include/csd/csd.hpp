@@ -131,7 +131,7 @@ namespace csd {
      * @param csd - Pointer to the null-terminated CSD string
      * @return The decimal value of the integral part
      */
-    CONSTEXPR14 auto to_decimal_integral(const char * &csd) -> int {
+    CONSTEXPR14 auto to_decimal_integral(const char *&csd) -> int {
         auto num = 0;
         for (;; ++csd) {
             auto digit = *csd;
@@ -159,7 +159,7 @@ namespace csd {
      * subtracts, a fraction of the current scale. This builds up the fractional part
      * of the final decimal number.
      */
-    CONSTEXPR14 auto to_decimal_fractional(const char * csd) -> double {
+    CONSTEXPR14 auto to_decimal_fractional(const char *csd) -> double {
         auto num = 0.0;
         auto scale = 0.5;
         for (++csd;; ++csd) {
@@ -206,7 +206,6 @@ namespace csd {
         return double(integral) + fractional;
     }
 
-
     /**
      * @brief Convert the CSD string to a decimal
      *
@@ -219,7 +218,5 @@ namespace csd {
      * null-terminated.
      * @return int decimal value of the CSD format
      */
-    CONSTEXPR14 auto to_decimal_i(const char *csd) -> int {
-        return to_decimal_integral(csd);
-    }
+    CONSTEXPR14 auto to_decimal_i(const char *csd) -> int { return to_decimal_integral(csd); }
 }  // namespace csd
