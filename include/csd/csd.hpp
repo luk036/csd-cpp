@@ -23,8 +23,8 @@ namespace csd {
      * https://sourceforge.net/projects/pycsd/
      * License: GPL2
      *
-     * @param num - The number to convert to CSD format.
-     * @param places - The number of decimal places to include in the CSD representation.
+     * @param[in] num - The number to convert to CSD format.
+     * @param[in] places - The number of decimal places to include in the CSD representation.
      * @return String representation of the input number in CSD format.
      */
     extern auto to_csd(double num, int places) -> std::string;
@@ -36,7 +36,7 @@ namespace csd {
      * https://sourceforge.net/projects/pycsd/
      * License: GPL2
      *
-     * @param num - The integer to convert to CSD format.
+     * @param[in] num - The integer to convert to CSD format.
      * @return String representation of the input integer in CSD format.
      */
     extern auto to_csd_i(int num) -> std::string;
@@ -47,8 +47,8 @@ namespace csd {
      *
      * This is an exported API function.
      *
-     * @param num - The number to convert to CSD format.
-     * @param nnz - The maximum number of non-zero digits allowed in the CSD representation.
+     * @param[in] num - The number to convert to CSD format.
+     * @param[in] nnz - The maximum number of non-zero digits allowed in the CSD representation.
      * @return String representation of the input number in CSD format with nnz non-zero digits.
      */
     extern auto to_csdfixed(double num, unsigned int nnz) -> std::string;
@@ -128,7 +128,7 @@ namespace csd {
      *
      * It throws an exception if any invalid character is encountered.
      *
-     * @param csd - Pointer to the null-terminated CSD string
+     * @param[in] csd - Pointer to the null-terminated CSD string
      * @return The decimal value of the integral part
      */
     CONSTEXPR14 auto to_decimal_integral(const char *&csd) -> int {
@@ -194,7 +194,7 @@ namespace csd {
      *
      * The function throws an exception if any invalid characters are encountered.
      *
-     * @param csd - Pointer to the null-terminated CSD string to convert
+     * @param[in] csd - Pointer to the null-terminated CSD string to convert
      * @return The decimal value of the CSD string
      */
     CONSTEXPR14 auto to_decimal(const char *csd) -> double {
