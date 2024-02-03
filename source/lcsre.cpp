@@ -27,15 +27,16 @@ namespace csd {
      * @return The function `longest_repeated_substring` returns a string, which is
      * the longest repeated substring in the given input string `sv`.
      */
-    auto longest_repeated_substring(const char *sv, size_t n) -> string {
-        auto lcsre = vector<vector<unsigned int>>(n + 1, vector<unsigned int>(n + 1, 0U));
+    auto longest_repeated_substring(const char *sv, size_t len) -> string {
+        auto ndim = len + 1;
+        auto lcsre = vector<vector<unsigned int>>(ndim, vector<unsigned int>(ndim, 0U));
 
         auto res_length = 0U;  // To store length of result
 
         // building table in bottom-up manner
         auto index = 0U;
-        for (auto i = 1U; i != n + 1; ++i) {
-            for (auto j = i + 1; j != n + 1; ++j) {
+        for (auto i = 1U; i != ndim; ++i) {
+            for (auto j = i + 1; j != ndim; ++j) {
                 // (j-i) > lcsre[i-1][j-1] to remove
                 // overlapping
                 if (sv[i - 1] == sv[j - 1] && lcsre[i - 1][j - 1] < (j - i)) {
@@ -62,9 +63,10 @@ namespace csd {
 
         auto res = string("");  // To store result
         if (res_length > 0) {
-            for (auto i = index - res_length + 1; i != index + 1; ++i) {
-                res += sv[i - 1];
-            }
+            res = string(sv).substr(index - res_length, res_length);
+            // for (auto i = index - res_length + 1; i != index + 1; ++i) {
+            //     res += sv[i - 1];
+            // }
         }
 
         return res;
