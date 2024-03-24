@@ -1,30 +1,31 @@
-#include <csd/greeter.h>
 #include <csd/version.h>
 
 #include <cxxopts.hpp>
 #include <iostream>
 #include <string>
-#include <unordered_map>
+#include <csd/csd.hpp> // for to_decimal, to_csd, and to_csdfixed
+
+// #include <unordered_map>
 
 auto main(int argc, char **argv) -> int {
-    const std::unordered_map<std::string, csd::LanguageCode> languages{
-        {"en", csd::LanguageCode::EN},
-        {"de", csd::LanguageCode::DE},
-        {"es", csd::LanguageCode::ES},
-        {"fr", csd::LanguageCode::FR},
-    };
+    cxxopts::Options options(*argv, "Canonical Signed Digit (CSD) Conversion");
 
-    cxxopts::Options options(*argv, "A program to welcome the world!");
-
-    std::string language;
-    std::string name;
+    double decimal;
+    double decimal2;
+    std::string csdstr;
+    int nnz;
+    int places;
+    const double INFTY = -1.0e100;
 
     // clang-format off
   options.add_options()
     ("h,help", "Show help")
     ("v,version", "Print the current version number")
-    ("n,name", "Name to greet", cxxopts::value(name)->default_value("World"))
-    ("l,lang", "Language code to use", cxxopts::value(language)->default_value("en"))
+    ("d,to_decimal", "Convert to decimal", cxxopts::value(csdstr)->default_value(""))
+    ("c,to_csd", "Convert to CSD with places", cxxopts::value(decimal)->default_value("-1.0e100"))
+    ("f,to_csdfixed", "Convert to CSD with number of non-zeros", cxxopts::value(decimal2)->default_value("-1.0e100"))
+    ("p,place", "Number of places", cxxopts::value(places)->default_value("4"))
+    ("z,nnz", "Number of non-zeros", cxxopts::value(nnz)->default_value("3"))
   ;
     // clang-format on
 
@@ -40,14 +41,18 @@ auto main(int argc, char **argv) -> int {
         return 0;
     }
 
-    auto langIt = languages.find(language);
-    if (langIt == languages.end()) {
-        std::cerr << "unknown language code: " << language << std::endl;
-        return 1;
+    if (decimal != INFTY) {
+        std::cout << csd::to_csd(decimal, places) << std::endl;
+
     }
 
-    csd::Csd csd(name);
-    std::cout << csd.greet(langIt->second) << std::endl;
+    if (decimal2 != INFTY) {
+        std::cout << csd::to_csdfixed(decimal2, nnz) << std::endl;
+    }
+
+    if (!csdstr.empty()) {
+        std::cout << csd::to_decimal(csdstr.c_str()) << std::endl;
+    }
 
     return 0;
 }
