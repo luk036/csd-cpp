@@ -34,9 +34,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 11)
 # enable compiler warnings
 if(NOT TEST_INSTALLED_VERSION)
   if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
-    target_compile_options(
-      Csd PUBLIC -Wall -Wpedantic -Wextra -Werror -Wno-c++17-attribute-extensions
-    )
+    target_compile_options(Csd PUBLIC -Wall -Wpedantic -Wextra -Werror)
   elseif(MSVC)
     target_compile_options(Csd PUBLIC /W4 /WX /EHsc /wd4038)
     target_compile_definitions(${PROJECT_NAME} PUBLIC DOCTEST_CONFIG_USE_STD_HEADERS)
