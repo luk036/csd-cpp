@@ -1,9 +1,9 @@
 #include <csd/version.h>
 
+#include <csd/csd.hpp>  // for to_decimal, to_csd, and to_csdfixed
 #include <cxxopts.hpp>
 #include <iostream>
 #include <string>
-#include <csd/csd.hpp> // for to_decimal, to_csd, and to_csdfixed
 
 // #include <unordered_map>
 
@@ -43,7 +43,6 @@ auto main(int argc, char **argv) -> int {
 
     if (decimal != INFTY) {
         std::cout << csd::to_csd(decimal, places) << std::endl;
-
     }
 
     if (decimal2 != INFTY) {
