@@ -15,7 +15,7 @@ elseif is_plat("windows") then
 end
 
 target("Csd")
-    set_languages("c++11")
+    set_languages("c++14")
 
     set_kind("static")
     add_includedirs("include", {public = true})
