@@ -1,5 +1,3 @@
-set_languages("c++14")
-
 add_rules("mode.debug", "mode.release", "mode.coverage")
 add_requires("doctest", {alias = "doctest"})
 add_requires("fmt 7.1.3", {alias = "fmt"})
@@ -12,21 +10,29 @@ end
 if is_plat("linux") then
     set_warnings("all", "error")
     add_cxflags("-Wconversion", {force = true})
+elseif is_plat("windows") then
+    add_cxflags("/EHsc /W4 /WX /wd4819 /wd4996", {force = true})
 end
 
 target("Csd")
+    set_languages("c++11")
+
     set_kind("static")
     add_includedirs("include", {public = true})
     add_files("source/*.cpp")
     add_packages("fmt")
 
 target("test_csd")
+    set_languages("c++14")
+
     set_kind("binary")
     add_deps("Csd")
     add_files("test/source/*.cpp")
     add_packages("doctest", "fmt")
 
 target("test_switch")
+    set_languages("c++14")
+
     set_kind("binary")
     add_deps("Csd")
     add_files("bench/BM_switch.cpp")

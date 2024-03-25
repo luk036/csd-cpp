@@ -34,7 +34,7 @@ enable_testing()
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
   target_compile_options(Csd PUBLIC -Wall -Wextra)
 elseif(MSVC)
-  target_compile_options(Csd PUBLIC /W4 /WX /EHsc /wd4819 /wd4146 /wd4127)
+  target_compile_options(Csd PUBLIC /W4 /WX /wd4146 /wd4127 /wd4996)
   # target_compile_definitions(EllAlgoTests PUBLIC DOCTEST_CONFIG_USE_STD_HEADERS)
 endif()
 
@@ -47,7 +47,7 @@ foreach(ONE_BENCH_CPP ${ALL_BENCH_CPP})
 
   add_executable(${TARGET_NAME} ${ONE_BENCH_CPP})
   set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME ${ONE_BENCH_EXEC})
-  set_target_properties(${TARGET_NAME} PROPERTIES CXX_STANDARD 11)
+  set_target_properties(${TARGET_NAME} PROPERTIES CXX_STANDARD 14)
 
   target_link_libraries(${TARGET_NAME} benchmark::benchmark Csd::Csd)
 
