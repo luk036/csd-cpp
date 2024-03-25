@@ -1,6 +1,6 @@
 add_rules("mode.debug", "mode.release", "mode.coverage")
 add_requires("doctest", {alias = "doctest"})
-add_requires("fmt 7.1.3", {alias = "fmt"})
+add_requires("fmt 9.1.0", {alias = "fmt"})
 add_requires("benchmark 1.8", {alias = "benchmark"})
 
 if is_mode("coverage") then
