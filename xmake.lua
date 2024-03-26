@@ -16,14 +16,14 @@ elseif is_plat("windows") then
 end
 
 target("Csd")
-    set_languages("c++11")
+    set_languages("c++14")
     set_kind("static")
     add_includedirs("include", {public = true})
     add_files("source/*.cpp")
     add_packages("fmt")
 
 target("test_csd")
-    set_languages("c++11")
+    set_languages("c++14")
     set_kind("binary")
     add_deps("Csd")
     add_files("test/source/*.cpp")
