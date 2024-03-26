@@ -1,7 +1,7 @@
 add_rules("mode.debug", "mode.release", "mode.coverage")
 add_requires("doctest", {alias = "doctest"})
-add_requires("fmt 9.1.0", {alias = "fmt"})
-add_requires("benchmark 1.8", {alias = "benchmark"})
+add_requires("fmt", {alias = "fmt"})
+add_requires("benchmark", {alias = "benchmark"})
 add_requires("cxxopts", {alias = "cxxopts"})
 
 if is_mode("coverage") then
@@ -16,14 +16,14 @@ elseif is_plat("windows") then
 end
 
 target("Csd")
-    set_languages("c++14")
+    set_languages("c++11")
     set_kind("static")
     add_includedirs("include", {public = true})
     add_files("source/*.cpp")
     add_packages("fmt")
 
 target("test_csd")
-    set_languages("c++14")
+    set_languages("c++11")
     set_kind("binary")
     add_deps("Csd")
     add_files("test/source/*.cpp")
