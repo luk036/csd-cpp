@@ -2,6 +2,7 @@ add_rules("mode.debug", "mode.release", "mode.coverage")
 add_requires("doctest", {alias = "doctest"})
 add_requires("fmt 9.1.0", {alias = "fmt"})
 add_requires("benchmark 1.8", {alias = "benchmark"})
+add_requires("cxxopts", {alias = "cxxopts"})
 
 if is_mode("coverage") then
     add_cxflags("-ftest-coverage", "-fprofile-arcs", {force = true})
@@ -16,7 +17,6 @@ end
 
 target("Csd")
     set_languages("c++14")
-
     set_kind("static")
     add_includedirs("include", {public = true})
     add_files("source/*.cpp")
@@ -24,7 +24,6 @@ target("Csd")
 
 target("test_csd")
     set_languages("c++14")
-
     set_kind("binary")
     add_deps("Csd")
     add_files("test/source/*.cpp")
@@ -32,11 +31,17 @@ target("test_csd")
 
 target("test_switch")
     set_languages("c++14")
-
     set_kind("binary")
     add_deps("Csd")
     add_files("bench/BM_switch.cpp")
     add_packages("benchmark", "fmt")
+
+target("csd_cli")
+    set_languages("c++17")
+    set_kind("binary")
+    add_deps("Csd")
+    add_files("standalone/source/*.cpp")
+    add_packages("cxxopts", "fmt")
 
 
 -- If you want to known more usage about xmake, please see https://xmake.io

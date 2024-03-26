@@ -1,5 +1,3 @@
-#include <csd/version.h>
-
 #include <csd/csd.hpp>  // for to_decimal, to_csd, and to_csdfixed
 #include <cxxopts.hpp>
 #include <iostream>
@@ -37,7 +35,7 @@ auto main(int argc, char **argv) -> int {
     }
 
     if (result["version"].as<bool>()) {
-        std::cout << "Csd, version " << CSD_VERSION << std::endl;
+        std::cout << "Csd, version " << "1.0.0" << std::endl;
         return 0;
     }
 
