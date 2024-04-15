@@ -70,7 +70,7 @@ namespace csd {
      * @return The function `to_csd` returns a string representation of the given
      * `num` in Canonical Signed Digit (CSD) format.
      */
-    auto to_csd(double num, const int places) -> string {
+    auto to_csd(double num, int places) -> string {
         auto absnum = fabs(num);
         int rem{0};
         string csd{"0"};
@@ -125,9 +125,10 @@ namespace csd {
             return "0";
         }
         // auto p2n = int(pow(2.0, ceil(log2(abs(num) * 1.5))));
-        auto temp = uint32_t(abs(num)) * 3 / 2;
+        auto temp = uint32_t(abs(num) * 3 / 2);
         auto p2n = highest_power_of_two_in(temp) * 2;
         string csd("");
+
         while (p2n > 1) {
             auto const p2n_half = p2n / 2;
             auto const det = 3 * num;
@@ -142,6 +143,7 @@ namespace csd {
             }
             p2n = p2n_half;
         }
+
         return csd;
     }
 
@@ -172,8 +174,8 @@ namespace csd {
             rem = int(ceil(log2(absnum * 1.5)));
             csd = string{""};
         }
-
         auto p2n = pow(2.0, rem);
+
         while (rem > 0 || (nnz > 0 && fabs(num) > 1e-100)) {
             if (rem == 0) {
                 csd += '.';
@@ -198,6 +200,7 @@ namespace csd {
                 num = 0.0;
             }
         }
+
         return csd;
     }
 }  // namespace csd

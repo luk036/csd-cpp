@@ -1,7 +1,6 @@
 /// @file csd.hpp
 #pragma once
 
-#include <cmath>      // for fabs, pow, ceil, log2
 #include <iosfwd>     // for string
 #include <stdexcept>  // for invalid_argument
 #include <string>     // for basic_string, operator==, operator<<
@@ -133,6 +132,7 @@ namespace csd {
      */
     CONSTEXPR14 auto to_decimal_integral(const char *&csd) -> int {
         auto num = 0;
+
         for (;; ++csd) {
             auto digit = *csd;
             if (digit == '0') {
@@ -144,9 +144,10 @@ namespace csd {
             } else if (digit == '.' || digit == '\0') {
                 break;
             } else {
-                throw std::invalid_argument("Work with 0, +, -, . only");
+                throw std::invalid_argument("Work with 0, +, -, and . only");
             }
         }
+
         return num;
     }
 
@@ -162,6 +163,7 @@ namespace csd {
     CONSTEXPR14 auto to_decimal_fractional(const char *csd) -> double {
         auto num = 0.0;
         auto scale = 0.5;
+
         for (++csd;; ++csd) {
             auto digit = *csd;
             if (digit == '0') {
@@ -174,8 +176,9 @@ namespace csd {
             } else {
                 throw std::invalid_argument("Fractional part work with 0, +, - only");
             }
-            scale /= 2;
+            scale /= 2.0;
         }
+
         return num;
     }
 
@@ -199,9 +202,11 @@ namespace csd {
      */
     CONSTEXPR14 auto to_decimal(const char *csd) -> double {
         auto integral = to_decimal_integral(csd);
+
         if (*csd == '\0') {
             return double(integral);
         }
+
         auto fractional = to_decimal_fractional(csd);
         return double(integral) + fractional;
     }
