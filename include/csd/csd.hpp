@@ -22,11 +22,11 @@ namespace csd {
      * https://sourceforge.net/projects/pycsd/
      * License: GPL2
      *
-     * @param[in] num - The number to convert to CSD format.
+     * @param[in] decimal_value - The number to convert to CSD format.
      * @param[in] places - The number of decimal places to include in the CSD representation.
      * @return String representation of the input number in CSD format.
      */
-    extern auto to_csd(double num, int places) -> std::string;
+    extern auto to_csd(double decimal_value, int places) -> std::string;
 
     /**
      * Converts an integer to a string representation in Canonical Signed Digit (CSD) format.
@@ -35,10 +35,10 @@ namespace csd {
      * https://sourceforge.net/projects/pycsd/
      * License: GPL2
      *
-     * @param[in] num - The integer to convert to CSD format.
+     * @param[in] decimal_value - The integer to convert to CSD format.
      * @return String representation of the input integer in CSD format.
      */
-    extern auto to_csd_i(int num) -> std::string;
+    extern auto to_csd_i(int decimal_value) -> std::string;
 
     /**
      * Converts a double precision floating point number to a CSD (Canonical Signed Digit)
@@ -46,11 +46,11 @@ namespace csd {
      *
      * This is an exported API function.
      *
-     * @param[in] num - The number to convert to CSD format.
+     * @param[in] decimal_value - The number to convert to CSD format.
      * @param[in] nnz - The maximum number of non-zero digits allowed in the CSD representation.
      * @return String representation of the input number in CSD format with nnz non-zero digits.
      */
-    extern auto to_csdfixed(double num, unsigned int nnz) -> std::string;
+    extern auto to_csdfixed(double decimal_value, unsigned int nnz) -> std::string;
 
     /**
      * Converts a CSD string to a double precision decimal number
@@ -64,29 +64,29 @@ namespace csd {
      * @return double decimal value of the CSD format
      */
     CONSTEXPR14 auto to_decimal_using_switch(const char *csd) -> double {
-        auto num = 0.0;
+        auto decimal_value = 0.0;
         // Handle integral part
         for (; *csd != '.' && *csd != '\0'; ++csd) {
             switch (*csd) {
                 case '0':
-                    num *= 2.0;
+                    decimal_value *= 2.0;
                     break;
                 case '+':
-                    num = 2.0 * num + 1.0;
+                    decimal_value = 2.0 * decimal_value + 1.0;
                     break;
                 case '-':
-                    num = 2.0 * num - 1.0;
+                    decimal_value = 2.0 * decimal_value - 1.0;
                     break;
                 // case '.':
                 //     break;
                 // case '\0':
                 //     break;
                 default:
-                    throw std::invalid_argument("Work with 0, +, -, . only");
+                    throw std::invalid_argument("Work with 0, +, -, and . only");
             }
         }
         if (*csd == '\0') {
-            return num;
+            return decimal_value;
         }
         // Handle fractional part
         auto scale = 0.5;
@@ -95,19 +95,19 @@ namespace csd {
                 case '0':
                     break;
                 case '+':
-                    num += scale;
+                    decimal_value += scale;
                     break;
                 case '-':
-                    num -= scale;
+                    decimal_value -= scale;
                     break;
                 // case '\0':
                 //     break;
                 default:
-                    throw std::invalid_argument("Fractional part work with 0, +, - only");
+                    throw std::invalid_argument("Fractional part work with 0, +, and - only");
             }
             scale /= 2;
         }
-        return num;
+        return decimal_value;
     }
 
     /**
@@ -131,16 +131,16 @@ namespace csd {
      * @return The decimal value of the integral part
      */
     CONSTEXPR14 auto to_decimal_integral(const char *&csd) -> int {
-        auto num = 0;
+        auto decimal_value = 0;
 
         for (;; ++csd) {
             auto digit = *csd;
             if (digit == '0') {
-                num *= 2;
+                decimal_value *= 2;
             } else if (digit == '+') {
-                num = 2 * num + 1;
+                decimal_value = 2 * decimal_value + 1;
             } else if (digit == '-') {
-                num = 2 * num - 1;
+                decimal_value = 2 * decimal_value - 1;
             } else if (digit == '.' || digit == '\0') {
                 break;
             } else {
@@ -148,7 +148,7 @@ namespace csd {
             }
         }
 
-        return num;
+        return decimal_value;
     }
 
     /**
@@ -161,25 +161,25 @@ namespace csd {
      * of the final decimal number.
      */
     CONSTEXPR14 auto to_decimal_fractional(const char *csd) -> double {
-        auto num = 0.0;
+        auto decimal_value = 0.0;
         auto scale = 0.5;
 
         for (++csd;; ++csd) {
             auto digit = *csd;
             if (digit == '0') {
             } else if (digit == '+') {
-                num += scale;
+                decimal_value += scale;
             } else if (digit == '-') {
-                num -= scale;
+                decimal_value -= scale;
             } else if (digit == '\0') {
                 break;
             } else {
-                throw std::invalid_argument("Fractional part work with 0, +, - only");
+                throw std::invalid_argument("Fractional part work with 0, +, and - only");
             }
             scale /= 2.0;
         }
 
-        return num;
+        return decimal_value;
     }
 
     /**

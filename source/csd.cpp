@@ -60,18 +60,18 @@ namespace csd {
      * The function `to_csd` converts a given number to its Canonical Signed Digit
      * (CSD) representation with a specified number of decimal places.
      *
-     * @param[in] num The `num` parameter is a double precision floating-point number
-     * that represents the value to be converted to CSD (Canonic Signed Digit)
+     * @param[in] decimal_value The `decimal_value` parameter is a double precision floating-point
+     * number that represents the value to be converted to CSD (Canonic Signed Digit)
      * representation.
      * @param[in] places The `places` parameter in the `to_csd` function represents the
      * number of decimal places to include in the CSD (Canonical Signed Digit)
-     * representation of the given `num`.
+     * representation of the given `decimal_value`.
      *
      * @return The function `to_csd` returns a string representation of the given
-     * `num` in Canonical Signed Digit (CSD) format.
+     * `decimal_value` in Canonical Signed Digit (CSD) format.
      */
-    auto to_csd(double num, int places) -> string {
-        auto absnum = fabs(num);
+    auto to_csd(double decimal_value, int places) -> string {
+        auto absnum = fabs(decimal_value);
         int rem{0};
         string csd{"0"};
         if (absnum >= 1.0) {
@@ -84,14 +84,14 @@ namespace csd {
             while (rem > value) {
                 p2n /= 2.0;
                 rem -= 1;
-                auto const det = 1.5 * num;
+                auto const det = 1.5 * decimal_value;
                 if (det > p2n) {
                     csd += '+';
-                    num -= p2n;
+                    decimal_value -= p2n;
                 } else {
                     if (det < -p2n) {
                         csd += '-';
-                        num += p2n;
+                        decimal_value += p2n;
                     } else {
                         csd += '0';
                     }
@@ -115,29 +115,29 @@ namespace csd {
      * The function converts a given integer into a Canonical Signed Digit (CSD)
      * representation.
      *
-     * @param[in] num The parameter `num` is an integer that represents the number for
-     * which we want to generate the CSD (Canonical Signed Digit) representation.
+     * @param[in] decimal_value The parameter `decimal_value` is an integer that represents the
+     * number for which we want to generate the CSD (Canonical Signed Digit) representation.
      *
      * @return The function `to_csd_i` returns a string.
      */
-    auto to_csd_i(int num) -> string {
-        if (num == 0) {
+    auto to_csd_i(int decimal_value) -> string {
+        if (decimal_value == 0) {
             return "0";
         }
-        // auto p2n = int(pow(2.0, ceil(log2(abs(num) * 1.5))));
-        auto temp = uint32_t(abs(num) * 3 / 2);
+        // auto p2n = int(pow(2.0, ceil(log2(abs(decimal_value) * 1.5))));
+        auto temp = uint32_t(abs(decimal_value) * 3 / 2);
         auto p2n = highest_power_of_two_in(temp) * 2;
         string csd("");
 
         while (p2n > 1) {
             auto const p2n_half = p2n / 2;
-            auto const det = 3 * num;
+            auto const det = 3 * decimal_value;
             if (det > int(p2n)) {
                 csd += '+';
-                num -= p2n_half;
+                decimal_value -= p2n_half;
             } else if (det < -int(p2n)) {
                 csd += '-';
-                num += p2n_half;
+                decimal_value += p2n_half;
             } else {
                 csd += '0';
             }
@@ -153,21 +153,21 @@ namespace csd {
      * The function `to_csdfixed` converts a given number into a CSD (Canonic Signed
      * Digit) representation with a specified number of non-zero digits.
      *
-     * @param[in] num The parameter `num` is a double precision floating-point number
-     * that represents the input value for conversion to CSD (Canonic Signed Digit)
+     * @param[in] decimal_value The parameter `decimal_value` is a double precision floating-point
+     * number that represents the input value for conversion to CSD (Canonic Signed Digit)
      * fixed-point representation.
      * @param[in] nnz The parameter `nnz` stands for "number of non-zero bits". It
      * represents the maximum number of non-zero bits allowed in the output CSD
-     * (Canonical Signed Digit) representation of the given `num`.
+     * (Canonical Signed Digit) representation of the given `decimal_value`.
      *
      * @return The function `to_csdfixed` returns a string representation of the
-     * given `num` in Canonical Signed Digit (CSD) format.
+     * given `decimal_value` in Canonical Signed Digit (CSD) format.
      */
-    auto to_csdfixed(double num, unsigned int nnz) -> string {
-        // if (num == 0.0) {
+    auto to_csdfixed(double decimal_value, unsigned int nnz) -> string {
+        // if (decimal_value == 0.0) {
         //     return "0";
         // }
-        auto const absnum = fabs(num);
+        auto const absnum = fabs(decimal_value);
         int rem{0};
         string csd{"0"};
         if (absnum >= 1.0) {
@@ -176,28 +176,28 @@ namespace csd {
         }
         auto p2n = pow(2.0, rem);
 
-        while (rem > 0 || (nnz > 0 && fabs(num) > 1e-100)) {
+        while (rem > 0 || (nnz > 0 && fabs(decimal_value) > 1e-100)) {
             if (rem == 0) {
                 csd += '.';
             }
             p2n /= 2.0;
             rem -= 1;
-            auto const det = 1.5 * num;
+            auto const det = 1.5 * decimal_value;
             if (det > p2n) {
                 csd += '+';
-                num -= p2n;
+                decimal_value -= p2n;
                 nnz -= 1;
             } else {
                 if (det < -p2n) {
                     csd += '-';
-                    num += p2n;
+                    decimal_value += p2n;
                     nnz -= 1;
                 } else {
                     csd += '0';
                 }
             }
             if (nnz == 0) {
-                num = 0.0;
+                decimal_value = 0.0;
             }
         }
 
