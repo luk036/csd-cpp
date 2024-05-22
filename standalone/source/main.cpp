@@ -35,7 +35,8 @@ auto main(int argc, char **argv) -> int {
     }
 
     if (result["version"].as<bool>()) {
-        std::cout << "Csd, version " << "1.0.0" << std::endl;
+        std::cout << "Csd, version "
+                  << "1.0.0" << std::endl;
         return 0;
     }
 
