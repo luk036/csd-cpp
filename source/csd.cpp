@@ -130,7 +130,7 @@ namespace csd {
         string csd("");
 
         while (p2n > 1) {
-            auto const p2n_half = p2n / 2;
+            auto const p2n_half = p2n >> 1;
             auto const det = 3 * decimal_value;
             if (det > int(p2n)) {
                 csd += '+';

@@ -136,11 +136,11 @@ namespace csd {
         for (;; ++csd) {
             auto digit = *csd;
             if (digit == '0') {
-                decimal_value *= 2;
+                decimal_value <<= 1;
             } else if (digit == '+') {
-                decimal_value = 2 * decimal_value + 1;
+                decimal_value = (decimal_value << 1) + 1;
             } else if (digit == '-') {
-                decimal_value = 2 * decimal_value - 1;
+                decimal_value = (decimal_value << 1) - 1;
             } else if (digit == '.' || digit == '\0') {
                 break;
             } else {
