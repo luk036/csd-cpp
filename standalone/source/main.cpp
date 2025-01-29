@@ -45,7 +45,7 @@ auto main(int argc, char **argv) -> int {
     }
 
     if (decimal2 != INFTY) {
-        std::cout << csd::to_csdfixed(decimal2, nnz) << std::endl;
+        std::cout << csd::to_csdfixed(decimal2, (unsigned int)(nnz)) << std::endl;
     }
 
     if (!csdstr.empty()) {
