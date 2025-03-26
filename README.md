@@ -1,7 +1,6 @@
 [![Actions Status](https://github.com/luk036/csd-cpp/workflows/MacOS/badge.svg)](https://github.com/luk036/csd-cpp/actions)
 [![Actions Status](https://github.com/luk036/csd-cpp/workflows/Windows/badge.svg)](https://github.com/luk036/csd-cpp/actions)
 [![Actions Status](https://github.com/luk036/csd-cpp/workflows/Ubuntu/badge.svg)](https://github.com/luk036/csd-cpp/actions)
-[![Actions Status](https://github.com/luk036/csd-cpp/workflows/Style/badge.svg)](https://github.com/luk036/csd-cpp/actions)
 [![Actions Status](https://github.com/luk036/csd-cpp/workflows/Install/badge.svg)](https://github.com/luk036/csd-cpp/actions)
 [![codecov](https://codecov.io/gh/luk036/csd-cpp/branch/master/graph/badge.svg)](https://codecov.io/gh/luk036/csd-cpp)
 
