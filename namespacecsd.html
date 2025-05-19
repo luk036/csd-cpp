@@ -76,7 +76,12 @@
             </dt>
             <dd></dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a2884bc4bcb0cd8e0436ad4ca9b71be8b" class="m-doc">to_csdfixed</a>(</span><span class="m-doc-wrap">double decimal_value,
+              <span class="m-doc-wrap-bumper">auto <a href="#a8fad601144936444dd4832746d49296f" class="m-doc">to_csdnnz</a>(</span><span class="m-doc-wrap">double decimal_value,
+              unsigned int nnz) -&gt; std::string -&gt; auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a8e5245e01d6827ecdcd6e9802365591f" class="m-doc">to_csdnnz_i</a>(</span><span class="m-doc-wrap">int decimal_value,
               unsigned int nnz) -&gt; std::string -&gt; auto</span>
             </dt>
             <dd></dd>
@@ -162,9 +167,9 @@
             </table>
 <p>Converts an integer to a string representation in Canonical Signed Digit (CSD) format.</p><p>Original author: Harnesser <a href="https://sourceforge.net/projects/pycsd/">https:/<wbr />/<wbr />sourceforge.net/<wbr />projects/<wbr />pycsd/<wbr /></a> License: GPL2</p>
           </div></section>
-          <section class="m-doc-details" id="a2884bc4bcb0cd8e0436ad4ca9b71be8b"><div>
+          <section class="m-doc-details" id="a8fad601144936444dd4832746d49296f"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">auto csd::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2884bc4bcb0cd8e0436ad4ca9b71be8b" class="m-doc-self">to_csdfixed</a>(</span><span class="m-doc-wrap">double decimal_value,
+              <span class="m-doc-wrap-bumper">auto csd::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8fad601144936444dd4832746d49296f" class="m-doc-self">to_csdnnz</a>(</span><span class="m-doc-wrap">double decimal_value,
               unsigned int nnz) -&gt; std::string</span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="csd_8hpp.html">&lt;csd/csd.hpp&gt;</a></div>
             </h3>
@@ -176,6 +181,35 @@
                 <tr>
                   <td style="width: 1%">decimal_value&nbsp;<span class="m-label m-flat m-info">in</span></td>
                   <td>- The number to convert to CSD format.</td>
+                </tr>
+                <tr>
+                  <td>nnz&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>- The maximum number of non-zero digits allowed in the CSD representation.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>String representation of the input number in CSD format with nnz non-zero digits.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Converts a double precision floating point number to a CSD (Canonical Signed Digit) string representation with a fixed number of non-zero digits.</p><p>This is an exported API function.</p>
+          </div></section>
+          <section class="m-doc-details" id="a8e5245e01d6827ecdcd6e9802365591f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">auto csd::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8e5245e01d6827ecdcd6e9802365591f" class="m-doc-self">to_csdnnz_i</a>(</span><span class="m-doc-wrap">int decimal_value,
+              unsigned int nnz) -&gt; std::string</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="csd_8hpp.html">&lt;csd/csd.hpp&gt;</a></div>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">decimal_value&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>- The integer to convert to CSD format.</td>
                 </tr>
                 <tr>
                   <td>nnz&nbsp;<span class="m-label m-flat m-info">in</span></td>
