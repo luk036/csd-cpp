@@ -50,9 +50,21 @@ namespace csd {
      * @param[in] nnz - The maximum number of non-zero digits allowed in the CSD representation.
      * @return String representation of the input number in CSD format with nnz non-zero digits.
      */
-    extern auto to_csdfixed(double decimal_value, unsigned int nnz) -> std::string;
+    extern auto to_csdnnz(double decimal_value, unsigned int nnz) -> std::string;
 
     /**
+     * Converts a double precision floating point number to a CSD (Canonical Signed Digit)
+     * string representation with a fixed number of non-zero digits.
+     *
+     * This is an exported API function.
+     *
+     * @param[in] decimal_value - The integer to convert to CSD format.
+     * @param[in] nnz - The maximum number of non-zero digits allowed in the CSD representation.
+     * @return String representation of the input number in CSD format with nnz non-zero digits.
+     */
+     extern auto to_csdnnz_i(int decimal_value, unsigned int nnz) -> std::string;
+
+     /**
      * Converts a CSD string to a double precision decimal number
      * using a switch statement.
      *

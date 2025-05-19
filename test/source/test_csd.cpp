@@ -2,7 +2,7 @@
 
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK_EQ, TEST_CASE
 
-#include <csd/csd.hpp>  // for to_csd, to_decimal, to_csdfixed, to_decimal_using_switch
+#include <csd/csd.hpp>  // for to_csd, to_decimal, to_csdnnz, to_decimal_using_switch
 #include <exception>
 
 using namespace csd;
@@ -42,15 +42,25 @@ TEST_CASE("test to_decimal_using_switch") {
     CHECK_THROWS(to_decimal_using_switch("+00-00.+XXX"));
 }
 
-TEST_CASE("test to_csdfixed") {
-    CHECK_EQ(to_csdfixed(28.5, 4), "+00-00.+");
-    CHECK_EQ(to_csdfixed(-0.5, 4), "0.-");
-    CHECK_EQ(to_csdfixed(0.0, 4), "0");
-    CHECK_EQ(to_csdfixed(0.5, 4), "0.+");
-    CHECK_EQ(to_csdfixed(-0.5, 4), "0.-");
-    CHECK_EQ(to_csdfixed(28.5, 2), "+00-00");
-    CHECK_EQ(to_csdfixed(28.5, 1), "+00000");
+TEST_CASE("test to_csdnnz") {
+    CHECK_EQ(to_csdnnz(28.5, 4), "+00-00.+");
+    CHECK_EQ(to_csdnnz(-0.5, 4), "0.-");
+    CHECK_EQ(to_csdnnz(0.0, 4), "0");
+    CHECK_EQ(to_csdnnz(0.5, 4), "0.+");
+    CHECK_EQ(to_csdnnz(-0.5, 4), "0.-");
+    CHECK_EQ(to_csdnnz(28.5, 2), "+00-00");
+    CHECK_EQ(to_csdnnz(28.5, 1), "+00000");
 }
+
+TEST_CASE("test to_csdnnz_i") {
+    CHECK_EQ(to_csdnnz_i(28, 4), "+00-00");
+    CHECK_EQ(to_csdnnz_i(-0, 4), "0");
+    CHECK_EQ(to_csdnnz_i(0, 4), "0");
+    CHECK_EQ(to_csdnnz_i(28, 2), "+00-00");
+    CHECK_EQ(to_csdnnz_i(28, 1), "+00000");
+    CHECK_EQ(to_csdnnz_i(158, 2), "+0+00000");
+}
+
 
 TEST_CASE("test to_decimal_i") {
     CHECK_EQ(to_decimal_i("+00-00"), 28);

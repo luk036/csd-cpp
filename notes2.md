@@ -6,8 +6,8 @@ double to_csd(double decimal, int places) {
 // implementation of to_csd function
 }
 
-double to_csdfixed(double decimal, int nnz) {
-// implementation of to_csdfixed function
+double to_csdnnz(double decimal, int nnz) {
+// implementation of to_csdnnz function
 }
 
 double to_decimal(std::string csdstr) {
@@ -34,7 +34,7 @@ args.nnz = 4;
         std::string arg = argv[i];
         if (arg == "-c" || arg == "--to_csd") {
             args.decimal = std::stod(argv[++i]);
-        } else if (arg == "-f" || arg == "--to_csdfixed") {
+        } else if (arg == "-f" || arg == "--to_csdnnz") {
             args.decimal2 = std::stod(argv[++i]);
         } else if (arg == "-d" || arg == "--to_decimal") {
             args.csdstr = argv[++i];
@@ -56,7 +56,7 @@ double ans = to_csd(args.decimal, args.places);
 std::cout << ans << std::endl;
 }
 if (args.decimal2 != INFINITY) {
-double ans = to_csdfixed(args.decimal2, args.nnz);
+double ans = to_csdnnz(args.decimal2, args.nnz);
 std::cout << ans << std::endl;
 }
 if (!args.csdstr.empty()) {

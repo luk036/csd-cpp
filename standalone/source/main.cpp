@@ -1,4 +1,4 @@
-#include <csd/csd.hpp>  // for to_decimal, to_csd, and to_csdfixed
+#include <csd/csd.hpp>  // for to_decimal, to_csd, and to_csdnnz
 #include <cxxopts.hpp>
 #include <iostream>
 #include <string>
@@ -21,7 +21,7 @@ auto main(int argc, char **argv) -> int {
     ("v,version", "Print the current version number")
     ("d,to_decimal", "Convert to decimal", cxxopts::value(csdstr)->default_value(""))
     ("c,to_csd", "Convert to CSD with places", cxxopts::value(decimal)->default_value("-1.0e100"))
-    ("f,to_csdfixed", "Convert to CSD with number of non-zeros", cxxopts::value(decimal2)->default_value("-1.0e100"))
+    ("f,to_csdnnz", "Convert to CSD with number of non-zeros", cxxopts::value(decimal2)->default_value("-1.0e100"))
     ("p,place", "Number of places", cxxopts::value(places)->default_value("4"))
     ("z,nnz", "Number of non-zeros", cxxopts::value(nnz)->default_value("3"))
   ;
@@ -44,7 +44,7 @@ auto main(int argc, char **argv) -> int {
     }
 
     if (decimal2 != INFTY) {
-        std::cout << csd::to_csdfixed(decimal2, (unsigned int)(nnz)) << std::endl;
+        std::cout << csd::to_csdnnz(decimal2, (unsigned int)(nnz)) << std::endl;
     }
 
     if (!csdstr.empty()) {

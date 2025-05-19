@@ -150,7 +150,7 @@ namespace csd {
     /**
      * @brief Convert to CSD (Canonical Signed Digit) string representation
      *
-     * The function `to_csdfixed` converts a given number into a CSD (Canonic Signed
+     * The function `to_csdnnz` converts a given number into a CSD (Canonic Signed
      * Digit) representation with a specified number of non-zero digits.
      *
      * @param[in] decimal_value The parameter `decimal_value` is a double precision floating-point
@@ -160,10 +160,10 @@ namespace csd {
      * represents the maximum number of non-zero bits allowed in the output CSD
      * (Canonical Signed Digit) representation of the given `decimal_value`.
      *
-     * @return The function `to_csdfixed` returns a string representation of the
+     * @return The function `to_csdnnz` returns a string representation of the
      * given `decimal_value` in Canonical Signed Digit (CSD) format.
      */
-    auto to_csdfixed(double decimal_value, unsigned int nnz) -> string {
+    auto to_csdnnz(double decimal_value, unsigned int nnz) -> string {
         // if (decimal_value == 0.0) {
         //     return "0";
         // }
@@ -198,6 +198,53 @@ namespace csd {
             }
             if (nnz == 0) {
                 decimal_value = 0.0;
+            }
+        }
+
+        return csd;
+    }
+
+    /**
+     * @brief Convert to CSD (Canonical Signed Digit) string representation
+     *
+     * Original author: Harnesser
+     * https://sourceforge.net/projects/pycsd/
+     * License: GPL2
+     *
+     * The function converts a given integer into a Canonical Signed Digit (CSD)
+     * representation.
+     *
+     * @param[in] decimal_value The parameter `decimal_value` is an integer that represents the
+     * number for which we want to generate the CSD (Canonical Signed Digit) representation.
+     *
+     * @return The function `to_csdnnz_i` returns a string.
+     */
+     auto to_csdnnz_i(int decimal_value, unsigned int nnz) -> string {
+        if (decimal_value == 0) {
+            return "0";
+        }
+        // auto p2n = int(pow(2.0, ceil(log2(abs(decimal_value) * 1.5))));
+        auto temp = uint32_t(abs(decimal_value) * 3 / 2);
+        auto p2n = highest_power_of_two_in(temp) * 2;
+        string csd("");
+
+        while (p2n > 1) {
+            auto const p2n_half = p2n >> 1;
+            auto const det = 3 * decimal_value;
+            if (det > int(p2n)) {
+                csd += '+';
+                decimal_value -= p2n_half;
+                nnz -= 1;
+            } else if (det < -int(p2n)) {
+                csd += '-';
+                decimal_value += p2n_half;
+                nnz -= 1;
+            } else {
+                csd += '0';
+            }
+            p2n = p2n_half;
+            if (nnz == 0) {
+                decimal_value = 0;
             }
         }
 

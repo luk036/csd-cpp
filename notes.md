@@ -56,7 +56,7 @@ spd::debug("Starting crazy calculations...");
     float decimal2 = parser.get<float>("decimal2");
     if (decimal2 != std::numeric_limits<float>::infinity()) {
         int nnz = parser.get<int>("nnz");
-        std::vector<int> ans = csdigit::to_csdfixed(decimal2, nnz);
+        std::vector<int> ans = csdigit::to_csdnnz(decimal2, nnz);
         for (int digit : ans) {
             std::cout << digit;
         }
