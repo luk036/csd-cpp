@@ -62,9 +62,9 @@ namespace csd {
      * @param[in] nnz - The maximum number of non-zero digits allowed in the CSD representation.
      * @return String representation of the input number in CSD format with nnz non-zero digits.
      */
-     extern auto to_csdnnz_i(int decimal_value, unsigned int nnz) -> std::string;
+    extern auto to_csdnnz_i(int decimal_value, unsigned int nnz) -> std::string;
 
-     /**
+    /**
      * Converts a CSD string to a double precision decimal number
      * using a switch statement.
      *

@@ -219,7 +219,7 @@ namespace csd {
      *
      * @return The function `to_csdnnz_i` returns a string.
      */
-     auto to_csdnnz_i(int decimal_value, unsigned int nnz) -> string {
+    auto to_csdnnz_i(int decimal_value, unsigned int nnz) -> string {
         if (decimal_value == 0) {
             return "0";
         }
