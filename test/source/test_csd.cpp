@@ -61,10 +61,27 @@ TEST_CASE("test to_csdnnz_i") {
     CHECK_EQ(to_csdnnz_i(158, 2), "+0+00000");
 }
 
-
 TEST_CASE("test to_decimal_i") {
     CHECK_EQ(to_decimal_i("+00-00"), 28);
     CHECK_EQ(to_decimal_i("0"), 0);
     CHECK_EQ(to_decimal_i("+00-00.00+"), 28);
     // CHECK_THROWS(to_decimal_i("+00-00.00+"));
 }
+
+TEST_CASE("test to_decimal additional cases") {
+    CHECK_EQ(to_decimal("0"), 0.0);
+    CHECK_EQ(to_decimal("0.0"), 0.0);
+    CHECK_EQ(to_decimal("-0.0"), -2.0);  // Note: This might differ from Python implementation
+    CHECK_EQ(to_decimal("+0.-"), 1.5);
+    CHECK_THROWS(to_decimal("+00-00.+XXX00+"));
+    CHECK_THROWS(to_decimal("+00XXX-00.+00+"));
+}
+
+TEST_CASE("test to_csd additional cases") {
+    CHECK_EQ(to_csd(28.5, 0), "+00-00.");
+    CHECK_EQ(to_csd(-28.5, 2), "-00+00.-0");
+}
+
+TEST_CASE("test to_csdnnz additional cases") { CHECK_EQ(to_csdnnz(28.5, 2), "+00-00"); }
+
+TEST_CASE("test to_csdnnz_i additional cases") { CHECK_EQ(to_csdnnz_i(-28, 4), "-00+00"); }
