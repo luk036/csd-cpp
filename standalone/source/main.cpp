@@ -44,7 +44,7 @@ auto main(int argc, char **argv) -> int {
     }
 
     if (decimal2 != INFTY) {
-        std::cout << csd::to_csdnnz(decimal2, (unsigned int)(nnz)) << std::endl;
+        std::cout << csd::to_csdnnz(decimal2, static_cast<unsigned int>(nnz)) << std::endl;
     }
 
     if (!csdstr.empty()) {
