@@ -29,7 +29,7 @@ namespace csd {
      */
     auto longest_repeated_substring(const char *sv, size_t len) -> string {
         auto ndim = len + 1;
-        auto lcsre = vector<vector<unsigned int>>(ndim, vector<unsigned int>(ndim, 0U));
+        auto lcsre = vector<vector<unsigned int>>(2, vector<unsigned int>(ndim, 0U));
 
         auto res_length = 0U;  // To store length of result
 
@@ -39,20 +39,20 @@ namespace csd {
             for (auto j = i + 1; j != ndim; ++j) {
                 // (j-i) > lcsre[i-1][j-1] to remove
                 // overlapping
-                if (sv[i - 1] == sv[j - 1] && lcsre[i - 1][j - 1] < (j - i)) {
-                    lcsre[i][j] = lcsre[i - 1][j - 1] + 1;
+                if (sv[i - 1] == sv[j - 1] && lcsre[(i - 1) % 2][j - 1] < (j - i)) {
+                    lcsre[i % 2][j] = lcsre[(i - 1) % 2][j - 1] + 1;
 
                     // updating maximum length of the
                     // substring and updating the finishing
                     // index of the suffix
-                    if (lcsre[i][j] > res_length) {
-                        res_length = lcsre[i][j];
+                    if (lcsre[i % 2][j] > res_length) {
+                        res_length = lcsre[i % 2][j];
                         if (index < i) {
                             index = i;
                         }
                     }
                 } else {
-                    lcsre[i][j] = 0U;
+                    lcsre[i % 2][j] = 0U;
                 }
             }
         }
