@@ -7,7 +7,7 @@ using std::vector;
 
 namespace csd {
     /**
-     * Finds the longest repeated substring in the given string.
+     * Finds the longest repeated non-overlapped substring in the given string.
      *
      * This implements a dynamic programming algorithm to find the longest substring
      * that appears at least twice in the input string. It builds a 2D table lcsre
