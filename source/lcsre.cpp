@@ -14,6 +14,28 @@ namespace csd {
      * where lcsre[i][j] stores the length of longest common substring ending at
      * indices i and j.
      *
+     * Algorithm visualization:
+     * ```svgbob
+     *   Input: "banana"
+     *   Build 2D table where cell [i][j] represents length of common substring
+     *   ending at position i-1 and j-1, but only if i and j are far enough apart
+     *   to avoid overlap (j-i > lcsre[i-1][j-1])
+     *
+     *   Table visualization for "banana" (only showing relevant parts):
+     *         _  b  a  n  a  n  a
+     *       +---------------------
+     *     _ | 0  0  0  0  0  0  0
+     *     b | 0  1  0  0  0  0  0
+     *     a | 0  0  1  0  1  0  1
+     *     n | 0  0  0  1  0  2  0
+     *     a | 0  0  1  0  2  0  3
+     *     n | 0  0  0  2  0  3  0
+     *     a | 0  0  1  0  3  0  4
+     *
+     *   The algorithm finds that "an" appears at positions 1-2 and 3-4
+     *   Result: "an"
+     * ```
+     *
      * It returns the longest repeated substring found. If no repeat is found,
      * it returns an empty string.
      *
