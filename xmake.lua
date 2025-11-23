@@ -5,6 +5,7 @@ if is_mode("release") then
 end
 add_requires("doctest", {alias = "doctest"})
 add_requires("fmt", {alias = "fmt"})
+add_requires("spdlog", {alias = "spdlog"})
 add_requires("benchmark", {alias = "benchmark"})
 add_requires("cxxopts", {alias = "cxxopts"})
 
@@ -27,7 +28,7 @@ target("Csd")
     set_kind("static")
     add_includedirs("include", {public = true})
     add_files("source/*.cpp")
-    add_packages("fmt")
+    add_packages("fmt", "spdlog")
 
 target("test_csd")
     set_languages("c++14")
@@ -35,6 +36,7 @@ target("test_csd")
     add_deps("Csd")
     add_files("test/source/*.cpp")
     add_packages("doctest", "fmt")
+    add_packages("spdlog")
 
 target("test_switch")
     set_languages("c++14")
@@ -42,13 +44,22 @@ target("test_switch")
     add_deps("Csd")
     add_files("bench/BM_switch.cpp")
     add_packages("benchmark", "fmt")
+    add_packages("spdlog")
 
 target("csd_cli")
     set_languages("c++17")
     set_kind("binary")
     add_deps("Csd")
-    add_files("standalone/source/*.cpp")
+    add_files("standalone/source/main.cpp")
     add_packages("cxxopts", "fmt")
+
+target("csd_cli_spdlog")
+    set_languages("c++17")
+    set_kind("binary")
+    add_deps("Csd")
+    add_files("standalone/source/main_with_spdlog.cpp")
+    add_packages("cxxopts", "fmt", "spdlog")
+    add_packages("spdlog")
 
 
 -- If you want to known more usage about xmake, please see https://xmake.io

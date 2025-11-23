@@ -16,8 +16,8 @@
 
 ## 技术栈与架构
 
-- **语言**: C++11
-- **构建系统**: CMake 3.14+
+- **语言**: C++11（库代码使用 C++11，standalone 可执行文件使用 C++17）
+- **构建系统**: CMake 3.14+（主要），xmake（支持）
 - **依赖管理**: CPM.cmake
 - **测试框架**: doctest
 - **命令行解析**: cxxopts
@@ -33,6 +33,7 @@
 - `documentation/`: 文档配置
 - `bench/`: 基准测试
 - `experiments/`: 实验性代码
+- `all/`: 用于一次性构建所有内容的 CMake 配置
 
 ## 构建与运行
 
@@ -76,6 +77,13 @@ cmake -S all -B build
 cmake --build build
 ```
 
+### 使用 xmake 构建（可选）
+```bash
+xmake f -m release -y
+xmake
+xmake run test_csd
+```
+
 ### 基准测试
 项目包含基准测试功能，位于 `bench/` 目录中。
 
@@ -87,7 +95,7 @@ cmake --build build
 ### 编码风格
 - 项目使用 clang-format 和 cmake-format 来强制执行代码格式化标准
 - 遵循现代 C++ 最佳实践
-- 使用 C++11 标准
+- 使用 C++11 标准（库代码）和 C++17 标准（standalone 可执行文件）
 
 ### 测试实践
 - 所有功能都应有相应的测试用例
@@ -95,6 +103,7 @@ cmake --build build
 - 测试代码位于 `test/source/` 目录中
 - 包含 CSD 转换功能和 lcsre（最长重复子字符串）功能的测试
 - 支持代码覆盖率收集
+- 包含压力测试用例，确保在大数据集或边界条件下正常工作
 
 ### 贡献指南
 1. 使用项目模板进行初始化
@@ -102,10 +111,12 @@ cmake --build build
 3. 为新功能添加测试
 4. 保持代码格式一致
 5. 在源代码中包含适当的文档注释
+6. 使用 Doxygen 风格的注释为公共 API 编写文档
 
 ## 依赖项
 
 - **fmt**: 用于格式化（版本 10.2.1）
+- **spdlog**: 用于日志记录（版本 1.12.0）
 - **doctest**: 用于测试
 - **cxxopts**: 用于命令行解析
 - **CPM.cmake**: 用于依赖管理
@@ -113,8 +124,9 @@ cmake --build build
 ## 附加工具
 
 - **Sanitizers**: 可通过 `-DUSE_SANITIZER` 选项启用
-- **静态分析器**: 支持 clang-tidy、iwyu、cppcheck
+- **静态分析器**: 支持 clang-tidy、iwyu、cppcheck，可通过 `-DUSE_STATIC_ANALYZER` 选项启用
 - **Ccache**: 可通过 `-DUSE_CCACHE` 选项启用
+- **代码覆盖率**: 可通过 `-DENABLE_TEST_COVERAGE` 选项启用测试覆盖率收集
 
 ## 项目特点
 
@@ -129,3 +141,5 @@ cmake --build build
 - 通过 PackageProject.cmake 的可安装目标和自动版本控制
 - 通过 Doxygen 和 GitHub Pages 的自动文档和部署
 - 支持 sanitizer 工具等附加功能
+- 支持 xmake 构建系统（可选）
+- 包含压力测试和边界条件测试

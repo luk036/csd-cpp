@@ -1,0 +1,10 @@
+[2025-11-23 10:36:24.379] [file_logger] [info] Starting CSD library example with spdlog
+[2025-11-23 10:36:24.379] [file_logger] [info] CSD conversion: 28.5 -> +00-00.+0
+[2025-11-23 10:36:24.379] [file_logger] [info] CSD integer conversion: 28 -> +00-00
+[2025-11-23 10:36:24.379] [file_logger] [info] Decimal conversion back: +00-00.+0 -> 28.5
+[2025-11-23 10:36:24.379] [file_logger] [info] Example completed successfully!
+[2025-11-23 10:36:30.082] [file_logger] [info] Starting CSD library example with spdlog
+[2025-11-23 10:36:30.082] [file_logger] [info] CSD conversion: 28.5 -> +00-00.+0
+[2025-11-23 10:36:30.082] [file_logger] [info] CSD integer conversion: 28 -> +00-00
+[2025-11-23 10:36:30.082] [file_logger] [info] Decimal conversion back: +00-00.+0 -> 28.5
+[2025-11-23 10:36:30.082] [file_logger] [info] Example completed successfully!
