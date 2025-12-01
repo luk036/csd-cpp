@@ -37,6 +37,7 @@ target("test_csd")
     add_files("test/source/*.cpp")
     add_packages("doctest", "fmt")
     add_packages("spdlog")
+    add_tests("default")
 
 target("test_switch")
     set_languages("c++14")
