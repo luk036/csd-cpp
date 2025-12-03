@@ -1,4 +1,16 @@
 /// @file lcsre.cpp
+/// @brief Implementation of longest repeated non-overlapping substring algorithm
+/**
+ * @details This file implements a dynamic programming algorithm to find the
+ * longest substring that appears at least twice in a given string without
+ * overlapping.
+ *
+ * The algorithm uses space optimization by only storing two rows of the
+ * DP table at any time, reducing space complexity from O(n²) to O(n).
+ *
+ * @author Original algorithm contributed by ita_c
+ */
+
 #include <string>
 #include <vector>
 
@@ -7,12 +19,18 @@ using std::vector;
 
 namespace csd {
     /**
-     * Finds the longest repeated non-overlapped substring in the given string.
+     * @brief Find the longest repeated non-overlapping substring
+     * @ingroup lcsre_functions
      *
      * This implements a dynamic programming algorithm to find the longest substring
-     * that appears at least twice in the input string. It builds a 2D table lcsre
-     * where lcsre[i][j] stores the length of longest common substring ending at
-     * indices i and j.
+     * that appears at least twice in the input string without overlapping.
+     * 
+     * Algorithm details:
+     * - Builds a 2D DP table where lcsre[i][j] stores the length of the longest
+     *   common substring ending at positions i-1 and j-1
+     * - Uses space optimization by only storing two rows at a time
+     * - Ensures non-overlapping by checking j-i > lcsre[i-1][j-1]
+     * - Tracks the maximum length and ending position of the best match
      *
      * Algorithm visualization:
      * ```svgbob
@@ -36,18 +54,24 @@ namespace csd {
      *   Result: "an"
      * ```
      *
-     * It returns the longest repeated substring found. If no repeat is found,
-     * it returns an empty string.
+     * Space optimization:
+     * Instead of storing the full n×n table, we only keep two rows:
+     * - Current row (i % 2)
+     * - Previous row ((i-1) % 2)
+     * This reduces space from O(n²) to O(n)
      *
-     * Time complexity is O(n^2) where n is length of input string.
+     * @param[in] sv Pointer to a null-terminated character array representing the
+     *               input string. Must not be nullptr.
+     * @param[in] len Length of the input string. Must be non-negative and should
+     *              match the actual string length.
      *
-     * @param[in] sv The parameter `sv` is a pointer to a character array, which
-     * represents the input string. It is assumed that the string is
-     * null-terminated.
-     * @param[in] n The parameter `n` represents the length of the input string `sv`.
+     * @return The longest repeated non-overlapping substring. Returns empty string
+     *         if no repeated substring exists.
      *
-     * @return The function `longest_repeated_substring` returns a string, which is
-     * the longest repeated substring in the given input string `sv`.
+     * @throws std::invalid_argument If sv is nullptr or len is negative.
+     *
+     * @note Time complexity: O(n²)
+     * @note Space complexity: O(n) due to row-wise optimization
      */
     auto longest_repeated_substring(const char *sv, size_t len) -> string {
         auto ndim = len + 1;

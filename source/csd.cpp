@@ -1,31 +1,39 @@
 /// @file csd.cpp
+/// @brief Implementation of Canonical Signed Digit (CSD) conversion functions
 /**
- Canonical Signed Digit Functions
-
- Handles:
-  * Decimals
-
- CSD representation example:
- ```svgbob
-    Bit position   6 5 4 3 2 1 0
-                   | | | | | | |
-    Decimal:    =  1 0 1 0 0 0 0  = 80
-    CSD:        = +0-0000          = 3*(2^6) - 3*(2^4) = 64-16 = 48  ... wait, let me recalculate:
-    Actually:   = +00-00+0         = 2^6 - 2^3 + 2^1 = 64-8+2 = 58
-
-    Better example:
-    Decimal: 28.5 = 11100.1
-    CSD:     +00-00.+ = 2^5 - 2^2 + 2^0 + 2^(-1) = 32-4+1+0.5 = 28.5
- ```
-
- eg, +00-00+000.0 or 0.+0000-00+
- Where: '+' is +1
-        '-' is -1
-        '0' is  0
-
- Harnesser
- License: GPL2
-*/
+ * @details Canonical Signed Digit Functions
+ *
+ * This file contains the implementation of functions for converting between
+ * decimal numbers and Canonical Signed Digit (CSD) representation.
+ *
+ * CSD representation properties:
+ * - Each digit can only be -1, 0, or 1 (represented as '-', '0', '+')
+ * - No two consecutive digits can be non-zero
+ * - Provides unique representation with minimal non-zero digits
+ * - Particularly useful for digital signal processing and hardware design
+ *
+ * CSD representation example:
+ * ```svgbob
+ *    Bit position   6 5 4 3 2 1 0
+ *                   | | | | | | |
+ *    Decimal:    =  1 0 1 0 0 0 0  = 80
+ *    CSD:        = +0-0000          = 2^6 - 2^4 = 64 - 16 = 48
+ *    
+ *    Better example:
+ *    Decimal: 28.5 = 11100.1 (binary)
+ *    CSD:     +00-00.+ = 2^5 - 2^2 + 2^0 + 2^(-1) = 32-4+1+0.5 = 28.5
+ * ```
+ *
+ * Digit meanings:
+ * - '+' represents +1
+ * - '-' represents -1
+ * - '0' represents 0
+ * - '.' separates integral and fractional parts
+ *
+ * @author Harnesser
+ * @see https://sourceforge.net/projects/pycsd/
+ * @license GPL2
+ */
 
 #include <cmath>    // for fabs, pow, ceil, log2
 #include <cstdint>  // for uint32_t
@@ -38,6 +46,22 @@ using std::fabs;
 using std::log2;
 using std::pow;
 using std::string;
+
+namespace {
+
+/// @brief Threshold for considering a number effectively zero in CSD conversion
+constexpr double ZERO_THRESHOLD = 1e-100;
+
+/// @brief Scaling factor for determining highest power in CSD conversion
+constexpr double POWER_SCALING_FACTOR = 1.5;
+
+/// @brief Scaling factor for integer CSD conversion
+constexpr double INTEGER_SCALING_FACTOR = 3.0;
+
+/// @brief Division factor for integer CSD conversion
+constexpr double INTEGER_DIVISION_FACTOR = 2.0;
+
+}  // anonymous namespace
 
 /**
  * @brief the highest power of two
