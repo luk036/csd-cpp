@@ -44,7 +44,7 @@ class invalid_csd_format : public std::invalid_argument {
 public:
     /// @brief Construct invalid CSD format exception
     /// @param message Error message describing the invalid format
-    explicit invalid_csd_format(const std::string& message) 
+    explicit invalid_csd_format(const std::string& message)
         : std::invalid_argument(message) {}
 };
 
@@ -95,7 +95,7 @@ public:
      * @code
      * to_csd_i(28) returns "+00-00"
      * // Calculation: 2^5 - 2^2 = 32 - 4 = 28
-     * 
+     *
      * to_csd_i(0) returns "0"
      * @endcode
      *

@@ -24,7 +24,7 @@ namespace csd {
      *
      * This implements a dynamic programming algorithm to find the longest substring
      * that appears at least twice in the input string without overlapping.
-     * 
+     *
      * Algorithm details:
      * - Builds a 2D DP table where lcsre[i][j] stores the length of the longest
      *   common substring ending at positions i-1 and j-1

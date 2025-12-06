@@ -34,10 +34,10 @@ namespace csd {
      * @code
      * longest_repeated_substring("banana", 6) returns "an"
      * // "an" appears at positions 1-2 and 3-4 (non-overlapping)
-     * 
+     *
      * longest_repeated_substring("abcabcabc", 9) returns "abc"
      * // "abc" appears at positions 0-2, 3-5, and 6-8
-     * 
+     *
      * longest_repeated_substring("abcdef", 6) returns ""
      * // No repeated substrings found
      * @endcode

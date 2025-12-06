@@ -19,7 +19,7 @@ using namespace std;
 string generate_csd_multiplier(const string& csd, int N, int M) {
     // Validate inputs
     if (csd.length() != M + 1) {
-        throw invalid_argument("CSD length " + to_string(csd.length()) + 
+        throw invalid_argument("CSD length " + to_string(csd.length()) +
                               " doesn't match M=" + to_string(M) + " (should be M+1)");
     }
 
@@ -42,7 +42,7 @@ string generate_csd_multiplier(const string& csd, int N, int M) {
     }
 
     // Generate module header
-    string verilog_code = 
+    string verilog_code =
         "\nmodule csd_multiplier (\n"
         "    input signed [" + to_string(N-1) + ":0] x,      // Input value\n"
         "    output signed [" + to_string(N+M-1) + ":0] result // Result of multiplication\n"
@@ -57,7 +57,7 @@ string generate_csd_multiplier(const string& csd, int N, int M) {
         }
 
         for (int p : powers_needed) {
-            verilog_code += "\n    wire signed [" + to_string(N+M-1) + ":0] x_shift" + 
+            verilog_code += "\n    wire signed [" + to_string(N+M-1) + ":0] x_shift" +
                            to_string(p) + " = x <<< " + to_string(p) + ";";
         }
     }
