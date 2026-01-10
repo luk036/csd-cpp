@@ -9,6 +9,7 @@ include(../cmake/tools.cmake)
 # ---- Dependencies ----
 
 include(../cmake/CPM.cmake)
+include(../cmake/specific.cmake)
 
 CPMAddPackage(
   NAME benchmark
@@ -19,7 +20,7 @@ CPMAddPackage(
 
 if(benchmark_ADDED)
   # enable c++11 to avoid compilation errors
-  set_target_properties(benchmark PROPERTIES CXX_STANDARD 11)
+  set_target_properties(benchmark PROPERTIES CXX_STANDARD 14)
 endif()
 
 CPMAddPackage(NAME Csd SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/..)
@@ -34,8 +35,8 @@ enable_testing()
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
   target_compile_options(Csd PUBLIC -Wall -Wextra)
 elseif(MSVC)
-  target_compile_options(Csd PUBLIC /W4 /WX /wd4146 /wd4127 /wd4996)
-  # target_compile_definitions(EllAlgoTests PUBLIC DOCTEST_CONFIG_USE_STD_HEADERS)
+  target_compile_options(Csd PUBLIC /W4 /WX /wd4819 /wd4146 /wd4127 /wd4996)
+  # target_compile_definitions(CsdTests PUBLIC DOCTEST_CONFIG_USE_STD_HEADERS)
 endif()
 
 foreach(ONE_BENCH_CPP ${ALL_BENCH_CPP})
@@ -49,7 +50,7 @@ foreach(ONE_BENCH_CPP ${ALL_BENCH_CPP})
   set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME ${ONE_BENCH_EXEC})
   set_target_properties(${TARGET_NAME} PROPERTIES CXX_STANDARD 14)
 
-  target_link_libraries(${TARGET_NAME} benchmark::benchmark Csd::Csd)
+  target_link_libraries(${TARGET_NAME} benchmark::benchmark Csd::Csd ${SPECIFIC_LIBS})
 
   # add_test(${TARGET_NAME} ${ONE_BENCH_EXEC})
   add_test(NAME ${ONE_BENCH_EXEC} COMMAND ${TARGET_NAME})
