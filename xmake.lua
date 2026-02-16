@@ -43,6 +43,29 @@ target("test_csd")
     add_packages("spdlog")
     add_tests("default")
 
+    -- Check if rapidcheck was downloaded by CMake (look in build_test first, then build)
+    local rapidcheck_dir = path.join(os.projectdir(), "build_test", "_deps", "rapidcheck-src")
+    local rapidcheck_lib_dir = path.join(os.projectdir(), "build_test", "_deps", "rapidcheck-build")
+    if is_plat("windows") then
+        rapidcheck_lib_dir = path.join(rapidcheck_lib_dir, "Release")
+    end
+
+    -- Fallback to build directory if build_test doesn't exist
+    if not os.isdir(rapidcheck_dir) then
+        rapidcheck_dir = path.join(os.projectdir(), "build", "_deps", "rapidcheck-src")
+        rapidcheck_lib_dir = path.join(os.projectdir(), "build", "_deps", "rapidcheck-build")
+        if is_plat("windows") then
+            rapidcheck_lib_dir = path.join(rapidcheck_lib_dir, "Release")
+        end
+    end
+
+    if os.isdir(rapidcheck_dir) and os.isdir(rapidcheck_lib_dir) then
+        add_includedirs(path.join(rapidcheck_dir, "include"))
+        add_linkdirs(rapidcheck_lib_dir)
+        add_links("rapidcheck")
+        add_defines("RAPIDCHECK_H")
+    end
+
 target("test_switch")
     set_languages("c++14")
     set_kind("binary")
