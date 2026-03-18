@@ -44,19 +44,19 @@ namespace csd {
      *
      * @param[in] sv Pointer to a null-terminated character array representing the
      *               input string. The string should contain valid ASCII or UTF-8 characters.
-     * @param[in] n Length of the input string. Must be non-negative and should match
+     * @param[in] len Length of the input string. Must be non-negative and should match
      *              the actual length of the string (excluding null terminator).
      *
      * @return The longest repeated non-overlapping substring found. If no repeated
      *         substring exists, returns an empty string.
      *
-     * @throws std::invalid_argument If sv is nullptr or if n doesn't match the
+     * @throws std::invalid_argument If sv is nullptr or if len doesn't match the
      *                               actual string length.
      *
      * @note Time complexity: O(n²) where n is the string length
      * @note Space complexity: O(n) due to row-wise table optimization
      */
-    extern auto longest_repeated_substring(const char *sv, size_t n) -> std::string;
+    extern auto longest_repeated_substring(const char *sv, size_t len) -> std::string;
 
 /// @}
 
