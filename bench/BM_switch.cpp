@@ -1,3 +1,12 @@
+/// @file BM_switch.cpp
+/// @brief Benchmark for CSD to decimal conversion methods
+///
+/// This benchmark compares two implementations of CSD to decimal conversion:
+/// - using_if_else: Uses if-else branching
+/// - using_switch: Uses switch statement
+///
+/// @note This benchmark is used to measure performance of different parsing strategies
+
 #include <benchmark/benchmark.h>
 
 #include <csd/csd.hpp>

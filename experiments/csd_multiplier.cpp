@@ -1,3 +1,13 @@
+/// @file csd_multiplier.cpp
+/// @brief Generate Verilog code for CSD multiplier
+///
+/// This experiment demonstrates how to convert a Canonical Signed Digit (CSD)
+/// representation into Verilog hardware description code for a multiplier.
+/// The generated Verilog module uses shift and add/subtract operations to
+/// implement multiplication efficiently in hardware.
+///
+/// @note This is an experimental file demonstrating CSD applications in hardware design
+
 #include <iostream>
 #include <vector>
 #include <string>
