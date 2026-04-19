@@ -14,9 +14,9 @@
 
 namespace csd {
 
-/// @defgroup lcsre_functions Longest Repeated Substring Functions
-/// @brief Functions for finding repeated substrings
-/// @{
+    /// @defgroup lcsre_functions Longest Repeated Substring Functions
+    /// @brief Functions for finding repeated substrings
+    /// @{
 
     /**
      * @brief Find the longest repeated non-overlapping substring
@@ -56,8 +56,8 @@ namespace csd {
      * @note Time complexity: O(n²) where n is the string length
      * @note Space complexity: O(n) due to row-wise table optimization
      */
-    extern auto longest_repeated_substring(const char *sv, size_t len) -> std::string;
+    extern auto longest_repeated_substring(const char* sv, size_t len) -> std::string;
 
-/// @}
+    /// @}
 
 }  // namespace csd

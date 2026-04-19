@@ -5,7 +5,7 @@
 
 // #include <unordered_map>
 
-auto main(int argc, char **argv) -> int {
+auto main(int argc, char** argv) -> int {
     cxxopts::Options options(*argv, "Canonical Signed Digit (CSD) Conversion");
 
     double decimal;

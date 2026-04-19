@@ -27,26 +27,25 @@
 
 namespace csd {
 
-/// @defgroup csd_functions CSD Conversion Functions
-/// @brief Functions for converting between decimal and CSD representations
-/// @{
+    /// @defgroup csd_functions CSD Conversion Functions
+    /// @brief Functions for converting between decimal and CSD representations
+    /// @{
 
-/// @brief Maximum number of decimal places supported by CSD conversion
-constexpr int MAX_DECIMAL_PLACES = 20;
+    /// @brief Maximum number of decimal places supported by CSD conversion
+    constexpr int MAX_DECIMAL_PLACES = 20;
 
-/// @brief Minimum value for non-zero digit count in CSDNNZ functions
-constexpr unsigned int MIN_NONZERO_DIGITS = 1;
+    /// @brief Minimum value for non-zero digit count in CSDNNZ functions
+    constexpr unsigned int MIN_NONZERO_DIGITS = 1;
 
-/// @brief Exception thrown when invalid CSD characters are encountered
-/// @details This exception is thrown when functions encounter characters
-/// other than '0', '+', '-', or '.' in CSD strings
-class invalid_csd_format : public std::invalid_argument {
-public:
-    /// @brief Construct invalid CSD format exception
-    /// @param message Error message describing the invalid format
-    explicit invalid_csd_format(const std::string& message)
-        : std::invalid_argument(message) {}
-};
+    /// @brief Exception thrown when invalid CSD characters are encountered
+    /// @details This exception is thrown when functions encounter characters
+    /// other than '0', '+', '-', or '.' in CSD strings
+    class invalid_csd_format : public std::invalid_argument {
+      public:
+        /// @brief Construct invalid CSD format exception
+        /// @param message Error message describing the invalid format
+        explicit invalid_csd_format(const std::string& message) : std::invalid_argument(message) {}
+    };
 
     /**
      * @brief Convert a floating-point number to CSD representation
@@ -188,7 +187,7 @@ public:
      * null-terminated.
      * @return double decimal value of the CSD format
      */
-    CONSTEXPR14 auto to_decimal_using_switch(const char *csd) -> double {
+    CONSTEXPR14 auto to_decimal_using_switch(const char* csd) -> double {
         auto decimal_value = 0.0;
         // Handle integral part
         for (; *csd != '.' && *csd != '\0'; ++csd) {
@@ -255,7 +254,7 @@ public:
      * @param[in] csd - Pointer to the null-terminated CSD string
      * @return The decimal value of the integral part
      */
-    CONSTEXPR14 auto to_decimal_integral(const char *&csd) -> int {
+    CONSTEXPR14 auto to_decimal_integral(const char*& csd) -> int {
         auto decimal_value = 0;
 
         for (;; ++csd) {
@@ -285,7 +284,7 @@ public:
      * subtracts, a fraction of the current scale. This builds up the fractional part
      * of the final decimal number.
      */
-    CONSTEXPR14 auto to_decimal_fractional(const char *csd) -> double {
+    CONSTEXPR14 auto to_decimal_fractional(const char* csd) -> double {
         auto decimal_value = 0.0;
         auto scale = 0.5;
 
@@ -325,7 +324,7 @@ public:
      * @param[in] csd - Pointer to the null-terminated CSD string to convert
      * @return The decimal value of the CSD string
      */
-    CONSTEXPR14 auto to_decimal(const char *csd) -> double {
+    CONSTEXPR14 auto to_decimal(const char* csd) -> double {
         auto integral = to_decimal_integral(csd);
 
         if (*csd == '\0') {
@@ -364,7 +363,7 @@ public:
      * @see to_csd_i() for reverse conversion
      * @see to_decimal() for floating-point conversion
      */
-    CONSTEXPR14 auto to_decimal_i(const char *csd) -> int { return to_decimal_integral(csd); }
-/// @}
+    CONSTEXPR14 auto to_decimal_i(const char* csd) -> int { return to_decimal_integral(csd); }
+    /// @}
 
 }  // namespace csd

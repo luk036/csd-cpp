@@ -8,12 +8,12 @@
 ///
 /// @note This is an experimental file demonstrating CSD applications in hardware design
 
-#include <iostream>
-#include <vector>
-#include <string>
-#include <set>
 #include <algorithm>
+#include <iostream>
+#include <set>
 #include <stdexcept>
+#include <string>
+#include <vector>
 
 using namespace std;
 
@@ -29,8 +29,8 @@ using namespace std;
 string generate_csd_multiplier(const string& csd, int N, int M) {
     // Validate inputs
     if (csd.length() != M + 1) {
-        throw invalid_argument("CSD length " + to_string(csd.length()) +
-                              " doesn't match M=" + to_string(M) + " (should be M+1)");
+        throw invalid_argument("CSD length " + to_string(csd.length())
+                               + " doesn't match M=" + to_string(M) + " (should be M+1)");
     }
 
     for (char c : csd) {
@@ -42,7 +42,7 @@ string generate_csd_multiplier(const string& csd, int N, int M) {
     // Parse CSD and collect non-zero terms
     vector<pair<int, string>> terms;
     for (size_t i = 0; i < csd.length(); i++) {
-        int power = M - i; // Most significant digit is highest power
+        int power = M - i;  // Most significant digit is highest power
         char c = csd[i];
         if (c == '+') {
             terms.emplace_back(power, "add");
@@ -67,8 +67,8 @@ string generate_csd_multiplier(const string& csd, int N, int M) {
         }
 
         for (int p : powers_needed) {
-            verilog_code += "\n    wire signed [" + to_string(N+M-1) + ":0] x_shift" +
-                           to_string(p) + " = x <<< " + to_string(p) + ";";
+            verilog_code += "\n    wire signed [" + to_string(N + M - 1) + ":0] x_shift"
+                            + to_string(p) + " = x <<< " + to_string(p) + ";";
         }
     }
 
@@ -98,8 +98,8 @@ string generate_csd_multiplier(const string& csd, int N, int M) {
 int main() {
     try {
         string csd = "+00-00+0";  // Represents 114
-        int N = 8;  // Input bit width
-        int M = 7;  // Highest power (2^7 for this CSD)
+        int N = 8;                // Input bit width
+        int M = 7;                // Highest power (2^7 for this CSD)
 
         string verilog_code = generate_csd_multiplier(csd, N, M);
         cout << verilog_code << endl;

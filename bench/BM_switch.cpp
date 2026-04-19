@@ -25,7 +25,7 @@ using namespace csd;
  * process. It provides various methods and properties to control the benchmark execution and to
  * access the benchmark results.
  */
-static void using_if_else(benchmark::State &state) {
+static void using_if_else(benchmark::State& state) {
     // Code inside this loop is measured repeatedly
     for (auto _ : state) {
         std::string test("+00-00+00+00-00+00+0-0+0+.+00+00-0++");
@@ -47,7 +47,7 @@ BENCHMARK(using_if_else);
  * process. It provides various methods and properties to control the benchmark execution and to
  * access the benchmark results.
  */
-static void using_switch(benchmark::State &state) {
+static void using_switch(benchmark::State& state) {
     // Code inside this loop is measured repeatedly
     for (auto _ : state) {
         std::string test("+00-00+00+00-00+00+0-0+0+.+00+00-0++");

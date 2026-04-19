@@ -68,8 +68,8 @@ endif()
 
 enable_testing()
 
-# Add a single test that runs all tests (both doctest and RapidCheck)
-# Note: doctest auto-discovery conflicts with RapidCheck, so we use a single test target
+# Add a single test that runs all tests (both doctest and RapidCheck) Note: doctest auto-discovery
+# conflicts with RapidCheck, so we use a single test target
 add_test(NAME CsdAllTests COMMAND ${PROJECT_NAME})
 
 # ---- code coverage ----

@@ -23,4 +23,4 @@ namespace csd {
      */
     void log_with_spdlog(const std::string& message);
 
-}
+}  // namespace csd

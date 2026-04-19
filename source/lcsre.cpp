@@ -73,7 +73,7 @@ namespace csd {
      * @note Time complexity: O(n²)
      * @note Space complexity: O(n) due to row-wise optimization
      */
-    auto longest_repeated_substring(const char *sv, size_t len) -> string {
+    auto longest_repeated_substring(const char* sv, size_t len) -> string {
         auto ndim = len + 1;
         auto lcsre = vector<vector<unsigned int>>(2, vector<unsigned int>(ndim, 0U));
 

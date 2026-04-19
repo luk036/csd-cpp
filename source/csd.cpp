@@ -237,7 +237,8 @@ namespace csd {
      *     abs(28.5) = 28.5 >= 1.0, so rem = ceil(log2(28.5*1.5)) = 6
      *   Step 2: Process each bit position but stop when nnz reaches 0
      *     Continue conversion until we have used 4 non-zero digits (+ or -)
-     *     Output: +00-00.+ (has 4 non-zero digits: + at pos 5, - at pos 2, + at pos 0, + at fract pos)
+     *     Output: +00-00.+ (has 4 non-zero digits: + at pos 5, - at pos 2, + at pos 0, + at fract
+     * pos)
      * ```
      *
      * @param[in] decimal_value The parameter `decimal_value` is a double precision floating-point
