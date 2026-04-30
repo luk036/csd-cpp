@@ -15,7 +15,7 @@ namespace spd = spdlog;
 void parse_args(int argc, char\* argv[]) {
 argparse::ArgumentParser parser("Converts a decimal to a CSD format");
 parser.add_argument("--version")
-.action([](const std::string& value) { std::cout << "csdigit " << value << std::endl; })
+.action([](const std::string& value) { std::cout << "csdigit " << value << '\n'; })
 .default_value(csdigit::version())
 .help("show program's version number and exit");
 parser.add_argument("-c", "--to_csd")
@@ -50,7 +50,7 @@ spd::debug("Starting crazy calculations...");
         for (int digit : ans) {
             std::cout << digit;
         }
-        std::cout << std::endl;
+        std::cout << '\n';
     }
 
     float decimal2 = parser.get<float>("decimal2");
@@ -60,13 +60,13 @@ spd::debug("Starting crazy calculations...");
         for (int digit : ans) {
             std::cout << digit;
         }
-        std::cout << std::endl;
+        std::cout << '\n';
     }
 
     std::string csdstr = parser.get<std::string>("csdstr");
     if (!csdstr.empty()) {
         float ans = csdigit::to_decimal(csdstr);
-        std::cout << ans << std::endl;
+        std::cout << ans << '\n';
     }
 
     spd::info("Script ends here");

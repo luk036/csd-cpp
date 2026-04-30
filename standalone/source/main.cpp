@@ -30,25 +30,25 @@ auto main(int argc, char** argv) -> int {
     auto result = options.parse(argc, argv);
 
     if (result["help"].as<bool>()) {
-        std::cout << options.help() << std::endl;
+        std::cout << options.help() << '\n';
         return 0;
     }
 
     if (result["version"].as<bool>()) {
-        std::cout << "Csd, version " << "1.0.0" << std::endl;
+        std::cout << "Csd, version " << "1.0.0\n";
         return 0;
     }
 
     if (decimal != INFTY) {
-        std::cout << csd::to_csd(decimal, places) << std::endl;
+        std::cout << csd::to_csd(decimal, places) << '\n';
     }
 
     if (decimal2 != INFTY) {
-        std::cout << csd::to_csdnnz(decimal2, static_cast<unsigned int>(nnz)) << std::endl;
+        std::cout << csd::to_csdnnz(decimal2, static_cast<unsigned int>(nnz)) << '\n';
     }
 
     if (!csdstr.empty()) {
-        std::cout << csd::to_decimal(csdstr.c_str()) << std::endl;
+        std::cout << csd::to_decimal(csdstr.c_str()) << '\n';
     }
 
     return 0;

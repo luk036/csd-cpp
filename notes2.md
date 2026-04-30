@@ -53,15 +53,15 @@ void main(int argc, char\* argv[]) {
 Args args = parse_args(argc, argv);
 if (args.decimal != INFINITY) {
 double ans = to_csd(args.decimal, args.places);
-std::cout << ans << std::endl;
+std::cout << ans << '\n';
 }
 if (args.decimal2 != INFINITY) {
 double ans = to_csdnnz(args.decimal2, args.nnz);
-std::cout << ans << std::endl;
+std::cout << ans << '\n';
 }
 if (!args.csdstr.empty()) {
 double ans = to_decimal(args.csdstr);
-std::cout << ans << std::endl;
+std::cout << ans << '\n';
 }
 }
 

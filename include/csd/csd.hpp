@@ -15,7 +15,6 @@
 /// GPL2
 #pragma once
 
-#include <iosfwd>     // for string
 #include <stdexcept>  // for invalid_argument
 #include <string>     // for basic_string, operator==, operator<<
 
