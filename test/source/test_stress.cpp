@@ -14,10 +14,10 @@ TEST_CASE("CSD Stress Tests - Large Numbers") {
     double large_neg = -987654321.987654321;
 
     auto csd_large_pos = to_csd(large_pos, 10);
-    CHECK(to_decimal(csd_large_pos.c_str()) == doctest::Approx(large_pos));
+    CHECK_EQ(to_decimal(csd_large_pos.c_str()), doctest::Approx(large_pos));
 
     auto csd_large_neg = to_csd(large_neg, 10);
-    CHECK(to_decimal(csd_large_neg.c_str()) == doctest::Approx(large_neg));
+    CHECK_EQ(to_decimal(csd_large_neg.c_str()), doctest::Approx(large_neg));
 }
 
 TEST_CASE("CSD Stress Tests - Precision") {
@@ -25,10 +25,10 @@ TEST_CASE("CSD Stress Tests - Precision") {
     double near_zero_neg = -0.00000000098765;
 
     auto csd_near_zero_pos = to_csd(near_zero_pos, 20);
-    CHECK(to_decimal(csd_near_zero_pos.c_str()) == doctest::Approx(near_zero_pos));
+    CHECK_EQ(to_decimal(csd_near_zero_pos.c_str()), doctest::Approx(near_zero_pos));
 
     auto csd_near_zero_neg = to_csd(near_zero_neg, 20);
-    CHECK(to_decimal(csd_near_zero_neg.c_str()) == doctest::Approx(near_zero_neg));
+    CHECK_EQ(to_decimal(csd_near_zero_neg.c_str()), doctest::Approx(near_zero_neg));
 }
 
 TEST_CASE("CSD Stress Tests - Round Trip Random") {
@@ -39,7 +39,7 @@ TEST_CASE("CSD Stress Tests - Round Trip Random") {
     for (int i = 0; i < 100; ++i) {
         double random_val = dis(gen);
         auto csd_repr = to_csd(random_val, 15);
-        CHECK(to_decimal(csd_repr.c_str()) == doctest::Approx(random_val));
+        CHECK_EQ(to_decimal(csd_repr.c_str()), doctest::Approx(random_val));
     }
 }
 
