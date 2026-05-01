@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CSD Conversion Functions module | Csd</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">Csd</a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li>
+              <a href="pages.html">Pages</a>
+              <ol>
+                <li><a href="about.html">About</a></li>
+              </ol>
+            </li>
+            <li><a href="namespaces.html">Namespaces</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          CSD Conversion Functions <span class="m-thin">module</span></h1>
+        <p>Functions for converting between decimal and CSD representations.</p>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#nested-classes">Classes</a></li>
+                <li><a href="#func-members">Functions</a></li>
+                <li><a href="#var-members">Variables</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <section id="nested-classes">
+          <h2><a href="#nested-classes">Classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              class <a href="classcsd_1_1invalid__csd__format.html" class="m-doc">csd::invalid_csd_format</a>
+            </dt>
+            <dd>Exception thrown when invalid CSD characters are encountered.</dd>
+          </dl>
+        </section>
+        <section id="func-members">
+          <h2><a href="#func-members">Functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#gae675b6458aee63f9ec4acc709e95b4d2" class="m-doc">to_csd</a>(</span><span class="m-doc-wrap">double decimal_value,
+              int places) -&gt; std::string -&gt; auto</span>
+            </dt>
+            <dd>Convert a floating-point number to CSD representation.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga867fa1175a61f1c1f7b1ea17b7a7c5d4" class="m-doc">to_csd_i</a>(</span><span class="m-doc-wrap">int decimal_value) -&gt; std::string -&gt; auto</span>
+            </dt>
+            <dd>Convert an integer to CSD representation.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga8fad601144936444dd4832746d49296f" class="m-doc">to_csdnnz</a>(</span><span class="m-doc-wrap">double decimal_value,
+              unsigned int nnz) -&gt; std::string -&gt; auto</span>
+            </dt>
+            <dd>Convert a floating-point number to CSD with limited non-zero digits.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga8e5245e01d6827ecdcd6e9802365591f" class="m-doc">to_csdnnz_i</a>(</span><span class="m-doc-wrap">int decimal_value,
+              unsigned int nnz) -&gt; std::string -&gt; auto</span>
+            </dt>
+            <dd>Convert an integer to CSD with limited non-zero digits.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga40ee1446e4a25bc4dc32099f8112dbd3" class="m-doc">to_decimal_using_switch</a>(</span><span class="m-doc-wrap">const char* csd) -&gt; double -&gt; <a href="csd_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga7714e178bca81658c4562364112406fb" class="m-doc">to_decimal_integral</a>(</span><span class="m-doc-wrap">const char*&amp; csd) -&gt; int -&gt; <a href="csd_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>Convert the integral part of a CSD string to a decimal.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#gae77977890d8fc7c48be7bdf38c7a617d" class="m-doc">to_decimal_fractional</a>(</span><span class="m-doc-wrap">const char* csd) -&gt; double -&gt; <a href="csd_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>Convert the fractional part of a CSD string to a decimal.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga7c7f78d90b854721226d9648b25af3a4" class="m-doc">to_decimal</a>(</span><span class="m-doc-wrap">const char* csd) -&gt; double -&gt; <a href="csd_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>Convert the CSD string to a decimal.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga074473a5966090abd466c580417770f0" class="m-doc">to_decimal_i</a>(</span><span class="m-doc-wrap">const char* csd) -&gt; int -&gt; <a href="csd_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto</span>
+            </dt>
+            <dd>Convert CSD string to integer.</dd>
+          </dl>
+        </section>
+        <section id="var-members">
+          <h2><a href="#var-members">Variables</a></h2>
+          <dl class="m-doc">
+            <dt>
+              int <a href="#ga28098b366c0e4c921893af3cfc5b51fb" class="m-doc">MAX_DECIMAL_PLACES</a> <span class="m-label m-flat m-primary">constexpr</span>
+            </dt>
+            <dd>Maximum number of decimal places supported by CSD conversion.</dd>
+            <dt>
+              unsigned int <a href="#gaeecb49e5ae69248317571197919dfe73" class="m-doc">MIN_NONZERO_DIGITS</a> <span class="m-label m-flat m-primary">constexpr</span>
+            </dt>
+            <dd>Minimum value for non-zero digit count in CSDNNZ functions.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="gae675b6458aee63f9ec4acc709e95b4d2"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gae675b6458aee63f9ec4acc709e95b4d2" class="m-doc-self">to_csd</a>(</span><span class="m-doc-wrap">double decimal_value,
+              int places) -&gt; std::string</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="csd_8hpp.html">&lt;csd/csd.hpp&gt;</a></div>
+            </h3>
+            <p>Convert a floating-point number to CSD representation.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">decimal_value&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The number to convert to CSD format. Can be positive, negative, or zero.</td>
+                </tr>
+                <tr>
+                  <td>places&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The number of decimal places to include in the CSD representation. Must be non-negative. Use 0 for integer values.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr>
+                  <th>Returns</th>
+                  <td>String representation of the input number in CSD format. The string contains only &#x27;0&#x27;, &#x27;+&#x27;, &#x27;-&#x27;, and &#x27;.&#x27; characters.</td>
+                </tr>
+              </thead>
+              <thead>
+                <tr><th colspan="2">Exceptions</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>std::invalid_argument</td>
+                  <td>If places is negative or if the conversion fails due to numerical limitations.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Converts a double precision floating point number to a string representation in Canonical Signed Digit (CSD) format with a specified number of decimal places.</p><p>The CSD format ensures that:</p><ul><li>Each digit is either &#x27;0&#x27;, &#x27;+&#x27;, or &#x27;-&#x27;</li><li>No two consecutive digits are non-zero</li><li>The representation has the minimal number of non-zero digits</li></ul><p>Example:</p><pre class="m-code"><span class="n">to_csd</span><span class="p">(</span><span class="mf">28.5</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="n">returns</span><span class="w"> </span><span class="s">&quot;+00-00.+&quot;</span>
+<span class="c1">// Calculation: 2^5 - 2^2 + 2^0 + 2^(-1) = 32 - 4 + 1 + 0.5 = 28.5</span></pre><aside class="m-note m-default"><h4>See also</h4><p><a href="group__csd__functions.html#ga867fa1175a61f1c1f7b1ea17b7a7c5d4" class="m-doc">to_<wbr />csd_<wbr />i()</a> for integer-only conversion</p><p><a href="group__csd__functions.html#ga7c7f78d90b854721226d9648b25af3a4" class="m-doc">to_<wbr />decimal()</a> for reverse conversion</p></aside>
+          </div></section>
+          <section class="m-doc-details" id="ga867fa1175a61f1c1f7b1ea17b7a7c5d4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga867fa1175a61f1c1f7b1ea17b7a7c5d4" class="m-doc-self">to_csd_i</a>(</span><span class="m-doc-wrap">int decimal_value) -&gt; std::string</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="csd_8hpp.html">&lt;csd/csd.hpp&gt;</a></div>
+            </h3>
+            <p>Convert an integer to CSD representation.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">decimal_value&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The integer to convert to CSD format. Can be positive, negative, or zero.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr>
+                  <th>Returns</th>
+                  <td>String representation of the input integer in CSD format. The string contains only &#x27;0&#x27;, &#x27;+&#x27;, and &#x27;-&#x27; characters.</td>
+                </tr>
+              </thead>
+              <thead>
+                <tr><th colspan="2">Exceptions</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>std::invalid_argument</td>
+                  <td>If the conversion fails due to numerical limitations.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Converts an integer to a string representation in Canonical Signed Digit (CSD) format. This function is optimized for integer values and produces a CSD string without a decimal point.</p><p>Example:</p><pre class="m-code"><span class="n">to_csd_i</span><span class="p">(</span><span class="mi">28</span><span class="p">)</span><span class="w"> </span><span class="n">returns</span><span class="w"> </span><span class="s">&quot;+00-00&quot;</span>
+<span class="c1">// Calculation: 2^5 - 2^2 = 32 - 4 = 28</span>
+
+<span class="n">to_csd_i</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">returns</span><span class="w"> </span><span class="s">&quot;0&quot;</span></pre><aside class="m-note m-default"><h4>See also</h4><p><a href="group__csd__functions.html#gae675b6458aee63f9ec4acc709e95b4d2" class="m-doc">to_<wbr />csd()</a> for floating-point conversion</p><p><a href="group__csd__functions.html#ga074473a5966090abd466c580417770f0" class="m-doc">to_<wbr />decimal_<wbr />i()</a> for reverse conversion</p></aside>
+          </div></section>
+          <section class="m-doc-details" id="ga8fad601144936444dd4832746d49296f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga8fad601144936444dd4832746d49296f" class="m-doc-self">to_csdnnz</a>(</span><span class="m-doc-wrap">double decimal_value,
+              unsigned int nnz) -&gt; std::string</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="csd_8hpp.html">&lt;csd/csd.hpp&gt;</a></div>
+            </h3>
+            <p>Convert a floating-point number to CSD with limited non-zero digits.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">decimal_value&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The number to convert to CSD format. Can be positive, negative, or zero.</td>
+                </tr>
+                <tr>
+                  <td>nnz&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The maximum number of non-zero digits allowed in the CSD representation. Must be at least 1. Larger values produce more accurate representations.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr>
+                  <th>Returns</th>
+                  <td>String representation of the input number in CSD format with at most nnz non-zero digits.</td>
+                </tr>
+              </thead>
+              <thead>
+                <tr><th colspan="2">Exceptions</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>std::invalid_argument</td>
+                  <td>If nnz is 0 or if the conversion fails.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Converts a double precision floating point number to a CSD (Canonical Signed Digit) string representation with a fixed number of non-zero digits. This is useful for applications where hardware resources are limited and you want to control the complexity of the resulting representation.</p><p>The function will stop adding non-zero digits once the specified limit is reached, potentially resulting in an approximation of the original value.</p><p>Example:</p><pre class="m-code"><span class="n">to_csdnnz</span><span class="p">(</span><span class="mf">28.5</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="n">returns</span><span class="w"> </span><span class="s">&quot;+00-00.+&quot;</span>
+<span class="c1">// Uses only 3 non-zero digits: + at position 5, - at position 2, + at position 0</span></pre><aside class="m-note m-default"><h4>See also</h4><p><a href="group__csd__functions.html#ga8e5245e01d6827ecdcd6e9802365591f" class="m-doc">to_<wbr />csdnnz_<wbr />i()</a> for integer version</p><p><a href="group__csd__functions.html#gae675b6458aee63f9ec4acc709e95b4d2" class="m-doc">to_<wbr />csd()</a> for unlimited non-zero digits</p></aside>
+          </div></section>
+          <section class="m-doc-details" id="ga8e5245e01d6827ecdcd6e9802365591f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga8e5245e01d6827ecdcd6e9802365591f" class="m-doc-self">to_csdnnz_i</a>(</span><span class="m-doc-wrap">int decimal_value,
+              unsigned int nnz) -&gt; std::string</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="csd_8hpp.html">&lt;csd/csd.hpp&gt;</a></div>
+            </h3>
+            <p>Convert an integer to CSD with limited non-zero digits.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">decimal_value&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The integer to convert to CSD format. Can be positive, negative, or zero.</td>
+                </tr>
+                <tr>
+                  <td>nnz&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The maximum number of non-zero digits allowed in the CSD representation. Must be at least 1.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr>
+                  <th>Returns</th>
+                  <td>String representation of the input number in CSD format with at most nnz non-zero digits.</td>
+                </tr>
+              </thead>
+              <thead>
+                <tr><th colspan="2">Exceptions</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>std::invalid_argument</td>
+                  <td>If nnz is 0 or if the conversion fails.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Converts an integer to a CSD (Canonical Signed Digit) string representation with a fixed number of non-zero digits. This is particularly useful for hardware design where you want to limit the number of adders/subtracters required.</p><p>The function will stop adding non-zero digits once the specified limit is reached, potentially resulting in an approximation of the original value.</p><p>Example:</p><pre class="m-code"><span class="n">to_csdnnz_i</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="n">returns</span><span class="w"> </span><span class="s">&quot;+00-00&quot;</span>
+<span class="c1">// Uses only 2 non-zero digits: + at position 5, - at position 2</span></pre><aside class="m-note m-default"><h4>See also</h4><p><a href="group__csd__functions.html#ga8fad601144936444dd4832746d49296f" class="m-doc">to_<wbr />csdnnz()</a> for floating-point version</p><p><a href="group__csd__functions.html#ga867fa1175a61f1c1f7b1ea17b7a7c5d4" class="m-doc">to_<wbr />csd_<wbr />i()</a> for unlimited non-zero digits</p></aside>
+          </div></section>
+          <section class="m-doc-details" id="ga40ee1446e4a25bc4dc32099f8112dbd3"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="csd_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga40ee1446e4a25bc4dc32099f8112dbd3" class="m-doc-self">to_decimal_using_switch</a>(</span><span class="m-doc-wrap">const char* csd) -&gt; double</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="csd_8hpp.html">&lt;csd/csd.hpp&gt;</a></div>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">csd&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>The parameter <code>csd</code> is a pointer to a character array, which represents the input string. It is assumed that the string is null-terminated.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>double decimal value of the CSD format</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Converts a CSD string to a double precision decimal number using a switch statement.</p><p>This is an internal implementation detail, not part of the public API.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga7714e178bca81658c4562364112406fb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="csd_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga7714e178bca81658c4562364112406fb" class="m-doc-self">to_decimal_integral</a>(</span><span class="m-doc-wrap">const char*&amp; csd) -&gt; int</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="csd_8hpp.html">&lt;csd/csd.hpp&gt;</a></div>
+            </h3>
+            <p>Convert the integral part of a CSD string to a decimal.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">csd&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>- Pointer to the null-terminated CSD string</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The decimal value of the integral part</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>This function takes a pointer to a null-terminated CSD string, which represents a number in canonical signed digit format. It iterates through the string, processing each character and accumulating a decimal value for just the integral part of the number.</p><p>For each &#x27;0&#x27; digit, it multiplies the current value by 2. For each &#x27;+&#x27; digit, it multiplies the current value by 2 and adds 1. For each &#x27;-&#x27; digit, it multiplies the current value by 2 and subtracts 1.</p><p>It stops when it reaches either a &#x27;.&#x27; or &#x27;\0&#x27; character, as those mark the end of the integral part.</p><p>It throws an exception if any invalid character is encountered.</p>
+          </div></section>
+          <section class="m-doc-details" id="gae77977890d8fc7c48be7bdf38c7a617d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="csd_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gae77977890d8fc7c48be7bdf38c7a617d" class="m-doc-self">to_decimal_fractional</a>(</span><span class="m-doc-wrap">const char* csd) -&gt; double</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="csd_8hpp.html">&lt;csd/csd.hpp&gt;</a></div>
+            </h3>
+            <p>Convert the fractional part of a CSD string to a decimal.</p>
+<p>This function takes a pointer to a CSD string that contains a fractional part, starting after the &#x27;.&#x27; character. It iterates through the fractional digits, keeping track of a scaling factor. For each &#x27;+&#x27; it adds, and for each &#x27;-&#x27; it subtracts, a fraction of the current scale. This builds up the fractional part of the final decimal number.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga7c7f78d90b854721226d9648b25af3a4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="csd_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga7c7f78d90b854721226d9648b25af3a4" class="m-doc-self">to_decimal</a>(</span><span class="m-doc-wrap">const char* csd) -&gt; double</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="csd_8hpp.html">&lt;csd/csd.hpp&gt;</a></div>
+            </h3>
+            <p>Convert the CSD string to a decimal.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">csd&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>- Pointer to the null-terminated CSD string to convert</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The decimal value of the CSD string</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>This function takes a CSD (Canonical Signed Digit) string as input and converts it to a decimal number. It iterates through the characters of the string and performs operations based on each character to build up the decimal value.</p><p>The integral part is processed first, multiplying the value by 2 for each &#x27;0&#x27; and adding/subtracting 1 for &#x27;+&#x27;/&#x27;-&#x27;.</p><p>Then the fractional part is processed, starting with a scale of 0.5 and adding/ subtracting fractions of that scale based on the &#x27;+/-&#x27; digits.</p><p>The function throws an exception if any invalid characters are encountered.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga074473a5966090abd466c580417770f0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="csd_8hpp.html#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc">CONSTEXPR14</a> auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga074473a5966090abd466c580417770f0" class="m-doc-self">to_decimal_i</a>(</span><span class="m-doc-wrap">const char* csd) -&gt; int</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="csd_8hpp.html">&lt;csd/csd.hpp&gt;</a></div>
+            </h3>
+            <p>Convert CSD string to integer.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">csd&nbsp;<span class="m-label m-flat m-info">in</span></td>
+                  <td>Pointer to null-terminated CSD string containing only &#x27;0&#x27;, &#x27;+&#x27;, &#x27;-&#x27;, and optional &#x27;.&#x27; characters.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr>
+                  <th>Returns</th>
+                  <td>Integer value of the CSD string (fractional part ignored).</td>
+                </tr>
+              </thead>
+              <thead>
+                <tr><th colspan="2">Exceptions</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a href="classcsd_1_1invalid__csd__format.html" class="m-doc">invalid_<wbr />csd_<wbr />format</a></td>
+                  <td>If the string contains invalid characters.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>The function <code>to_decimal_i</code> takes a CSD (Canonical Signed Digit) string as input and converts it to an integer. This function only processes the integral part of the CSD string and ignores any fractional part.</p><p>This is essentially a wrapper around <a href="group__csd__functions.html#ga7714e178bca81658c4562364112406fb" class="m-doc">to_<wbr />decimal_<wbr />integral()</a> for convenience and API consistency.</p><p>Example:</p><pre class="m-code"><span class="n">to_decimal_i</span><span class="p">(</span><span class="s">&quot;+00-00&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">returns</span><span class="w"> </span><span class="mi">28</span>
+<span class="n">to_decimal_i</span><span class="p">(</span><span class="s">&quot;+00-00.+&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">returns</span><span class="w"> </span><span class="mi">28</span><span class="w">  </span><span class="c1">// Fractional part ignored</span>
+<span class="n">to_decimal_i</span><span class="p">(</span><span class="s">&quot;0&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">returns</span><span class="w"> </span><span class="mi">0</span></pre><aside class="m-note m-default"><h4>See also</h4><p><a href="group__csd__functions.html#ga867fa1175a61f1c1f7b1ea17b7a7c5d4" class="m-doc">to_<wbr />csd_<wbr />i()</a> for reverse conversion</p><p><a href="group__csd__functions.html#ga7c7f78d90b854721226d9648b25af3a4" class="m-doc">to_<wbr />decimal()</a> for floating-point conversion</p></aside>
+          </div></section>
+        </section>
+        <section>
+          <h2>Variable documentation</h2>
+          <section class="m-doc-details" id="ga28098b366c0e4c921893af3cfc5b51fb"><div>
+            <h3>
+              int <a href="#ga28098b366c0e4c921893af3cfc5b51fb" class="m-doc-self">MAX_DECIMAL_PLACES</a> <span class="m-label m-primary">constexpr</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="csd_8hpp.html">&lt;csd/csd.hpp&gt;</a></div>
+            </h3>
+            <p>Maximum number of decimal places supported by CSD conversion.</p>
+          </div></section>
+          <section class="m-doc-details" id="gaeecb49e5ae69248317571197919dfe73"><div>
+            <h3>
+              unsigned int <a href="#gaeecb49e5ae69248317571197919dfe73" class="m-doc-self">MIN_NONZERO_DIGITS</a> <span class="m-label m-primary">constexpr</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="csd_8hpp.html">&lt;csd/csd.hpp&gt;</a></div>
+            </h3>
+            <p>Minimum value for non-zero digit count in CSDNNZ functions.</p>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Csd. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.8 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

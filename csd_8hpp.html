@@ -51,33 +51,26 @@
         <h1>
           <span class="m-breadcrumb"><a href="dir_a0c318f5b52a0cf7f13b5cc4cf6affc5.html">csd</a>/</span>csd.hpp <span class="m-thin">file</span>
         </h1>
-        <p><span></span></p>
+        <p>Canonical Signed Digit (CSD) representation library.</p>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
               Reference
               <ul>
-                <li><a href="#namespaces">Namespaces</a></li>
-                <li><a href="#define-members">Defines</a></li>
+                <li><a href="#nested-classes">Classes</a></li>
               </ul>
             </li>
           </ul>
         </nav>
-        <section id="namespaces">
-          <h2><a href="#namespaces">Namespaces</a></h2>
+<p>This library provides functions for converting between decimal numbers and Canonical Signed Digit (CSD) representation. CSD is a signed-digit representation where each digit can be -1, 0, or 1, with no consecutive non-zero digits.</p><p>CSD representation is particularly useful in digital signal processing and hardware design as it minimizes the number of non-zero digits, leading to more efficient implementations using only adders and subtractors.</p><aside class="m-note m-default"><h4>Author</h4><p>Harnesser</p></aside><aside class="m-note m-default"><h4>See also</h4><p><a href="https://sourceforge.net/projects/pycsd/">https:/<wbr />/<wbr />sourceforge.net/<wbr />projects/<wbr />pycsd/<wbr /></a></p></aside><aside class="m-note m-default"><h4>License</h4><p>GPL2</p></aside>
+        <section id="nested-classes">
+          <h2><a href="#nested-classes">Classes</a></h2>
           <dl class="m-doc">
-            <dt>namespace <a href="namespacecsd.html" class="m-doc">csd</a></dt>
-            <dd><span></span></dd>
-          </dl>
-        </section>
-        <section id="define-members">
-          <h2><a href="#define-members">Defines</a></h2>
-          <dl class="m-doc">
-            <dt id="a46d983a6cf6b8e418426de1b7e33dc46">
-              <span class="m-doc-wrap-bumper">#define <a href="#a46d983a6cf6b8e418426de1b7e33dc46" class="m-doc-self">CONSTEXPR14</a></span>
+            <dt>
+              class <a href="classcsd_1_1invalid__csd__format.html" class="m-doc">csd::invalid_csd_format</a>
             </dt>
-            <dd><span></span></dd>
+            <dd>Exception thrown when invalid CSD characters are encountered.</dd>
           </dl>
         </section>
       </div>
