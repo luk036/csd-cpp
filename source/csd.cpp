@@ -13,7 +13,7 @@
  * - Particularly useful for digital signal processing and hardware design
  *
  * CSD representation example:
- * ```svgbob
+ * @verbatim
  *    Bit position   6 5 4 3 2 1 0
  *                   | | | | | | |
  *    Decimal:    =  1 0 1 0 0 0 0  = 80
@@ -22,7 +22,7 @@
  *    Better example:
  *    Decimal: 28.5 = 11100.1 (binary)
  *    CSD:     +00-00.+ = 2^5 - 2^2 + 2^0 + 2^(-1) = 32-4+1+0.5 = 28.5
- * ```
+ * @endverbatim
  *
  * Digit meanings:
  * - '+' represents +1
@@ -72,7 +72,7 @@ using std::string;
  * to a given number.
  *
  * Algorithm visualization:
- * ```svgbob
+ * @verbatim
  *   Input: x = 42 (binary: 101010)
  *   Step 1: x |= x >> 1
  *     x = 101010 | 010101 = 111111
@@ -84,7 +84,7 @@ using std::string;
  *   Step 4: return x ^ (x >> 1)
  *     result = 111111 ^ 011111 = 100000 = 32 = 2^5
  *   So highest power of 2 <= 42 is 32
- * ```
+ * @endverbatim
  *
  * @param[in] x The parameter `x` is an unsigned 32-bit integer.
  *
@@ -112,7 +112,7 @@ namespace csd {
      * (CSD) representation with a specified number of decimal places.
      *
      * Algorithm visualization:
-     * ```svgbob
+     * @verbatim
      *   Input: 28.5, places=2
      *   Step 1: Calculate highest power needed
      *     abs(28.5) = 28.5 >= 1.0, so rem = ceil(log2(28.5*1.5)) = ceil(log2(42.75)) = 6
@@ -122,7 +122,7 @@ namespace csd {
      *     Since 42.75 > 64? No, so check next condition...
      *     Since 42.75 < -64? No, so add '0'
      *     Continue until we get: +00-00.+0
-     * ```
+     * @endverbatim
      *
      * @param[in] decimal_value The `decimal_value` parameter is a double precision floating-point
      * number that represents the value to be converted to CSD (Canonic Signed Digit)
@@ -180,7 +180,7 @@ namespace csd {
      * representation.
      *
      * Algorithm visualization:
-     * ```svgbob
+     * @verbatim
      *   Input: 28
      *   Step 1: Calculate highest power needed using highest_power_of_two_in
      *     temp = abs(28) * 3 / 2 = 42
@@ -190,7 +190,7 @@ namespace csd {
      *     Compare det with 2*p2n to decide +, -, or 0
      *     84 > 64? Yes, so output '+' and subtract 32 (p2n/2) from value
      *     Continue until we get: +00-00
-     * ```
+     * @endverbatim
      *
      * @param[in] decimal_value The parameter `decimal_value` is an integer that represents the
      * number for which we want to generate the CSD (Canonical Signed Digit) representation.
@@ -231,7 +231,7 @@ namespace csd {
      * Digit) representation with a specified number of non-zero digits.
      *
      * Algorithm visualization:
-     * ```svgbob
+     * @verbatim
      *   Input: 28.5, nnz=4
      *   Step 1: Calculate highest power needed
      *     abs(28.5) = 28.5 >= 1.0, so rem = ceil(log2(28.5*1.5)) = 6
@@ -239,7 +239,7 @@ namespace csd {
      *     Continue conversion until we have used 4 non-zero digits (+ or -)
      *     Output: +00-00.+ (has 4 non-zero digits: + at pos 5, - at pos 2, + at pos 0, + at fract
      * pos)
-     * ```
+     * @endverbatim
      *
      * @param[in] decimal_value The parameter `decimal_value` is a double precision floating-point
      * number that represents the input value for conversion to CSD (Canonic Signed Digit)
@@ -303,7 +303,7 @@ namespace csd {
      * representation.
      *
      * Algorithm visualization:
-     * ```svgbob
+     * @verbatim
      *   Input: 28, nnz=4
      *   Step 1: Calculate highest power needed using highest_power_of_two_in
      *     temp = abs(28) * 3 / 2 = 42
@@ -311,7 +311,7 @@ namespace csd {
      *   Step 2: Process each bit position from high to low but stop when nnz reaches 0
      *     Continue conversion until we have used 4 non-zero digits
      *     Output: +00-00 (has 4 non-zero digits: + at pos 5, - at pos 2)
-     * ```
+     * @endverbatim
      *
      * @param[in] decimal_value The parameter `decimal_value` is an integer that represents the
      * number for which we want to generate the CSD (Canonical Signed Digit) representation.

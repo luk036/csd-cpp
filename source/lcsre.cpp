@@ -33,7 +33,7 @@ namespace csd {
      * - Tracks the maximum length and ending position of the best match
      *
      * Algorithm visualization:
-     * ```svgbob
+     * @verbatim
      *   Input: "banana"
      *   Build 2D table where cell [i][j] represents length of common substring
      *   ending at position i-1 and j-1, but only if i and j are far enough apart
@@ -52,7 +52,7 @@ namespace csd {
      *
      *   The algorithm finds that "an" appears at positions 1-2 and 3-4
      *   Result: "an"
-     * ```
+     * @endverbatim
      *
      * Space optimization:
      * Instead of storing the full n×n table, we only keep two rows:
