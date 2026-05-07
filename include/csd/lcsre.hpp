@@ -9,7 +9,7 @@
 /// to efficiently find repeated patterns without allowing overlaps.
 #pragma once
 
-#include <iosfwd>  // for string
+// #include <iosfwd>  // for string
 #include <string>  // for basic_string, operator==, operator<<
 
 namespace csd {
