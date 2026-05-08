@@ -102,9 +102,9 @@ int main() {
         int M = 7;                // Highest power (2^7 for this CSD)
 
         string verilog_code = generate_csd_multiplier(csd, N, M);
-        cout << verilog_code << endl;
+        cout << verilog_code << '\n';
     } catch (const exception& e) {
-        cerr << "Error: " << e.what() << endl;
+        cerr << "Error: " << e.what() << '\n';
         return 1;
     }
 

@@ -37,7 +37,6 @@
 
 #include <cmath>    // for fabs, pow, ceil, log2
 #include <cstdint>  // for uint32_t
-#include <iosfwd>   // for string
 #include <string>   // for basic_string
 
 using std::abs;
@@ -202,17 +201,17 @@ namespace csd {
             return "0";
         }
         // auto p2n = int(pow(2.0, ceil(log2(abs(decimal_value) * 1.5))));
-        auto temp = uint32_t(abs(decimal_value) * 3 / 2);
-        auto p2n = highest_power_of_two_in(temp) * 2;
-        string csd("");
+        auto temp = static_cast<uint32_t>(abs(decimal_value) * 3 / 2);
+        auto p2n = static_cast<int>(highest_power_of_two_in(temp) * 2);
+        string csd{};
 
         while (p2n > 1) {
             auto const p2n_half = p2n >> 1;
             auto const det = 3 * decimal_value;
-            if (det > int(p2n)) {
+            if (det > p2n) {
                 csd += '+';
                 decimal_value -= p2n_half;
-            } else if (det < -int(p2n)) {
+            } else if (det < -p2n) {
                 csd += '-';
                 decimal_value += p2n_half;
             } else {
@@ -323,18 +322,18 @@ namespace csd {
             return "0";
         }
         // auto p2n = int(pow(2.0, ceil(log2(abs(decimal_value) * 1.5))));
-        auto temp = uint32_t(abs(decimal_value) * 3 / 2);
-        auto p2n = highest_power_of_two_in(temp) * 2;
-        string csd("");
+        auto temp = static_cast<uint32_t>(abs(decimal_value) * 3 / 2);
+        auto p2n = static_cast<int>(highest_power_of_two_in(temp) * 2);
+        string csd{};
 
         while (p2n > 1) {
             auto const p2n_half = p2n >> 1;
             auto const det = 3 * decimal_value;
-            if (det > int(p2n)) {
+            if (det > p2n) {
                 csd += '+';
                 decimal_value -= p2n_half;
                 nnz -= 1;
-            } else if (det < -int(p2n)) {
+            } else if (det < -p2n) {
                 csd += '-';
                 decimal_value += p2n_half;
                 nnz -= 1;
