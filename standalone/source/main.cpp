@@ -1,5 +1,4 @@
 #include <cmath>
-
 #include <csd/csd.hpp>  // for to_decimal, to_csd, and to_csdnnz
 #include <cxxopts.hpp>
 #include <iostream>
