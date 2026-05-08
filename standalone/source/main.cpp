@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include <csd/csd.hpp>  // for to_decimal, to_csd, and to_csdnnz
 #include <cxxopts.hpp>
 #include <iostream>
@@ -8,11 +10,11 @@
 auto main(int argc, char** argv) -> int {
     cxxopts::Options options(*argv, "Canonical Signed Digit (CSD) Conversion");
 
-    double decimal;
-    double decimal2;
+    double decimal = NAN;
+    double decimal2 = NAN;
     std::string csdstr;
-    int nnz;
-    int places;
+    int nnz = 0;
+    int places = 0;
     const double INFTY = -1.0e100;
 
     // clang-format off

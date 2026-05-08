@@ -138,7 +138,7 @@ namespace csd {
         int rem{0};
         string csd{"0"};
         if (absnum >= 1.0) {
-            rem = int(ceil(log2(absnum * 1.5)));
+            rem = static_cast<int>(ceil(log2(absnum * 1.5)));
             csd = string{""};
         }
 
@@ -258,7 +258,7 @@ namespace csd {
         int rem{0};
         string csd{"0"};
         if (absnum >= 1.0) {
-            rem = int(ceil(log2(absnum * 1.5)));
+            rem = static_cast<int>(ceil(log2(absnum * 1.5)));
             csd = string{""};
         }
         auto p2n = pow(2.0, rem);

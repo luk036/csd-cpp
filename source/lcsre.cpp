@@ -11,6 +11,7 @@
  * @author Original algorithm contributed by ita_c
  */
 
+#include <algorithm>
 #include <string>
 #include <vector>
 
@@ -93,9 +94,7 @@ namespace csd {
                     // index of the suffix
                     if (lcsre[i % 2][j] > res_length) {
                         res_length = lcsre[i % 2][j];
-                        if (index < i) {
-                            index = i;
-                        }
+                        index = std::max(index, i);
                     }
                 } else {
                     lcsre[i % 2][j] = 0U;
