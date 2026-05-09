@@ -2,8 +2,7 @@
 
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK_EQ, TEST_CASE
 
-#include <csd/csd.hpp>  // for to_csd, to_decimal, to_csdnnz, to_decimal_using_switch
-#include <exception>
+#include <csd/csd.hpp>  // for to_csd, to_decimal, to_csdnnz, to_decimal_using_switch#include <exception>
 
 using namespace csd;
 
