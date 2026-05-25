@@ -37,6 +37,8 @@ file(GLOB_RECURSE headers CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/include
 file(GLOB_RECURSE sources CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp"
      "${CMAKE_CURRENT_SOURCE_DIR}/source/*.tpp"
 )
+# Exclude logger from the core library; it's provided as a separate target
+list(FILTER sources EXCLUDE REGEX ".*logger\\.cpp$")
 
 # ---- Create library ----
 
@@ -48,13 +50,16 @@ set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 14)
 # being a cross-platform target, we enforce standards conformance on MSVC
 target_compile_options(${PROJECT_NAME} PUBLIC "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permissive->")
 
-# Link dependencies
-target_link_libraries(${PROJECT_NAME} PRIVATE ${SPECIFIC_LIBS})
-
 target_include_directories(
   ${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
                          $<INSTALL_INTERFACE:include/${PROJECT_NAME}-${PROJECT_VERSION}>
 )
+
+# Separate target for the logger, keeps spdlog/fmt out of the core library
+add_library(${PROJECT_NAME}Logger STATIC source/logger.cpp)
+target_link_libraries(${PROJECT_NAME}Logger PUBLIC ${PROJECT_NAME} ${SPECIFIC_LIBS})
+target_include_directories(${PROJECT_NAME}Logger PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>)
+set_target_properties(${PROJECT_NAME}Logger PROPERTIES CXX_STANDARD 14)
 
 # ---- Create an installable target ----
 # this allows users to install and find the library via `find_package()`.

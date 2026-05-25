@@ -1,112 +1,52 @@
 /// @file csd_multiplier.cpp
-/// @brief Generate Verilog code for CSD multiplier
+/// @brief Generate Verilog code for CSD multiplier (experiment)
 ///
-/// This experiment demonstrates how to convert a Canonical Signed Digit (CSD)
-/// representation into Verilog hardware description code for a multiplier.
-/// The generated Verilog module uses shift and add/subtract operations to
-/// implement multiplication efficiently in hardware.
+/// This experiment demonstrates csd::generate_csd_multiplier() with
+/// LCSRe-based optimization. When the CSD string contains repeated patterns,
+/// the generated Verilog shares hardware via a sub-expression wire.
 ///
 /// @note This is an experimental file demonstrating CSD applications in hardware design
 
-#include <algorithm>
+#include <csd/csd_multiplier.hpp>
+
+#include <cstdlib>
 #include <iostream>
-#include <set>
 #include <stdexcept>
 #include <string>
-#include <vector>
 
-using namespace std;
-
-/**
- * Generate Verilog code for a CSD multiplier module with proper signed handling.
- *
- * @param csd CSD string (e.g., "+00-00+0+")
- * @param N Input bit width
- * @param M Highest power in CSD (must be len(csd)-1)
- * @return Verilog module code as a string
- * @throws invalid_argument if CSD length doesn't match M+1 or contains invalid characters
- */
-string generate_csd_multiplier(const string& csd, int N, int M) {
-    // Validate inputs
-    if (csd.length() != M + 1) {
-        throw invalid_argument("CSD length " + to_string(csd.length())
-                               + " doesn't match M=" + to_string(M) + " (should be M+1)");
-    }
-
-    for (char c : csd) {
-        if (c != '+' && c != '-' && c != '0') {
-            throw invalid_argument("CSD string can only contain '+', '-', or '0'");
-        }
-    }
-
-    // Parse CSD and collect non-zero terms
-    vector<pair<int, string>> terms;
-    for (size_t i = 0; i < csd.length(); i++) {
-        int power = M - i;  // Most significant digit is highest power
-        char c = csd[i];
-        if (c == '+') {
-            terms.emplace_back(power, "add");
-        } else if (c == '-') {
-            terms.emplace_back(power, "sub");
-        }
-    }
-
-    // Generate module header
-    string verilog_code =
-        "\nmodule csd_multiplier (\n"
-        "    input signed [" + to_string(N-1) + ":0] x,      // Input value\n"
-        "    output signed [" + to_string(N+M-1) + ":0] result // Result of multiplication\n"
-        ");";
-
-    // Generate shifted versions
-    if (!terms.empty()) {
-        verilog_code += "\n\n    // Create shifted versions of input";
-        set<int, greater<int>> powers_needed;
-        for (const auto& term : terms) {
-            powers_needed.insert(term.first);
-        }
-
-        for (int p : powers_needed) {
-            verilog_code += "\n    wire signed [" + to_string(N + M - 1) + ":0] x_shift"
-                            + to_string(p) + " = x <<< " + to_string(p) + ";";
-        }
-    }
-
-    // Generate the computation
-    verilog_code += "\n\n    // CSD implementation";
-    if (terms.empty()) {
-        verilog_code += "\n    assign result = 0;";
-    } else {
-        string expr = "x_shift" + to_string(terms[0].first);
-
-        for (size_t i = 1; i < terms.size(); i++) {
-            const auto& [power, op] = terms[i];
-            if (op == "add") {
-                expr += " + x_shift" + to_string(power);
-            } else {
-                expr += " - x_shift" + to_string(power);
-            }
-        }
-
-        verilog_code += "\n    assign result = " + expr + ";";
-    }
-
-    verilog_code += "\nendmodule\n";
-    return verilog_code;
-}
-
-int main() {
+auto main() -> int {
     try {
-        string csd = "+00-00+0";  // Represents 114
-        int N = 8;                // Input bit width
-        int M = 7;                // Highest power (2^7 for this CSD)
+        // --- No repeated pattern (flat generation) ---
+        std::cout << "=== +00-00+0 (no repeat) ===\n";
+        std::cout << csd::generate_csd_multiplier("+00-00+0", 8, 7) << '\n';
 
-        string verilog_code = generate_csd_multiplier(csd, N, M);
-        cout << verilog_code << '\n';
-    } catch (const exception& e) {
-        cerr << "Error: " << e.what() << '\n';
-        return 1;
+        // --- Repeated pattern "+0-0" — optimized with _pat wire ---
+        // Flat: x_shift7 - x_shift5 + x_shift3 - x_shift1  (4 adders)
+        // Opt:  _pat + (_pat >>> 4)                         (2 adders + 1 shift)
+        std::cout << "=== +0-0+0-0 (repeat: +0-0) ===\n";
+        std::cout << csd::generate_csd_multiplier("+0-0+0-0", 8, 7) << '\n';
+
+        // --- Triple repeat: +0-0+0-0+0-0 ---
+        std::cout << "=== +0-0+0-0+0-0 (triple repeat) ===\n";
+        std::cout << csd::generate_csd_multiplier("+0-0+0-0+0-0", 8, 11) << '\n';
+
+        // --- Longer pattern: +00-00+00-00 ---
+        std::cout << "=== +00-00+00-00 (repeat: +00-00) ===\n";
+        std::cout << csd::generate_csd_multiplier("+00-00+00-00", 8, 11) << '\n';
+
+        // --- Leading minus — also triggers LCSRe on "-0-" pattern ---
+        // Flat: -x_shift2 - x_shift0    (2 adders, no repeat benefit)
+        std::cout << "=== -0- (no repeat benefit) ===\n";
+        std::cout << csd::generate_csd_multiplier("-0-", 8, 2) << '\n';
+
+        // --- All zeros ---
+        std::cout << "=== 000 (all zeros) ===\n";
+        std::cout << csd::generate_csd_multiplier("000", 8, 2) << '\n';
+
+    } catch (const std::exception& e) {
+        std::cerr << "Error: " << e.what() << '\n';
+        return EXIT_FAILURE;
     }
 
-    return 0;
+    return EXIT_SUCCESS;
 }

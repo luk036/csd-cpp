@@ -35,15 +35,14 @@
  * @license GPL2
  */
 
-#include <cmath>    // for fabs, pow, ceil, log2
+#include <cmath>    // for fabs, frexp, ldexp
 #include <cstdint>  // for uint32_t
 #include <string>   // for basic_string
 
 using std::abs;
-using std::ceil;
 using std::fabs;
-using std::log2;
-using std::pow;
+using std::frexp;
+using std::ldexp;
 using std::string;
 
 // namespace {
@@ -138,11 +137,18 @@ namespace csd {
         int rem{0};
         string csd{"0"};
         if (absnum >= 1.0) {
-            rem = static_cast<int>(ceil(log2(absnum * 1.5)));
-            csd = string{""};
+        // frexp(x, &exp) returns mantissa m in [0.5, 1), x = m * 2^exp
+        // ceil(log2(x)) = exp when m > 0.5, else exp - 1 (exact power of 2)
+        int exp = 0;
+        auto mant = frexp(absnum * 1.5, &exp);
+        rem = exp;
+        if (mant == 0.5) {
+            rem -= 1;
         }
+        csd = string{""};
+    }
 
-        auto p2n = pow(2.0, rem);
+    auto p2n = ldexp(1.0, rem);
         auto loop_fn = [&](int value) {
             while (rem > value) {
                 p2n /= 2.0;
@@ -203,7 +209,14 @@ namespace csd {
         // auto p2n = int(pow(2.0, ceil(log2(abs(decimal_value) * 1.5))));
         auto temp = static_cast<uint32_t>(abs(decimal_value) * 3 / 2);
         auto p2n = static_cast<int>(highest_power_of_two_in(temp) * 2);
+        // Pre-allocate string: CSD length = log2(p2n)
         string csd{};
+        {
+            auto cap = static_cast<unsigned int>(p2n);
+            size_t estimated = 0;
+            while (cap > 1) { cap >>= 1; ++estimated; }
+            csd.reserve(estimated);
+        }
 
         while (p2n > 1) {
             auto const p2n_half = p2n >> 1;
@@ -224,7 +237,7 @@ namespace csd {
     }
 
     /**
-     * @brief Convert to CSD (Canonical Signed Digit) string representation
+      * @brief Convert to CSD (Canonical Signed Digit) string representation
      *
      * The function `to_csdnnz` converts a given number into a CSD (Canonic Signed
      * Digit) representation with a specified number of non-zero digits.
@@ -258,10 +271,15 @@ namespace csd {
         int rem{0};
         string csd{"0"};
         if (absnum >= 1.0) {
-            rem = static_cast<int>(ceil(log2(absnum * 1.5)));
+            int exp = 0;
+            auto mant = frexp(absnum * 1.5, &exp);
+            rem = exp;
+            if (mant == 0.5) {
+                rem -= 1;
+            }
             csd = string{""};
         }
-        auto p2n = pow(2.0, rem);
+        auto p2n = ldexp(1.0, rem);
 
         while (rem > 0 || (nnz > 0 && fabs(decimal_value) > 1e-100)) {
             if (rem == 0) {
@@ -324,7 +342,14 @@ namespace csd {
         // auto p2n = int(pow(2.0, ceil(log2(abs(decimal_value) * 1.5))));
         auto temp = static_cast<uint32_t>(abs(decimal_value) * 3 / 2);
         auto p2n = static_cast<int>(highest_power_of_two_in(temp) * 2);
+        // Pre-allocate string: CSD length = log2(p2n)
         string csd{};
+        {
+            auto cap = static_cast<unsigned int>(p2n);
+            size_t estimated = 0;
+            while (cap > 1) { cap >>= 1; ++estimated; }
+            csd.reserve(estimated);
+        }
 
         while (p2n > 1) {
             auto const p2n_half = p2n >> 1;

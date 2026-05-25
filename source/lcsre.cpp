@@ -76,28 +76,31 @@ namespace csd {
      */
     auto longest_repeated_substring(const char* sv, size_t len) -> string {
         auto ndim = len + 1;
-        auto lcsre = vector<vector<unsigned int>>(2, vector<unsigned int>(ndim, 0U));
+        // Flat vector: 2 rows of ndim columns, avoids vector-of-vector indirection
+        auto lcsre = vector<unsigned int>(2 * ndim, 0U);
 
         auto res_length = 0U;  // To store length of result
 
         // building table in bottom-up manner
         auto index = 0U;
         for (auto i = 1U; i != ndim; ++i) {
+            auto cur_row = (i % 2) * ndim;
+            auto prev_row = ((i - 1) % 2) * ndim;
             for (auto j = i + 1; j != ndim; ++j) {
                 // (j-i) > lcsre[i-1][j-1] to remove
                 // overlapping
-                if (sv[i - 1] == sv[j - 1] && lcsre[(i - 1) % 2][j - 1] < (j - i)) {
-                    lcsre[i % 2][j] = lcsre[(i - 1) % 2][j - 1] + 1;
+                if (sv[i - 1] == sv[j - 1] && lcsre[prev_row + j - 1] < (j - i)) {
+                    lcsre[cur_row + j] = lcsre[prev_row + j - 1] + 1;
 
                     // updating maximum length of the
                     // substring and updating the finishing
                     // index of the suffix
-                    if (lcsre[i % 2][j] > res_length) {
-                        res_length = lcsre[i % 2][j];
+                    if (lcsre[cur_row + j] > res_length) {
+                        res_length = lcsre[cur_row + j];
                         index = std::max(index, i);
                     }
                 } else {
-                    lcsre[i % 2][j] = 0U;
+                    lcsre[cur_row + j] = 0U;
                 }
             }
         }
@@ -106,12 +109,9 @@ namespace csd {
         // all characters from first character to
         // last character of string
 
-        auto res = string("");  // To store result
+        string res;  // To store result
         if (res_length > 0) {
-            res = string(sv).substr(index - res_length, res_length);
-            // for (auto i = index - res_length + 1; i != index + 1; ++i) {
-            //     res += sv[i - 1];
-            // }
+            res.assign(sv + index - res_length, res_length);
         }
 
         return res;

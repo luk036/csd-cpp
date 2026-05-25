@@ -187,31 +187,28 @@ namespace csd {
      * @return double decimal value of the CSD format
      */
     CONSTEXPR14 auto to_decimal_using_switch(const char* csd) -> double {
-        auto decimal_value = 0.0;
-        // Handle integral part
+        // Handle integral part using int (bit shifts are faster than FP ops)
+        auto integral = 0;
         for (; *csd != '.' && *csd != '\0'; ++csd) {
             switch (*csd) {
                 case '0':
-                    decimal_value *= 2.0;
+                    integral *= 2;
                     break;
                 case '+':
-                    decimal_value = 2.0 * decimal_value + 1.0;
+                    integral = integral * 2 + 1;
                     break;
                 case '-':
-                    decimal_value = 2.0 * decimal_value - 1.0;
+                    integral = integral * 2 - 1;
                     break;
-                // case '.':
-                //     break;
-                // case '\0':
-                //     break;
                 default:
                     throw std::invalid_argument("Work with 0, +, -, and . only");
             }
         }
         if (*csd == '\0') {
-            return decimal_value;
+            return double(integral);
         }
         // Handle fractional part
+        auto decimal_value = double(integral);
         auto scale = 0.5;
         for (++csd; *csd != '\0'; ++csd) {
             switch (*csd) {
@@ -223,8 +220,6 @@ namespace csd {
                 case '-':
                     decimal_value -= scale;
                     break;
-                // case '\0':
-                //     break;
                 default:
                     throw std::invalid_argument("Fractional part work with 0, +, and - only");
             }
