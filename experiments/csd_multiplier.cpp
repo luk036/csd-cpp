@@ -8,7 +8,6 @@
 /// @note This is an experimental file demonstrating CSD applications in hardware design
 
 #include <csd/csd_multiplier.hpp>
-
 #include <cstdlib>
 #include <iostream>
 #include <stdexcept>

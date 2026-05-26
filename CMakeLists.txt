@@ -58,7 +58,9 @@ target_include_directories(
 # Separate target for the logger, keeps spdlog/fmt out of the core library
 add_library(${PROJECT_NAME}Logger STATIC source/logger.cpp)
 target_link_libraries(${PROJECT_NAME}Logger PUBLIC ${PROJECT_NAME} ${SPECIFIC_LIBS})
-target_include_directories(${PROJECT_NAME}Logger PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>)
+target_include_directories(
+  ${PROJECT_NAME}Logger PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+)
 set_target_properties(${PROJECT_NAME}Logger PROPERTIES CXX_STANDARD 14)
 
 # ---- Create an installable target ----

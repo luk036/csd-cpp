@@ -14,8 +14,8 @@
 /// GPL2
 #pragma once
 
-#include <string>       // for string
-#include <vector>       // for vector
+#include <string>  // for string
+#include <vector>  // for vector
 
 namespace csd {
 
@@ -23,10 +23,10 @@ namespace csd {
      * @brief Specification for a single CSD multiplier coefficient
      */
     struct MultiplierSpec {
-        std::string name;        ///< Output port name
-        std::string csd;         ///< CSD string ('+', '-', '0')
-        int input_width;         ///< Bit width of input x
-        int max_power;           ///< Highest power (len(csd)-1)
+        std::string name;  ///< Output port name
+        std::string csd;   ///< CSD string ('+', '-', '0')
+        int input_width;   ///< Bit width of input x
+        int max_power;     ///< Highest power (len(csd)-1)
     };
 
     /**
@@ -45,8 +45,8 @@ namespace csd {
      * @throws std::invalid_argument if csd_str length doesn't match max_power+1
      *         or if the string contains characters other than '+', '-', '0'
      */
-    auto generate_csd_multiplier(const std::string& csd_str, int input_width,
-                                 int max_power) -> std::string;
+    auto generate_csd_multiplier(const std::string& csd_str, int input_width, int max_power)
+        -> std::string;
 
     /**
      * @brief Generate Verilog for multiple CSD multipliers with cross-CSE
@@ -66,7 +66,6 @@ namespace csd {
      * @throws std::invalid_argument on validation failure or width mismatch
      */
     auto generate_csd_multipliers(const std::vector<MultiplierSpec>& coeffs,
-                                  const std::string& module_name = "csd_filter")
-        -> std::string;
+                                  const std::string& module_name = "csd_filter") -> std::string;
 
 }  // namespace csd

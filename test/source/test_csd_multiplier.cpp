@@ -1,9 +1,8 @@
-#include <string>
-#include <stdexcept>
-
 #include <doctest/doctest.h>
 
 #include <csd/csd_multiplier.hpp>
+#include <stdexcept>
+#include <string>
 
 using namespace csd;
 
@@ -134,7 +133,7 @@ TEST_CASE("csd_multiplier very short CSD") {
 TEST_CASE("csd_multiplier all minus signs") {
     auto v = generate_csd_multiplier("---", 8, 2);
     CHECK(v.find("_pat") == std::string::npos);  // pattern has 3 nnz but
-                                             // no repeat of same substring
+                                                 // no repeat of same substring
 }
 
 TEST_CASE("csd_multiplier always has proper module boundaries") {

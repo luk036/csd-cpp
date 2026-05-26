@@ -137,18 +137,18 @@ namespace csd {
         int rem{0};
         string csd{"0"};
         if (absnum >= 1.0) {
-        // frexp(x, &exp) returns mantissa m in [0.5, 1), x = m * 2^exp
-        // ceil(log2(x)) = exp when m > 0.5, else exp - 1 (exact power of 2)
-        int exp = 0;
-        auto mant = frexp(absnum * 1.5, &exp);
-        rem = exp;
-        if (mant == 0.5) {
-            rem -= 1;
+            // frexp(x, &exp) returns mantissa m in [0.5, 1), x = m * 2^exp
+            // ceil(log2(x)) = exp when m > 0.5, else exp - 1 (exact power of 2)
+            int exp = 0;
+            auto mant = frexp(absnum * 1.5, &exp);
+            rem = exp;
+            if (mant == 0.5) {
+                rem -= 1;
+            }
+            csd = string{""};
         }
-        csd = string{""};
-    }
 
-    auto p2n = ldexp(1.0, rem);
+        auto p2n = ldexp(1.0, rem);
         auto loop_fn = [&](int value) {
             while (rem > value) {
                 p2n /= 2.0;
@@ -214,7 +214,10 @@ namespace csd {
         {
             auto cap = static_cast<unsigned int>(p2n);
             size_t estimated = 0;
-            while (cap > 1) { cap >>= 1; ++estimated; }
+            while (cap > 1) {
+                cap >>= 1;
+                ++estimated;
+            }
             csd.reserve(estimated);
         }
 
@@ -237,7 +240,7 @@ namespace csd {
     }
 
     /**
-      * @brief Convert to CSD (Canonical Signed Digit) string representation
+     * @brief Convert to CSD (Canonical Signed Digit) string representation
      *
      * The function `to_csdnnz` converts a given number into a CSD (Canonic Signed
      * Digit) representation with a specified number of non-zero digits.
@@ -347,7 +350,10 @@ namespace csd {
         {
             auto cap = static_cast<unsigned int>(p2n);
             size_t estimated = 0;
-            while (cap > 1) { cap >>= 1; ++estimated; }
+            while (cap > 1) {
+                cap >>= 1;
+                ++estimated;
+            }
             csd.reserve(estimated);
         }
 

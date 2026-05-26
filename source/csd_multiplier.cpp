@@ -1,15 +1,14 @@
 /// @file csd_multiplier.cpp
 /// @brief Implementation of Verilog CSD multiplier generation
+#include <algorithm>  // for sort, unique
 #include <csd/csd_multiplier.hpp>
 #include <csd/lcsre.hpp>
-
-#include <algorithm>   // for sort, unique
-#include <map>         // for map
-#include <set>         // for set, greater
-#include <stdexcept>   // for invalid_argument
-#include <string>      // for string, to_string
-#include <utility>     // for pair
-#include <vector>      // for vector
+#include <map>        // for map
+#include <set>        // for set, greater
+#include <stdexcept>  // for invalid_argument
+#include <string>     // for string, to_string
+#include <utility>    // for pair
+#include <vector>     // for vector
 
 namespace csd {
     namespace {
@@ -19,8 +18,7 @@ namespace csd {
         // Fixes the first-term sign bug: a leading '-' is properly reflected
         // in the first term's operation rather than being silently dropped.
         auto parse_terms(const std::string& csd_str, int max_power)
-            -> std::vector<std::pair<int, TermOp>>
-        {
+            -> std::vector<std::pair<int, TermOp>> {
             std::vector<std::pair<int, TermOp>> terms;
             auto const len = static_cast<int>(csd_str.size());
             for (int i = 0; i < len; ++i) {
@@ -35,8 +33,7 @@ namespace csd {
                     case '0':
                         break;
                     default:
-                        throw std::invalid_argument(
-                            "CSD string can only contain '+', '-', or '0'");
+                        throw std::invalid_argument("CSD string can only contain '+', '-', or '0'");
                 }
             }
             return terms;
@@ -45,9 +42,8 @@ namespace csd {
         // Build a flat Verilog expression for a range [start, start+length)
         // of the CSD string using absolute x_shift references.
         // Returns empty string if the range has no non-zero digits.
-        auto build_range_expr(const std::string& csd_str, size_t start,
-                              size_t length, int max_power) -> std::string
-        {
+        auto build_range_expr(const std::string& csd_str, size_t start, size_t length,
+                              int max_power) -> std::string {
             std::string expr;
             bool first = true;
             for (size_t i = start; i < start + length && i < csd_str.size(); ++i) {
@@ -79,10 +75,8 @@ namespace csd {
         // Find all non-overlapping occurrences of |pattern| in |csd_str|.
         // The pattern is expected to come from longest_repeated_substring,
         // which guarantees non-overlapping with itself.
-        auto find_pattern_occurrences(const std::string& csd_str,
-                                      const std::string& pattern)
-            -> std::vector<size_t>
-        {
+        auto find_pattern_occurrences(const std::string& csd_str, const std::string& pattern)
+            -> std::vector<size_t> {
             std::vector<size_t> positions;
             size_t pos = 0;
             while ((pos = csd_str.find(pattern, pos)) != std::string::npos) {
@@ -94,10 +88,8 @@ namespace csd {
 
         // Build a coefficient expression using CSE wire + flat gap terms.
         // Equivalent to Python's _build_coeff_expr.
-        auto build_coeff_expr(const std::string& csd, int max_power,
-                              const std::string& pattern, int base_pos,
-                              const std::string& cse_name) -> std::string
-        {
+        auto build_coeff_expr(const std::string& csd, int max_power, const std::string& pattern,
+                              int base_pos, const std::string& cse_name) -> std::string {
             if (pattern.empty()) {
                 return build_range_expr(csd, 0, csd.size(), max_power);
             }
@@ -140,23 +132,20 @@ namespace csd {
         }
     }  // anonymous namespace
 
-    auto generate_csd_multiplier(const std::string& csd_str, int input_width,
-                                 int max_power) -> std::string
-    {
+    auto generate_csd_multiplier(const std::string& csd_str, int input_width, int max_power)
+        -> std::string {
         // --- validation ---
         auto const len = static_cast<int>(csd_str.size());
         if (len != max_power + 1) {
-            throw std::invalid_argument(
-                "CSD length " + std::to_string(len)
-                + " doesn't match max_power=" + std::to_string(max_power)
-                + " (should be max_power+1)");
+            throw std::invalid_argument("CSD length " + std::to_string(len)
+                                        + " doesn't match max_power=" + std::to_string(max_power)
+                                        + " (should be max_power+1)");
         }
 
         // Validate characters (allows early error)
         for (auto const c : csd_str) {
             if (c != '+' && c != '-' && c != '0') {
-                throw std::invalid_argument(
-                    "CSD string can only contain '+', '-', or '0'");
+                throw std::invalid_argument("CSD string can only contain '+', '-', or '0'");
             }
         }
 
@@ -180,15 +169,13 @@ namespace csd {
                 powers_needed.insert(term.first);
             }
             for (auto const p : powers_needed) {
-                verilog += "\n    wire signed [" + std::to_string(output_width - 1)
-                           + ":0] x_shift" + std::to_string(p) + " = x <<< "
-                           + std::to_string(p) + ";";
+                verilog += "\n    wire signed [" + std::to_string(output_width - 1) + ":0] x_shift"
+                           + std::to_string(p) + " = x <<< " + std::to_string(p) + ";";
             }
         }
 
         // --- detect LCSRe optimization opportunity ---
-        auto const repeated = longest_repeated_substring(
-            csd_str.c_str(), csd_str.size());
+        auto const repeated = longest_repeated_substring(csd_str.c_str(), csd_str.size());
 
         bool use_opt = false;
         std::vector<size_t> pat_positions;
@@ -214,8 +201,7 @@ namespace csd {
             auto const base_pos = pat_positions[0];
 
             // Generate the sub-expression wire for the pattern at its first occurrence
-            auto const pat_expr = build_range_expr(csd_str, base_pos,
-                                                    repeated.size(), max_power);
+            auto const pat_expr = build_range_expr(csd_str, base_pos, repeated.size(), max_power);
             verilog += "\n\n    // LCSRe: repeated pattern \"" + repeated + "\"";
             verilog += "\n    wire signed [" + std::to_string(output_width - 1)
                        + ":0] _pat = " + pat_expr + ";";
@@ -228,8 +214,7 @@ namespace csd {
 
                 // prefix/gap before this occurrence
                 if (pos > cur) {
-                    auto const gap_expr = build_range_expr(
-                        csd_str, cur, pos - cur, max_power);
+                    auto const gap_expr = build_range_expr(csd_str, cur, pos - cur, max_power);
                     if (!gap_expr.empty()) {
                         if (expr.empty()) {
                             expr = gap_expr;
@@ -241,9 +226,8 @@ namespace csd {
 
                 // the pattern occurrence (shifted if not the first)
                 auto const shift = static_cast<int>(pos - base_pos);
-                auto const pat_ref = (shift == 0)
-                    ? std::string("_pat")
-                    : "(_pat >>> " + std::to_string(shift) + ")";
+                auto const pat_ref = (shift == 0) ? std::string("_pat")
+                                                  : "(_pat >>> " + std::to_string(shift) + ")";
 
                 if (expr.empty()) {
                     expr = pat_ref;
@@ -256,8 +240,8 @@ namespace csd {
 
             // suffix after the last occurrence
             if (cur < csd_str.size()) {
-                auto const suffix_expr = build_range_expr(
-                    csd_str, cur, csd_str.size() - cur, max_power);
+                auto const suffix_expr
+                    = build_range_expr(csd_str, cur, csd_str.size() - cur, max_power);
                 if (!suffix_expr.empty()) {
                     expr += " + " + suffix_expr;
                 }
@@ -278,9 +262,8 @@ namespace csd {
                     }
                     expr += "x_shift" + std::to_string(power);
                 } else {
-                    expr += (op == TermOp::Add)
-                                ? " + x_shift" + std::to_string(power)
-                                : " - x_shift" + std::to_string(power);
+                    expr += (op == TermOp::Add) ? " + x_shift" + std::to_string(power)
+                                                : " - x_shift" + std::to_string(power);
                 }
             }
             verilog += "\n    assign result = " + expr + ";";
@@ -306,8 +289,7 @@ namespace csd {
         // Find substrings (NNZ >= 2) that appear in >= 2 different CSD strings.
         // Returns a map: pattern -> [(coeff_idx, position), ...].
         auto find_cross_patterns(const std::vector<std::string>& csd_list)
-            -> std::map<std::string, std::vector<std::pair<int, int>>>
-        {
+            -> std::map<std::string, std::vector<std::pair<int, int>>> {
             std::map<std::string, std::vector<std::pair<int, int>>> patterns;
             for (int ci = 0; ci < static_cast<int>(csd_list.size()); ++ci) {
                 auto const& csd = csd_list[ci];
@@ -339,8 +321,7 @@ namespace csd {
     }  // anonymous namespace
 
     auto generate_csd_multipliers(const std::vector<MultiplierSpec>& coeffs,
-                                  const std::string& module_name) -> std::string
-    {
+                                  const std::string& module_name) -> std::string {
         if (coeffs.empty()) {
             throw std::invalid_argument("At least one coefficient is required");
         }
@@ -361,8 +342,7 @@ namespace csd {
             }
             for (auto c : spec.csd) {
                 if (c != '+' && c != '-' && c != '0') {
-                    throw std::invalid_argument(
-                        "CSD string can only contain '+', '-', or '0'");
+                    throw std::invalid_argument("CSD string can only contain '+', '-', or '0'");
                 }
             }
         }
@@ -420,8 +400,7 @@ namespace csd {
 
         for (auto const& spec : coeffs) {
             auto ow = spec.input_width + spec.max_power;
-            verilog += "\n    output signed [" + std::to_string(ow - 1)
-                       + ":0] " + spec.name;
+            verilog += "\n    output signed [" + std::to_string(ow - 1) + ":0] " + spec.name;
         }
         verilog += "\n);";
 
@@ -429,20 +408,19 @@ namespace csd {
         if (!all_powers.empty()) {
             verilog += "\n\n    // Create shifted versions of input";
             for (auto p : all_powers) {
-                verilog += "\n    wire signed [" + std::to_string(output_width - 1)
-                           + ":0] x_shift" + std::to_string(p) + " = x <<< "
-                           + std::to_string(p) + ";";
+                verilog += "\n    wire signed [" + std::to_string(output_width - 1) + ":0] x_shift"
+                           + std::to_string(p) + " = x <<< " + std::to_string(p) + ";";
             }
         }
 
         // Shared CSE wire
         std::string cse_name = "_cse_0";
         if (!best_pattern.empty()) {
-            auto const cse_expr = build_range_expr(
-                best_pattern, 0, best_pattern.size(), max_power - cse_base_pos);
+            auto const cse_expr
+                = build_range_expr(best_pattern, 0, best_pattern.size(), max_power - cse_base_pos);
             verilog += "\n\n    // Cross-CSE: shared pattern \"" + best_pattern + "\"";
-            verilog += "\n    wire signed [" + std::to_string(output_width - 1)
-                       + ":0] " + cse_name + " = " + cse_expr + ";";
+            verilog += "\n    wire signed [" + std::to_string(output_width - 1) + ":0] " + cse_name
+                       + " = " + cse_expr + ";";
         }
 
         // Set of coeff indices that have the pattern
@@ -458,16 +436,16 @@ namespace csd {
             verilog += "\n\n    // " + spec.name + ": " + spec.csd;
 
             bool has_cse = !best_pattern.empty() && cse_coeffs.count(idx);
-            auto const expr = has_cse
-                ? build_coeff_expr(spec.csd, max_power, best_pattern, cse_base_pos, cse_name)
-                : build_coeff_expr(spec.csd, max_power, {}, 0, {});
+            auto const expr = has_cse ? build_coeff_expr(spec.csd, max_power, best_pattern,
+                                                         cse_base_pos, cse_name)
+                                      : build_coeff_expr(spec.csd, max_power, {}, 0, {});
 
             if (expr.empty()) {
-                verilog += "\n    wire signed [" + std::to_string(ow - 1)
-                           + ":0] " + spec.name + " = 0;";
+                verilog += "\n    wire signed [" + std::to_string(ow - 1) + ":0] " + spec.name
+                           + " = 0;";
             } else {
-                verilog += "\n    wire signed [" + std::to_string(ow - 1)
-                           + ":0] " + spec.name + " = " + expr + ";";
+                verilog += "\n    wire signed [" + std::to_string(ow - 1) + ":0] " + spec.name
+                           + " = " + expr + ";";
             }
         }
 
