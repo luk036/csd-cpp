@@ -1,6 +1,5 @@
 /// @file csd_multiplier.cpp
 /// @brief Implementation of Verilog CSD multiplier generation
-#include <algorithm>  // for sort, unique
 #include <csd/csd_multiplier.hpp>
 #include <csd/lcsre.hpp>
 #include <map>        // for map
@@ -361,6 +360,7 @@ namespace csd {
 
         // Find best cross-CSD pattern
         std::vector<std::string> csd_strings;
+        csd_strings.reserve(coeffs.size());
         for (auto const& spec : coeffs) {
             csd_strings.push_back(spec.csd);
         }
@@ -388,7 +388,9 @@ namespace csd {
             cse_base_pos = best_occurrences[0].second;
             for (auto const& occ_pair : best_occurrences) {
                 auto const pos = occ_pair.second;
-                if (pos < cse_base_pos) cse_base_pos = pos;
+                if (pos < cse_base_pos) {
+                    cse_base_pos = pos;
+                }
             }
         }
 
@@ -435,7 +437,7 @@ namespace csd {
             auto ow = spec.input_width + spec.max_power;
             verilog += "\n\n    // " + spec.name + ": " + spec.csd;
 
-            bool has_cse = !best_pattern.empty() && cse_coeffs.count(idx);
+            bool has_cse = !best_pattern.empty() && (cse_coeffs.count(idx) != 0U);
             auto const expr = has_cse ? build_coeff_expr(spec.csd, max_power, best_pattern,
                                                          cse_base_pos, cse_name)
                                       : build_coeff_expr(spec.csd, max_power, {}, 0, {});
