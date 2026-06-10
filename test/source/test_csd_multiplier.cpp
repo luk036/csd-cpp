@@ -162,35 +162,23 @@ TEST_CASE("csd_multipliers empty coeffs") {
 }
 
 TEST_CASE("csd_multipliers width mismatch") {
-    std::vector<MultiplierSpec> coeffs = {
-        {"a", "+0-00", 8, 4},
-        {"b", "0+0-0", 16, 4}
-    };
+    std::vector<MultiplierSpec> coeffs = {{"a", "+0-00", 8, 4}, {"b", "0+0-0", 16, 4}};
     CHECK_THROWS_AS(generate_csd_multipliers(coeffs), std::invalid_argument);
 }
 
 TEST_CASE("csd_multipliers length mismatch") {
-    std::vector<MultiplierSpec> coeffs = {
-        {"a", "+0-00", 8, 4},
-        {"b", "+0-0", 8, 4}
-    };
+    std::vector<MultiplierSpec> coeffs = {{"a", "+0-00", 8, 4}, {"b", "+0-0", 8, 4}};
     CHECK_THROWS_AS(generate_csd_multipliers(coeffs), std::invalid_argument);
 }
 
 TEST_CASE("csd_multipliers invalid chars") {
-    std::vector<MultiplierSpec> coeffs = {
-        {"a", "+0-00", 8, 4},
-        {"b", "12+00", 8, 4}
-    };
+    std::vector<MultiplierSpec> coeffs = {{"a", "+0-00", 8, 4}, {"b", "12+00", 8, 4}};
     CHECK_THROWS_AS(generate_csd_multipliers(coeffs), std::invalid_argument);
 }
 
 TEST_CASE("csd_multipliers shared pattern cross-CSE") {
     // coeff1: "+0-00" nnz=2, coeff2: "0+0-0" nnz=2 — share "+0-" (nnz=2)
-    std::vector<MultiplierSpec> coeffs = {
-        {"c1", "+0-00", 8, 4},
-        {"c2", "0+0-0", 8, 4}
-    };
+    std::vector<MultiplierSpec> coeffs = {{"c1", "+0-00", 8, 4}, {"c2", "0+0-0", 8, 4}};
     auto v = generate_csd_multipliers(coeffs);
     CHECK(v.find("_cse_0") != std::string::npos);
     CHECK(v.find("Cross-CSE") != std::string::npos);
@@ -203,27 +191,20 @@ TEST_CASE("csd_multipliers shared pattern cross-CSE") {
 
 TEST_CASE("csd_multipliers no shared pattern") {
     // Both coeffs have only 1 non-zero digit — no pattern with nnz >= 2
-    std::vector<MultiplierSpec> coeffs = {
-        {"a", "+0000", 8, 4},
-        {"b", "0+000", 8, 4}
-    };
+    std::vector<MultiplierSpec> coeffs = {{"a", "+0000", 8, 4}, {"b", "0+000", 8, 4}};
     auto v = generate_csd_multipliers(coeffs);
     CHECK(v.find("_cse_0") == std::string::npos);
     CHECK(v.find("module csd_filter") != std::string::npos);
 }
 
 TEST_CASE("csd_multipliers custom module name") {
-    std::vector<MultiplierSpec> coeffs = {
-        {"a", "+0-00", 8, 4}
-    };
+    std::vector<MultiplierSpec> coeffs = {{"a", "+0-00", 8, 4}};
     auto v = generate_csd_multipliers(coeffs, "my_mult");
     CHECK(v.find("module my_mult") != std::string::npos);
 }
 
 TEST_CASE("csd_multipliers single coefficient") {
-    std::vector<MultiplierSpec> coeffs = {
-        {"single", "+0-", 8, 2}
-    };
+    std::vector<MultiplierSpec> coeffs = {{"single", "+0-", 8, 2}};
     auto v = generate_csd_multipliers(coeffs);
     CHECK(v.find("module csd_filter") != std::string::npos);
     CHECK(v.find("x_shift2") != std::string::npos);
@@ -233,9 +214,7 @@ TEST_CASE("csd_multipliers single coefficient") {
 
 TEST_CASE("csd_multipliers all zero coefficient") {
     // All-zero coefficient should produce wire = 0
-    std::vector<MultiplierSpec> coeffs = {
-        {"zero", "00000", 8, 4}
-    };
+    std::vector<MultiplierSpec> coeffs = {{"zero", "00000", 8, 4}};
     auto v = generate_csd_multipliers(coeffs);
     CHECK(v.find("zero = 0") != std::string::npos);
 }
