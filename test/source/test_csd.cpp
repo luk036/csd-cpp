@@ -84,3 +84,32 @@ TEST_CASE("test to_csd additional cases") {
 TEST_CASE("test to_csdnnz additional cases") { CHECK_EQ(to_csdnnz(28.5, 2), "+00-00"); }
 
 TEST_CASE("test to_csdnnz_i additional cases") { CHECK_EQ(to_csdnnz_i(-28, 4), "-00+00"); }
+
+TEST_CASE("test to_csd_i negative values") {
+    CHECK_EQ(to_csd_i(-28), "-00+00");
+    CHECK_EQ(to_csd_i(-1), "-");
+    CHECK_EQ(to_csd_i(-5), "-0-");
+    CHECK_EQ(to_csd_i(-158), "-0-000+0");
+}
+
+TEST_CASE("test to_csdnnz_i negative values") {
+    CHECK_EQ(to_csdnnz_i(-28, 4), "-00+00");
+    CHECK_EQ(to_csdnnz_i(-28, 1), "-00000");
+    CHECK_EQ(to_csdnnz_i(-158, 2), "-0-00000");
+}
+
+TEST_CASE("test to_decimal single char CSD") {
+    CHECK_EQ(to_decimal("+"), 1.0);
+    CHECK_EQ(to_decimal("-"), -1.0);
+}
+
+TEST_CASE("test to_decimal_using_switch single char") {
+    CHECK_EQ(to_decimal_using_switch("+"), 1.0);
+    CHECK_EQ(to_decimal_using_switch("-"), -1.0);
+    CHECK_EQ(to_decimal_using_switch("0"), 0.0);
+}
+
+TEST_CASE("test to_decimal with negative CSD strings") {
+    CHECK_EQ(to_decimal("-00+00"), -28.0);
+    CHECK_EQ(to_decimal("-0-"), -5.0);
+}
