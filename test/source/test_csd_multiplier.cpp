@@ -1,3 +1,12 @@
+/// @file test_csd_multiplier.cpp
+/// @brief Unit tests for CSD multiplier Verilog code generation
+///
+/// Tests the Verilog code generation from CSD representations:
+/// - Basic structural tests (valid modules, endmodule boundaries)
+/// - LCSRe optimization (repeated pattern detection and sharing)
+/// - Cross-CSE optimization (patterns shared across multiple coefficients)
+/// - Edge cases: all zeros, single non-zero, invalid inputs, width mismatches
+
 #include <doctest/doctest.h>
 
 #include <csd/csd_multiplier.hpp>

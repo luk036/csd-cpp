@@ -39,8 +39,11 @@ static void using_if_else(benchmark::State& state) {
 BENCHMARK(using_if_else);
 
 /**
- * The function `using_switch` repeatedly measures the time it takes to convert a given string to a
- * decimal number using the `to_decimal` function.
+ * @brief Benchmark the switch-based CSD to decimal conversion
+ *
+ * Repeatedly measures the time it takes to convert a given string to a
+ * decimal number using the `to_decimal_using_switch` function, which uses
+ * a switch statement for character parsing.
  *
  * @param[in] state The `state` parameter in the `using_switch` function is of type
  * `benchmark::State`. It is used by the Google Benchmark library to control the benchmarking

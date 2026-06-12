@@ -45,22 +45,6 @@ using std::frexp;
 using std::ldexp;
 using std::string;
 
-// namespace {
-
-/// @brief Threshold for considering a number effectively zero in CSD conversion
-// constexpr double ZERO_THRESHOLD = 1e-100;
-
-/// @brief Scaling factor for determining highest power in CSD conversion
-// constexpr double POWER_SCALING_FACTOR = 1.5;
-
-/// @brief Scaling factor for integer CSD conversion
-// constexpr double INTEGER_SCALING_FACTOR = 3.0;
-
-/// @brief Division factor for integer CSD conversion
-// constexpr double INTEGER_DIVISION_FACTOR = 2.0;
-
-// }  // anonymous namespace
-
 /**
  * @brief the highest power of two
  *

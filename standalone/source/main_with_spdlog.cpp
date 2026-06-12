@@ -1,3 +1,9 @@
+/// @file main_with_spdlog.cpp
+/// @brief CSD library example with spdlog logging
+///
+/// Demonstrates CSD conversion functions with structured logging via the
+/// spdlog library. Logs conversion results for various test values to a file.
+
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/spdlog.h>
 

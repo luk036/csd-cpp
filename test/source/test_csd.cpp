@@ -1,3 +1,12 @@
+/// @file test_csd.cpp
+/// @brief Unit tests for CSD conversion functions
+///
+/// Tests the core CSD library functions including:
+/// - to_csd / to_csd_i (decimal to CSD conversion)
+/// - to_decimal / to_decimal_i / to_decimal_using_switch (CSD to decimal)
+/// - to_csdnnz / to_csdnnz_i (CSD with limited non-zero digits)
+/// - Edge cases: negative values, zero, single-character CSD, fractional values
+
 #define DOCTEST_CONFIG_NO_EXCEPTIONS_BUT_WITH_ALL_ASSERTS
 
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK_EQ, TEST_CASE

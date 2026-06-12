@@ -1,3 +1,12 @@
+/// @file test_stress.cpp
+/// @brief Stress and property tests for CSD and LCSRE algorithms
+///
+/// Tests numerical stability and performance under:
+/// - Large numbers and high-precision fractional values
+/// - Random round-trip conversions
+/// - Long strings and repetitive patterns for LCSRE
+/// - Maximum-length uniformly repeating strings
+
 #include <doctest/doctest.h>
 
 #include <csd/csd.hpp>

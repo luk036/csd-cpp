@@ -11,11 +11,22 @@
 
 namespace csd {
     namespace {
+        /// @brief Operation type for a CSD term
         enum class TermOp { Add, Sub };
 
-        // Parse CSD string into (power, operation) pairs.
-        // Fixes the first-term sign bug: a leading '-' is properly reflected
-        // in the first term's operation rather than being silently dropped.
+        /**
+         * @brief Parse CSD string into (power, operation) pairs
+         *
+         * Iterates through the CSD string and extracts each non-zero digit as a
+         * term with its bit position. Fixes the first-term sign bug: a leading '-'
+         * is properly reflected in the first term's operation rather than being
+         * silently dropped.
+         *
+         * @param[in] csd_str CSD string containing '+', '-', '0' characters
+         * @param[in] max_power Highest power of two in the CSD representation
+         * @return Vector of (power, operation) pairs for non-zero digits
+         * @throws std::invalid_argument If invalid characters are encountered
+         */
         auto parse_terms(const std::string& csd_str, int max_power)
             -> std::vector<std::pair<int, TermOp>> {
             std::vector<std::pair<int, TermOp>> terms;
@@ -38,9 +49,18 @@ namespace csd {
             return terms;
         }
 
-        // Build a flat Verilog expression for a range [start, start+length)
-        // of the CSD string using absolute x_shift references.
-        // Returns empty string if the range has no non-zero digits.
+        /**
+         * @brief Build a flat Verilog expression for a range of CSD positions
+         *
+         * Creates a Verilog expression using absolute x_shift references for all
+         * non-zero digits in the specified range of the CSD string.
+         *
+         * @param[in] csd_str The full CSD string
+         * @param[in] start Starting position in the CSD string
+         * @param[in] length Number of positions to include
+         * @param[in] max_power Highest power of two in the CSD representation
+         * @return Verilog expression string, or empty if the range has no non-zero digits
+         */
         auto build_range_expr(const std::string& csd_str, size_t start, size_t length,
                               int max_power) -> std::string {
             std::string expr;
@@ -71,9 +91,16 @@ namespace csd {
             return expr;
         }
 
-        // Find all non-overlapping occurrences of |pattern| in |csd_str|.
-        // The pattern is expected to come from longest_repeated_substring,
-        // which guarantees non-overlapping with itself.
+        /**
+         * @brief Find all non-overlapping occurrences of a pattern in a CSD string
+         *
+         * The pattern is expected to come from longest_repeated_substring, which
+         * guarantees non-overlapping with itself.
+         *
+         * @param[in] csd_str The CSD string to search in
+         * @param[in] pattern The substring pattern to find
+         * @return Sorted vector of starting positions for each occurrence
+         */
         auto find_pattern_occurrences(const std::string& csd_str, const std::string& pattern)
             -> std::vector<size_t> {
             std::vector<size_t> positions;
@@ -85,8 +112,20 @@ namespace csd {
             return positions;
         }
 
-        // Build a coefficient expression using CSE wire + flat gap terms.
-        // Equivalent to Python's _build_coeff_expr.
+        /**
+         * @brief Build a coefficient expression using CSE wire and flat gap terms
+         *
+         * Constructs a Verilog expression that references the shared sub-expression
+         * (CSE) wire for pattern occurrences and builds flat expressions for any
+         * gap regions between them.
+         *
+         * @param[in] csd The full CSD string for this coefficient
+         * @param[in] max_power Highest power of two in the CSD representation
+         * @param[in] pattern The shared sub-expression pattern (empty if no CSE)
+         * @param[in] base_pos Base position for the CSE wire
+         * @param[in] cse_name Name of the CSE wire signal
+         * @return Verilog expression string
+         */
         auto build_coeff_expr(const std::string& csd, int max_power, const std::string& pattern,
                               int base_pos, const std::string& cse_name) -> std::string {
             if (pattern.empty()) {
@@ -276,7 +315,11 @@ namespace csd {
     // ------------------------------------------------------------------
     namespace {
 
-        // Count non-zero digits ('+' or '-') in a CSD substring
+        /**
+         * @brief Count non-zero digits ('+' or '-') in a CSD substring
+         * @param[in] s The CSD substring to analyze
+         * @return Number of non-zero digit characters found
+         */
         auto count_nnz(const std::string& s) -> int {
             int n = 0;
             for (auto c : s) {
@@ -285,8 +328,16 @@ namespace csd {
             return n;
         }
 
-        // Find substrings (NNZ >= 2) that appear in >= 2 different CSD strings.
-        // Returns a map: pattern -> [(coeff_idx, position), ...].
+        /**
+         * @brief Find substrings that appear across multiple CSD strings
+         *
+         * Searches for substrings with at least 2 non-zero digits that appear in
+         * 2 or more different CSD strings. These substrings are candidates for
+         * cross-coefficient common sub-expression elimination.
+         *
+         * @param[in] csd_list List of CSD strings to search across
+         * @return Map from pattern string to list of (coefficient_index, position) pairs
+         */
         auto find_cross_patterns(const std::vector<std::string>& csd_list)
             -> std::map<std::string, std::vector<std::pair<int, int>>> {
             std::map<std::string, std::vector<std::pair<int, int>>> patterns;

@@ -1,3 +1,12 @@
+/// @file main.cpp
+/// @brief Standalone CLI tool for CSD conversions
+///
+/// Command-line interface for converting between decimal and Canonical
+/// Signed Digit (CSD) representations. Supports:
+/// - Decimal to CSD conversion (with configurable places)
+/// - CSD to decimal conversion
+/// - CSD conversion with limited non-zero digits (nnz)
+
 #include <cmath>
 #include <csd/csd.hpp>  // for to_decimal, to_csd, and to_csdnnz
 #include <cxxopts.hpp>

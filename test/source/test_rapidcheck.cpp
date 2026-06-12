@@ -1,3 +1,13 @@
+/// @file test_rapidcheck.cpp
+/// @brief Property-based tests for CSD library using RapidCheck
+///
+/// Uses property-based testing to verify CSD invariants:
+/// - Valid character sets in CSD output strings
+/// - Round-trip inverse relationship: to_decimal(to_csd(x)) ≈ x
+/// - Non-zero digit limits in nnz variants
+/// - CSD property: no consecutive non-zero digits
+/// - Correct handling of positive, negative, and fractional values
+
 #define DOCTEST_CONFIG_NO_EXCEPTIONS_BUT_WITH_ALL_ASSERTS
 
 #include <doctest/doctest.h>

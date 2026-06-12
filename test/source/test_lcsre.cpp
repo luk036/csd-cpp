@@ -1,3 +1,11 @@
+/// @file test_lcsre.cpp
+/// @brief Unit tests for longest repeated non-overlapping substring algorithm
+///
+/// Tests the longest_repeated_substring function:
+/// - Basic cases: repeated patterns, no repeats, exact repeats
+/// - Edge cases: empty string, single character, two characters
+/// - Pattern matching with CSD symbols ('+', '-', '0')
+
 #include <doctest/doctest.h>  // for ResultBuilder, CHECK_EQ, TEST_CASE
 
 #include <csd/lcsre.hpp>  // for longest_repeated_substring
