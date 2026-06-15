@@ -35,11 +35,7 @@ enable_testing()
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
   target_compile_options(Csd PUBLIC -Wall -Wextra)
 elseif(MSVC)
-  target_compile_options(
-    Csd
-    PUBLIC /utf-8 /W4
-           /WX
-  )
+  target_compile_options(Csd PUBLIC /utf-8 /W4 /WX)
   # target_compile_definitions(CsdTests PUBLIC DOCTEST_CONFIG_USE_STD_HEADERS)
 endif()
 
