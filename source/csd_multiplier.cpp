@@ -1,5 +1,6 @@
 /// @file csd_multiplier.cpp
 /// @brief Implementation of Verilog CSD multiplier generation
+#include <algorithm>
 #include <csd/csd_multiplier.hpp>
 #include <csd/lcsre.hpp>
 #include <map>        // for map
@@ -202,7 +203,7 @@ namespace csd {
         // --- wire declarations (deduplicated powers) ---
         if (!terms.empty()) {
             verilog += "\n\n    // Create shifted versions of input";
-            std::set<int, std::greater<int>> powers_needed;
+            std::set<int, std::greater<>> powers_needed;
             for (auto const& term : terms) {
                 powers_needed.insert(term.first);
             }
@@ -247,9 +248,7 @@ namespace csd {
             // Build the full expression from segments
             std::string expr;
             size_t cur = 0;
-            for (size_t i = 0; i < pat_positions.size(); ++i) {
-                auto const pos = pat_positions[i];
-
+            for (unsigned long long pos : pat_positions) {
                 // prefix/gap before this occurrence
                 if (pos > cur) {
                     auto const gap_expr = build_range_expr(csd_str, cur, pos - cur, max_power);
@@ -400,7 +399,7 @@ namespace csd {
         auto const output_width = input_width + max_power;
 
         // Collect all x_shift powers
-        std::set<int, std::greater<int>> all_powers;
+        std::set<int, std::greater<>> all_powers;
         for (auto const& spec : coeffs) {
             for (int i = 0; i < static_cast<int>(spec.csd.size()); ++i) {
                 if (spec.csd[i] != '0') {
@@ -439,9 +438,7 @@ namespace csd {
             cse_base_pos = best_occurrences[0].second;
             for (auto const& occ_pair : best_occurrences) {
                 auto const pos = occ_pair.second;
-                if (pos < cse_base_pos) {
-                    cse_base_pos = pos;
-                }
+                cse_base_pos = std::min(pos, cse_base_pos);
             }
         }
 
