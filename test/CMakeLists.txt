@@ -61,7 +61,7 @@ if(NOT TEST_INSTALLED_VERSION)
       Csd PUBLIC -Wall -Wpedantic -Wextra -Werror -Wno-deprecated-literal-operator
     )
   elseif(MSVC)
-    target_compile_options(Csd PUBLIC /utf-8 /W4 /WX /wd5285 /wd4996)
+    target_compile_options(Csd PUBLIC /utf-8 /W4 /WX /wd5285)
     # target_compile_definitions(${PROJECT_NAME} PUBLIC DOCTEST_CONFIG_USE_STD_HEADERS)
   endif()
 endif()
