@@ -6,7 +6,7 @@
  * overlapping.
  *
  * The algorithm uses space optimization by only storing two rows of the
- * DP table at any time, reducing space complexity from O(n²) to O(n).
+ * DP table at any time, reducing space complexity from O(n^2) to O(n).
  *
  * @author Original algorithm contributed by ita_c
  */
@@ -56,10 +56,10 @@ namespace csd {
      * @endverbatim
      *
      * Space optimization:
-     * Instead of storing the full n×n table, we only keep two rows:
+     * Instead of storing the full n x n table, we only keep two rows:
      * - Current row (i % 2)
      * - Previous row ((i-1) % 2)
-     * This reduces space from O(n²) to O(n)
+     * This reduces space from O(n^2) to O(n)
      *
      * @param[in] sv Pointer to a null-terminated character array representing the
      *               input string. Must not be nullptr.
@@ -71,7 +71,7 @@ namespace csd {
      *
      * @throws std::invalid_argument If sv is nullptr or len is negative.
      *
-     * @note Time complexity: O(n²)
+     * @note Time complexity: O(n^2)
      * @note Space complexity: O(n) due to row-wise optimization
      */
     auto longest_repeated_substring(const char* sv, size_t len) -> string {

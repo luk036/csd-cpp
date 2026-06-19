@@ -53,7 +53,7 @@ namespace csd {
      * @throws std::invalid_argument If sv is nullptr or if len doesn't match the
      *                               actual string length.
      *
-     * @note Time complexity: O(n²) where n is the string length
+     * @note Time complexity: O(n^2) where n is the string length
      * @note Space complexity: O(n) due to row-wise table optimization
      */
     extern auto longest_repeated_substring(const char* sv, size_t len) -> std::string;

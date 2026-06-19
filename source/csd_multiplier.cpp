@@ -219,8 +219,8 @@ namespace csd {
         bool use_opt = false;
         std::vector<size_t> pat_positions;
         if (!repeated.empty() && repeated.size() > 1) {
-            // Count non-zero digits in the pattern — only optimize if it
-            // actually saves hardware (≥2 non-zero terms per occurrence)
+            // Count non-zero digits in the pattern - only optimize if it
+            // actually saves hardware (>=2 non-zero terms per occurrence)
             int pat_nnz = 0;
             for (auto const c : repeated) {
                 if (c == '+' || c == '-') ++pat_nnz;

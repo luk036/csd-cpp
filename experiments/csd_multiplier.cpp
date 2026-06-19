@@ -19,7 +19,7 @@ auto main() -> int {
         std::cout << "=== +00-00+0 (no repeat) ===\n";
         std::cout << csd::generate_csd_multiplier("+00-00+0", 8, 7) << '\n';
 
-        // --- Repeated pattern "+0-0" — optimized with _pat wire ---
+        // --- Repeated pattern "+0-0" - optimized with _pat wire ---
         // Flat: x_shift7 - x_shift5 + x_shift3 - x_shift1  (4 adders)
         // Opt:  _pat + (_pat >>> 4)                         (2 adders + 1 shift)
         std::cout << "=== +0-0+0-0 (repeat: +0-0) ===\n";
@@ -33,7 +33,7 @@ auto main() -> int {
         std::cout << "=== +00-00+00-00 (repeat: +00-00) ===\n";
         std::cout << csd::generate_csd_multiplier("+00-00+00-00", 8, 11) << '\n';
 
-        // --- Leading minus — also triggers LCSRe on "-0-" pattern ---
+        // --- Leading minus - also triggers LCSRe on "-0-" pattern ---
         // Flat: -x_shift2 - x_shift0    (2 adders, no repeat benefit)
         std::cout << "=== -0- (no repeat benefit) ===\n";
         std::cout << csd::generate_csd_multiplier("-0-", 8, 2) << '\n';

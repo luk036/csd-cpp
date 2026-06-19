@@ -3,7 +3,7 @@
 ///
 /// Uses property-based testing to verify CSD invariants:
 /// - Valid character sets in CSD output strings
-/// - Round-trip inverse relationship: to_decimal(to_csd(x)) ≈ x
+/// - Round-trip inverse relationship: to_decimal(to_csd(x)) ~= x
 /// - Non-zero digit limits in nnz variants
 /// - CSD property: no consecutive non-zero digits
 /// - Correct handling of positive, negative, and fractional values

@@ -64,7 +64,7 @@ TEST_CASE("csd_multiplier invalid length") {
 // ---------------------------------------------------------------------------
 
 TEST_CASE("csd_multiplier flat when pattern nnz is 1") {
-    // "+0" has only 1 non-zero digit — should NOT be optimized
+    // "+0" has only 1 non-zero digit - should NOT be optimized
     auto v = generate_csd_multiplier("+00-00+0", 8, 7);
     CHECK(v.find("_pat") == std::string::npos);
     CHECK(v.find("x_shift7 - x_shift4 + x_shift1") != std::string::npos);
@@ -111,7 +111,7 @@ TEST_CASE("csd_multiplier pattern with leading minus") {
 }
 
 TEST_CASE("csd_multiplier no optimization for single occurrence") {
-    // CSD with unique pattern throughout — no repeat = flat
+    // CSD with unique pattern throughout - no repeat = flat
     auto v = generate_csd_multiplier("+0-+00-0", 8, 7);
     CHECK(v.find("_pat") == std::string::npos);
 }
@@ -186,7 +186,7 @@ TEST_CASE("csd_multipliers invalid chars") {
 }
 
 TEST_CASE("csd_multipliers shared pattern cross-CSE") {
-    // coeff1: "+0-00" nnz=2, coeff2: "0+0-0" nnz=2 — share "+0-" (nnz=2)
+    // coeff1: "+0-00" nnz=2, coeff2: "0+0-0" nnz=2 - share "+0-" (nnz=2)
     std::vector<MultiplierSpec> coeffs = {{"c1", "+0-00", 8, 4}, {"c2", "0+0-0", 8, 4}};
     auto v = generate_csd_multipliers(coeffs);
     CHECK(v.find("_cse_0") != std::string::npos);
@@ -199,7 +199,7 @@ TEST_CASE("csd_multipliers shared pattern cross-CSE") {
 }
 
 TEST_CASE("csd_multipliers no shared pattern") {
-    // Both coeffs have only 1 non-zero digit — no pattern with nnz >= 2
+    // Both coeffs have only 1 non-zero digit - no pattern with nnz >= 2
     std::vector<MultiplierSpec> coeffs = {{"a", "+0000", 8, 4}, {"b", "0+000", 8, 4}};
     auto v = generate_csd_multipliers(coeffs);
     CHECK(v.find("_cse_0") == std::string::npos);

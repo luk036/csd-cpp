@@ -3,11 +3,11 @@
 ///
 /// Translates a Canonical Signed Digit (CSD) string into a Verilog hardware
 /// module that implements multiplication using only shift-and-add/subtract
-/// operations — no actual multipliers needed. Each non-zero CSD digit becomes
+/// operations - no actual multipliers needed. Each non-zero CSD digit becomes
 /// a shifted term, and the terms are summed.
 ///
 /// Example:
-///   csd = "+00-00+0" → result = x_shift7 - x_shift4 + x_shift1
+///   csd = "+00-00+0" -> result = x_shift7 - x_shift4 + x_shift1
 ///
 /// @see https://github.com/luk036/csd-cpp
 /// @par License
@@ -52,7 +52,7 @@ namespace csd {
      * @brief Generate Verilog for multiple CSD multipliers with cross-CSE
      *
      * When the same CSD substring appears in multiple coefficients, a shared
-     * sub-expression wire is created — reducing total adder count across the
+     * sub-expression wire is created - reducing total adder count across the
      * entire filter.
      *
      * All coefficients **must** share the same ``input_width`` and ``max_power``
