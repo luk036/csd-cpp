@@ -65,6 +65,25 @@ namespace csd {
      * // Calculation: 2^5 - 2^2 + 2^0 + 2^(-1) = 32 - 4 + 1 + 0.5 = 28.5
      * @endcode
      *
+     * @f[
+     *     x = \sum_{i} s_i 2^i, \quad s_i \in \{-1, 0, 1\}
+     * @f]
+     *
+     * @dot
+     *   digraph csd_flow {
+     *     rankdir=LR;
+     *     bgcolor="transparent";
+     *     node [shape=box, style=filled, fillcolor="#d4e6f1"];
+     *     input [label="Decimal x", fillcolor="#a9cce3"];
+     *     convert [label="Convert to\ncanonical signed\ndigit form"];
+     *     encode [label="Encode as\n'+', '-', '0'\nstring"];
+     *     output [label="CSD string", fillcolor="#7fb3d8"];
+     *     input -> convert -> encode -> output;
+     *     note [shape=note, fillcolor="#fcf3cf", label="x = sum s_i * 2^i\ns_i in {-1,0,1}\nno adjacent non-zero"];
+     *     convert -> note [style=dashed, color="#888", constraint=false];
+     *   }
+     * @enddot
+     *
      * @param[in] decimal_value The number to convert to CSD format. Can be positive,
      *                         negative, or zero.
      * @param[in] places The number of decimal places to include in the CSD representation.
@@ -97,6 +116,25 @@ namespace csd {
      * to_csd_i(0) returns "0"
      * @endcode
      *
+     * @f[
+     *     n = \sum_{i} s_i 2^i, \quad s_i \in \{-1, 0, 1\}
+     * @f]
+     *
+     * @dot
+     *   digraph csd_i_flow {
+     *     rankdir=LR;
+     *     bgcolor="transparent";
+     *     node [shape=box, style=filled, fillcolor="#d4e6f1"];
+     *     input [label="Integer n", fillcolor="#a9cce3"];
+     *     convert [label="Convert to\ncanonical signed\ndigit form"];
+     *     encode [label="Encode as\n'+', '-', '0'\nstring"];
+     *     output [label="CSD string", fillcolor="#7fb3d8"];
+     *     input -> convert -> encode -> output;
+     *     note [shape=note, fillcolor="#fcf3cf", label="n = sum s_i * 2^i\ns_i in {-1,0,1}\nno adjacent non-zero"];
+     *     convert -> note [style=dashed, color="#888", constraint=false];
+     *   }
+     * @enddot
+     *
      * @param[in] decimal_value The integer to convert to CSD format. Can be positive,
      *                         negative, or zero.
      *
@@ -127,6 +165,10 @@ namespace csd {
      * to_csdnnz(28.5, 3) returns "+00-00.+"
      * // Uses only 3 non-zero digits: + at position 5, - at position 2, + at position 0
      * @endcode
+     *
+     * @f[
+     *     x \approx \sum_{i} s_i 2^i, \quad |\{i : s_i \ne 0\}| \le \mathrm{nnz}
+     * @f]
      *
      * @param[in] decimal_value The number to convert to CSD format. Can be positive,
      *                         negative, or zero.
@@ -160,6 +202,10 @@ namespace csd {
      * // Uses only 2 non-zero digits: + at position 5, - at position 2
      * @endcode
      *
+     * @f[
+     *     n \approx \sum_{i} s_i 2^i, \quad |\{i : s_i \ne 0\}| \le \mathrm{nnz}
+     * @f]
+     *
      * @param[in] decimal_value The integer to convert to CSD format. Can be positive,
      *                         negative, or zero.
      * @param[in] nnz The maximum number of non-zero digits allowed in the CSD representation.
@@ -180,6 +226,10 @@ namespace csd {
      * using a switch statement.
      *
      * This is an internal implementation detail, not part of the public API.
+     *
+     * @f[
+     *     v = \sum_{i} s_i 2^i, \quad s_i \in \{-1, 0, 1\}
+     * @f]
      *
      * @param[in] csd The parameter `csd` is a pointer to a character array, which
      * represents the input string. It is assumed that the string is
@@ -245,6 +295,10 @@ namespace csd {
      *
      * It throws an exception if any invalid character is encountered.
      *
+     * @f[
+     *     v = \sum_{i} s_i 2^i, \quad s_i \in \{-1, 0, 1\}
+     * @f]
+     *
      * @param[in] csd - Pointer to the null-terminated CSD string
      * @return The decimal value of the integral part
      */
@@ -277,6 +331,10 @@ namespace csd {
      * keeping track of a scaling factor. For each '+' it adds, and for each '-' it
      * subtracts, a fraction of the current scale. This builds up the fractional part
      * of the final decimal number.
+     *
+     * @f[
+     *     v = \sum_{i} s_i 2^{-(i+1)}, \quad s_i \in \{-1, 0, 1\}
+     * @f]
      */
     CONSTEXPR14 auto to_decimal_fractional(const char* csd) -> double {
         auto decimal_value = 0.0;
@@ -315,6 +373,26 @@ namespace csd {
      *
      * The function throws an exception if any invalid characters are encountered.
      *
+     * @f[
+     *     v = \sum_{i} s_i 2^i + \sum_{j} s_j 2^{-(j+1)}, \quad s_i, s_j \in \{-1, 0, 1\}
+     * @f]
+     *
+     * @dot
+     *   digraph csd_decimal_flow {
+     *     rankdir=LR;
+     *     bgcolor="transparent";
+     *     node [shape=box, style=filled, fillcolor="#d4e6f1"];
+     *     csd [label="CSD string\n'+', '-', '0'", fillcolor="#a9cce3"];
+     *     integral [label="Parse integral\npart: sum s_i*2^i", fillcolor="#d4e6f1"];
+     *     fractional [label="Parse fractional\npart: sum s_j*2^{-j-1}", fillcolor="#d4e6f1"];
+     *     output [label="Decimal v", fillcolor="#7fb3d8"];
+     *     csd -> integral;
+     *     csd -> fractional;
+     *     integral -> output;
+     *     fractional -> output;
+     *   }
+     * @enddot
+     *
      * @param[in] csd - Pointer to the null-terminated CSD string to convert
      * @return The decimal value of the CSD string
      */
@@ -346,6 +424,10 @@ namespace csd {
      * to_decimal_i("+00-00.+") returns 28  // Fractional part ignored
      * to_decimal_i("0") returns 0
      * @endcode
+     *
+     * @f[
+     *     n = \sum_{i} s_i 2^i, \quad s_i \in \{-1, 0, 1\}
+     * @f]
      *
      * @param[in] csd Pointer to null-terminated CSD string containing
      *                only '0', '+', '-', and optional '.' characters.
