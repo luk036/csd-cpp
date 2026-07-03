@@ -79,8 +79,8 @@ namespace csd {
      *     encode [label="Encode as\n'+', '-', '0'\nstring"];
      *     output [label="CSD string", fillcolor="#7fb3d8"];
      *     input -> convert -> encode -> output;
-     *     note [shape=note, fillcolor="#fcf3cf", label="x = sum s_i * 2^i\ns_i in {-1,0,1}\nno adjacent non-zero"];
-     *     convert -> note [style=dashed, color="#888", constraint=false];
+     *     note [shape=note, fillcolor="#fcf3cf", label="x = sum s_i * 2^i\ns_i in {-1,0,1}\nno
+     * adjacent non-zero"]; convert -> note [style=dashed, color="#888", constraint=false];
      *   }
      * @enddot
      *
@@ -130,8 +130,8 @@ namespace csd {
      *     encode [label="Encode as\n'+', '-', '0'\nstring"];
      *     output [label="CSD string", fillcolor="#7fb3d8"];
      *     input -> convert -> encode -> output;
-     *     note [shape=note, fillcolor="#fcf3cf", label="n = sum s_i * 2^i\ns_i in {-1,0,1}\nno adjacent non-zero"];
-     *     convert -> note [style=dashed, color="#888", constraint=false];
+     *     note [shape=note, fillcolor="#fcf3cf", label="n = sum s_i * 2^i\ns_i in {-1,0,1}\nno
+     * adjacent non-zero"]; convert -> note [style=dashed, color="#888", constraint=false];
      *   }
      * @enddot
      *
