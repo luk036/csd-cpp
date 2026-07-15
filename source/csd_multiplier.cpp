@@ -3,12 +3,13 @@
 #include <algorithm>
 #include <csd/csd_multiplier.hpp>
 #include <csd/lcsre.hpp>
-#include <map>        // for map
-#include <set>        // for set, greater
-#include <stdexcept>  // for invalid_argument
-#include <string>     // for string, to_string
-#include <utility>    // for pair
-#include <vector>     // for vector
+#include <map>          // for map
+#include <set>          // for set, greater
+#include <stdexcept>    // for invalid_argument
+#include <string>       // for string, to_string
+#include <string_view>  // for string_view
+#include <utility>      // for pair
+#include <vector>       // for vector
 
 namespace csd {
     namespace {
@@ -319,7 +320,7 @@ namespace csd {
          * @param[in] s The CSD substring to analyze
          * @return Number of non-zero digit characters found
          */
-        auto count_nnz(const std::string& s) -> int {
+        auto count_nnz(std::string_view s) -> int {
             int n = 0;
             for (auto c : s) {
                 if (c == '+' || c == '-') ++n;
@@ -330,16 +331,16 @@ namespace csd {
         /**
          * @brief Find substrings that appear across multiple CSD strings
          *
-         * Searches for substrings with at least 2 non-zero digits that appear in
-         * 2 or more different CSD strings. These substrings are candidates for
-         * cross-coefficient common sub-expression elimination.
+         * Uses std::string_view keys to avoid O(N*M²) heap allocations for substrings.
+         * The string_views reference the original CSD data which is stable for the
+         * duration of the call.
          *
          * @param[in] csd_list List of CSD strings to search across
-         * @return Map from pattern string to list of (coefficient_index, position) pairs
+         * @return Map from pattern string_view to list of (coefficient_index, position) pairs
          */
-        auto find_cross_patterns(const std::vector<std::string>& csd_list)
-            -> std::map<std::string, std::vector<std::pair<int, int>>> {
-            std::map<std::string, std::vector<std::pair<int, int>>> patterns;
+        auto find_cross_patterns(const std::vector<std::string_view>& csd_list)
+            -> std::map<std::string_view, std::vector<std::pair<int, int>>> {
+            std::map<std::string_view, std::vector<std::pair<int, int>>> patterns;
             for (int ci = 0; ci < static_cast<int>(csd_list.size()); ++ci) {
                 auto const& csd = csd_list[ci];
                 auto const n = static_cast<int>(csd.size());
@@ -408,13 +409,13 @@ namespace csd {
             }
         }
 
-        // Find best cross-CSD pattern
-        std::vector<std::string> csd_strings;
-        csd_strings.reserve(coeffs.size());
+        // Find best cross-CSD pattern (use string_view to avoid copying CSD strings)
+        std::vector<std::string_view> csd_views;
+        csd_views.reserve(coeffs.size());
         for (auto const& spec : coeffs) {
-            csd_strings.push_back(spec.csd);
+            csd_views.push_back(spec.csd);
         }
-        auto const cross = find_cross_patterns(csd_strings);
+        auto const cross = find_cross_patterns(csd_views);
 
         std::string best_pattern;
         std::vector<std::pair<int, int>> best_occurrences;
@@ -427,7 +428,7 @@ namespace csd {
             auto const score_val = (nnz - 1) * (static_cast<int>(occ.size()) - 1);
             if (score_val > best_score) {
                 best_score = score_val;
-                best_pattern = pat;
+                best_pattern = std::string(pat);
                 best_occurrences = occ;
             }
         }
@@ -442,8 +443,13 @@ namespace csd {
             }
         }
 
+        // Estimate Verilog output size and pre-reserve
+        // Rough estimate: ~200 bytes header + ~50 bytes per x_shift + ~100 bytes per coeff
+        auto estimated_size = 200UL + all_powers.size() * 80UL + coeffs.size() * 150UL;
+
         // Build the Verilog module
         std::string verilog;
+        verilog.reserve(estimated_size);
         verilog += "\nmodule " + module_name + " (";
         verilog += "\n    input signed [" + std::to_string(input_width - 1)
                    + ":0] x,      // Input value";

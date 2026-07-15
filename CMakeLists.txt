@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.14...3.22)
 # Note: update this to your new project's name and version
 project(
   Csd
-  VERSION 1.1.3
+  VERSION 1.1.4
   LANGUAGES CXX
 )
 
@@ -45,7 +45,7 @@ list(FILTER sources EXCLUDE REGEX ".*logger\\.cpp$")
 # Note: for header-only libraries change all PUBLIC flags to INTERFACE and create an interface
 # target: add_library(${PROJECT_NAME} INTERFACE)
 add_library(${PROJECT_NAME} ${headers} ${sources})
-set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 14)
+set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 17)
 
 # being a cross-platform target, we enforce standards conformance on MSVC
 target_compile_options(${PROJECT_NAME} PUBLIC "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permissive->")
@@ -61,7 +61,7 @@ target_link_libraries(${PROJECT_NAME}Logger PUBLIC ${PROJECT_NAME} ${SPECIFIC_LI
 target_include_directories(
   ${PROJECT_NAME}Logger PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
 )
-set_target_properties(${PROJECT_NAME}Logger PROPERTIES CXX_STANDARD 14)
+set_target_properties(${PROJECT_NAME}Logger PROPERTIES CXX_STANDARD 17)
 
 # ---- Create an installable target ----
 # this allows users to install and find the library via `find_package()`.

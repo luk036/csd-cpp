@@ -65,25 +65,26 @@ namespace csd {
      * // Calculation: 2^5 - 2^2 + 2^0 + 2^(-1) = 32 - 4 + 1 + 0.5 = 28.5
      * @endcode
      *
-     * @f[
-     *     x = \sum_{i} s_i 2^i, \quad s_i \in \{-1, 0, 1\}
-     * @f]
-     *
-     * @dot
-     *   digraph csd_flow {
-     *     rankdir=LR;
-     *     bgcolor="transparent";
-     *     node [shape=box, style=filled, fillcolor="#d4e6f1"];
-     *     input [label="Decimal x", fillcolor="#a9cce3"];
-     *     convert [label="Convert to\ncanonical signed\ndigit form"];
-     *     encode [label="Encode as\n'+', '-', '0'\nstring"];
-     *     output [label="CSD string", fillcolor="#7fb3d8"];
-     *     input -> convert -> encode -> output;
-     *     note [shape=note, fillcolor="#fcf3cf", label="x = sum s_i * 2^i\ns_i in {-1,0,1}\nno adjacent non-zero"];
-     *     convert -> note [style=dashed, color="#888", constraint=false];
-     *   }
-     * @enddot
-     *
+ *
+ * @f[
+ *     x = \sum_{i} s_i 2^i, \quad s_i \in \{-1, 0, 1\}
+ * @f]
+ *
+ * @dot
+ *   digraph csd_flow {
+ *     rankdir=LR;
+ *     bgcolor="transparent";
+ *     node [shape=box, style=filled, fillcolor="#d4e6f1"];
+ *     input [label="Decimal x", fillcolor="#a9cce3"];
+ *     convert [label="Convert to\ncanonical signed\ndigit form"];
+ *     encode [label="Encode as\n'+', '-', '0'\nstring"];
+ *     output [label="CSD string", fillcolor="#7fb3d8"];
+ *     input -> convert -> encode -> output;
+ *     note [shape=note, fillcolor="#fcf3cf", label="x = sum s_i * 2^i\ns_i in {-1,0,1}\nno
+ * adjacent non-zero"]; convert -> note [style=dashed, color="#888", constraint=false];
+ *   }
+ * @enddot
+ *
      * @param[in] decimal_value The number to convert to CSD format. Can be positive,
      *                         negative, or zero.
      * @param[in] places The number of decimal places to include in the CSD representation.
@@ -116,25 +117,26 @@ namespace csd {
      * to_csd_i(0) returns "0"
      * @endcode
      *
-     * @f[
-     *     n = \sum_{i} s_i 2^i, \quad s_i \in \{-1, 0, 1\}
-     * @f]
-     *
-     * @dot
-     *   digraph csd_i_flow {
-     *     rankdir=LR;
-     *     bgcolor="transparent";
-     *     node [shape=box, style=filled, fillcolor="#d4e6f1"];
-     *     input [label="Integer n", fillcolor="#a9cce3"];
-     *     convert [label="Convert to\ncanonical signed\ndigit form"];
-     *     encode [label="Encode as\n'+', '-', '0'\nstring"];
-     *     output [label="CSD string", fillcolor="#7fb3d8"];
-     *     input -> convert -> encode -> output;
-     *     note [shape=note, fillcolor="#fcf3cf", label="n = sum s_i * 2^i\ns_i in {-1,0,1}\nno adjacent non-zero"];
-     *     convert -> note [style=dashed, color="#888", constraint=false];
-     *   }
-     * @enddot
-     *
+ *
+ * @f[
+ *     n = \sum_{i} s_i 2^i, \quad s_i \in \{-1, 0, 1\}
+ * @f]
+ *
+ * @dot
+ *   digraph csd_i_flow {
+ *     rankdir=LR;
+ *     bgcolor="transparent";
+ *     node [shape=box, style=filled, fillcolor="#d4e6f1"];
+ *     input [label="Integer n", fillcolor="#a9cce3"];
+ *     convert [label="Convert to\ncanonical signed\ndigit form"];
+ *     encode [label="Encode as\n'+', '-', '0'\nstring"];
+ *     output [label="CSD string", fillcolor="#7fb3d8"];
+ *     input -> convert -> encode -> output;
+ *     note [shape=note, fillcolor="#fcf3cf", label="n = sum s_i * 2^i\ns_i in {-1,0,1}\nno
+ * adjacent non-zero"]; convert -> note [style=dashed, color="#888", constraint=false];
+ *   }
+ * @enddot
+ *
      * @param[in] decimal_value The integer to convert to CSD format. Can be positive,
      *                         negative, or zero.
      *

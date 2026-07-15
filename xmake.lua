@@ -28,13 +28,27 @@ elseif is_plat("windows") then
 end
 
 target("Csd")
-    set_languages("c++14")
+    set_languages("c++17")
     set_kind("static")
     add_includedirs("include", {public = true})
     add_files("source/csd.cpp", "source/lcsre.cpp", "source/csd_multiplier.cpp")
 
+target("check_verilog")
+    set_languages("c++17")
+    set_kind("binary")
+    add_deps("Csd")
+    add_includedirs("include", {public = true})
+    add_files("bench/check_verilog.cpp")
+
+target("bench_csd")
+    set_languages("c++17")
+    set_kind("binary")
+    add_deps("Csd")
+    add_includedirs("include", {public = true})
+    add_files("bench/bench_csd.cpp")
+
 target("CsdLogger")
-    set_languages("c++14")
+    set_languages("c++17")
     set_kind("static")
     add_deps("Csd")
     add_includedirs("include", {public = true})
@@ -42,7 +56,7 @@ target("CsdLogger")
     add_packages("spdlog")
 
 target("test_csd")
-    set_languages("c++14")
+    set_languages("c++17")
     set_kind("binary")
     add_deps("Csd")
     add_files("test/source/*.cpp")
@@ -73,7 +87,7 @@ target("test_csd")
     end
 
 target("test_switch")
-    set_languages("c++14")
+    set_languages("c++17")
     set_kind("binary")
     add_deps("Csd")
     add_files("bench/BM_switch.cpp")
