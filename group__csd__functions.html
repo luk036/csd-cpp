@@ -28,7 +28,7 @@ MathJax.Hub.Config({
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Csd<span id="projectnumber">&#160;1.1.3;  VERSION ${PROJECT_VERSION}</span>
+   <div id="projectname">Csd<span id="projectnumber">&#160;1.1.4;  VERSION ${PROJECT_VERSION}</span>
    </div>
   </td>
  </tr>
@@ -96,10 +96,8 @@ Classes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:gae675b6458aee63f9ec4acc709e95b4d2" id="r_gae675b6458aee63f9ec4acc709e95b4d2"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__csd__functions.html#gae675b6458aee63f9ec4acc709e95b4d2">csd::to_csd</a> (double decimal_value, int places) -&gt; std::string</td></tr>
-<tr class="memdesc:gae675b6458aee63f9ec4acc709e95b4d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a floating-point number to CSD representation.  <br /></td></tr>
 <tr class="separator:gae675b6458aee63f9ec4acc709e95b4d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga867fa1175a61f1c1f7b1ea17b7a7c5d4" id="r_ga867fa1175a61f1c1f7b1ea17b7a7c5d4"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__csd__functions.html#ga867fa1175a61f1c1f7b1ea17b7a7c5d4">csd::to_csd_i</a> (int decimal_value) -&gt; std::string</td></tr>
-<tr class="memdesc:ga867fa1175a61f1c1f7b1ea17b7a7c5d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert an integer to CSD representation.  <br /></td></tr>
 <tr class="separator:ga867fa1175a61f1c1f7b1ea17b7a7c5d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8fad601144936444dd4832746d49296f" id="r_ga8fad601144936444dd4832746d49296f"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__csd__functions.html#ga8fad601144936444dd4832746d49296f">csd::to_csdnnz</a> (double decimal_value, unsigned int nnz) -&gt; std::string</td></tr>
 <tr class="memdesc:ga8fad601144936444dd4832746d49296f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a floating-point number to CSD with limited non-zero digits.  <br /></td></tr>
@@ -167,35 +165,45 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<pre class="fragment">@brief Convert a floating-point number to CSD representation
+@ingroup csd_functions
 
-<p>Convert a floating-point number to CSD representation. </p>
-<p>Converts a double precision floating point number to a string representation in Canonical Signed Digit (CSD) format with a specified number of decimal places.</p>
-<p>The CSD format ensures that:</p><ul>
-<li>Each digit is either '0', '+', or '-'</li>
-<li>No two consecutive digits are non-zero</li>
-<li>The representation has the minimal number of non-zero digits</li>
-</ul>
-<p>Example: </p><div class="fragment"><div class="line"><a class="code hl_function" href="group__csd__functions.html#gae675b6458aee63f9ec4acc709e95b4d2">to_csd</a>(28.5, 2) returns &quot;+00-00.+&quot;</div>
-<div class="line"><span class="comment">// Calculation: 2^5 - 2^2 + 2^0 + 2^(-1) = 32 - 4 + 1 + 0.5 = 28.5</span></div>
-<div class="ttc" id="agroup__csd__functions_html_gae675b6458aee63f9ec4acc709e95b4d2"><div class="ttname"><a href="group__csd__functions.html#gae675b6458aee63f9ec4acc709e95b4d2">csd::to_csd</a></div><div class="ttdeci">auto to_csd(double decimal_value, int places) -&gt; std::string</div><div class="ttdoc">Convert a floating-point number to CSD representation.</div></div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">decimal_value</td><td>The number to convert to CSD format. Can be positive, negative, or zero. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">places</td><td>The number of decimal places to include in the CSD representation. Must be non-negative. Use 0 for integer values.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>String representation of the input number in CSD format. The string contains only '0', '+', '-', and '.' characters.</dd></dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::invalid_argument</td><td>If places is negative or if the conversion fails due to numerical limitations.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__csd__functions.html#ga867fa1175a61f1c1f7b1ea17b7a7c5d4" title="Convert an integer to CSD representation.">to_csd_i()</a> for integer-only conversion </dd>
-<dd>
-<a class="el" href="group__csd__functions.html#ga7c7f78d90b854721226d9648b25af3a4" title="Convert the CSD string to a decimal.">to_decimal()</a> for reverse conversion </dd></dl>
+Converts a double precision floating point number to a string
+representation in Canonical Signed Digit (CSD) format with a
+specified number of decimal places.
 
+The CSD format ensures that:
+- Each digit is either '0', '+', or '-'
+- No two consecutive digits are non-zero
+- The representation has the minimal number of non-zero digits
+
+Example:
+@code
+to_csd(28.5, 2) returns "+00-00.+"
+// Calculation: 2^5 - 2^2 + 2^0 + 2^(-1) = 32 - 4 + 1 + 0.5 = 28.5
+@endcode
+</pre><p class="formulaDsp">
+\[
+    x = \sum_{i} s_i 2^i, \quad s_i \in \{-1, 0, 1\}
+\]
+</p>
+<div class="dotgraph">
+<img src="dot_inline_dotgraph_1.png" alt="dot_inline_dotgraph_1.png" border="0" usemap="#dot_inline_dotgraph_1.map"/>
+</div>
+ <pre class="fragment">@param[in] decimal_value The number to convert to CSD format. Can be positive,
+                        negative, or zero.
+@param[in] places The number of decimal places to include in the CSD representation.
+                 Must be non-negative. Use 0 for integer values.
+
+@return String representation of the input number in CSD format.
+        The string contains only '0', '+', '-', and '.' characters.
+
+@throws std::invalid_argument If places is negative or if the conversion
+                              fails due to numerical limitations.
+
+@see to_csd_i() for integer-only conversion
+@see to_decimal() for reverse conversion
+</pre> 
 </div>
 </div>
 <a id="ga867fa1175a61f1c1f7b1ea17b7a7c5d4" name="ga867fa1175a61f1c1f7b1ea17b7a7c5d4"></a>
@@ -221,31 +229,39 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<pre class="fragment">@brief Convert an integer to CSD representation
+@ingroup csd_functions
 
-<p>Convert an integer to CSD representation. </p>
-<p>Converts an integer to a string representation in Canonical Signed Digit (CSD) format. This function is optimized for integer values and produces a CSD string without a decimal point.</p>
-<p>Example: </p><div class="fragment"><div class="line"><a class="code hl_function" href="group__csd__functions.html#ga867fa1175a61f1c1f7b1ea17b7a7c5d4">to_csd_i</a>(28) returns &quot;+00-00&quot;</div>
-<div class="line"><span class="comment">// Calculation: 2^5 - 2^2 = 32 - 4 = 28</span></div>
-<div class="line"> </div>
-<div class="line"><a class="code hl_function" href="group__csd__functions.html#ga867fa1175a61f1c1f7b1ea17b7a7c5d4">to_csd_i</a>(0) returns &quot;0&quot;</div>
-<div class="ttc" id="agroup__csd__functions_html_ga867fa1175a61f1c1f7b1ea17b7a7c5d4"><div class="ttname"><a href="group__csd__functions.html#ga867fa1175a61f1c1f7b1ea17b7a7c5d4">csd::to_csd_i</a></div><div class="ttdeci">auto to_csd_i(int decimal_value) -&gt; std::string</div><div class="ttdoc">Convert an integer to CSD representation.</div></div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">decimal_value</td><td>The integer to convert to CSD format. Can be positive, negative, or zero.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>String representation of the input integer in CSD format. The string contains only '0', '+', and '-' characters.</dd></dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::invalid_argument</td><td>If the conversion fails due to numerical limitations.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__csd__functions.html#gae675b6458aee63f9ec4acc709e95b4d2" title="Convert a floating-point number to CSD representation.">to_csd()</a> for floating-point conversion </dd>
-<dd>
-<a class="el" href="group__csd__functions.html#ga074473a5966090abd466c580417770f0" title="Convert CSD string to integer.">to_decimal_i()</a> for reverse conversion </dd></dl>
+Converts an integer to a string representation in Canonical Signed Digit (CSD) format.
+This function is optimized for integer values and produces a CSD string without
+a decimal point.
 
+Example:
+@code
+to_csd_i(28) returns "+00-00"
+// Calculation: 2^5 - 2^2 = 32 - 4 = 28
+
+to_csd_i(0) returns "0"
+@endcode
+</pre><p class="formulaDsp">
+\[
+    n = \sum_{i} s_i 2^i, \quad s_i \in \{-1, 0, 1\}
+\]
+</p>
+<div class="dotgraph">
+<img src="dot_inline_dotgraph_2.png" alt="dot_inline_dotgraph_2.png" border="0" usemap="#dot_inline_dotgraph_2.map"/>
+</div>
+ <pre class="fragment">@param[in] decimal_value The integer to convert to CSD format. Can be positive,
+                        negative, or zero.
+
+@return String representation of the input integer in CSD format.
+        The string contains only '0', '+', and '-' characters.
+
+@throws std::invalid_argument If the conversion fails due to numerical limitations.
+
+@see to_csd() for floating-point conversion
+@see to_decimal_i() for reverse conversion
+</pre> 
 </div>
 </div>
 <a id="ga8fad601144936444dd4832746d49296f" name="ga8fad601144936444dd4832746d49296f"></a>
@@ -288,7 +304,12 @@ Variables</h2></td></tr>
 <p>Example: </p><div class="fragment"><div class="line"><a class="code hl_function" href="group__csd__functions.html#ga8fad601144936444dd4832746d49296f">to_csdnnz</a>(28.5, 3) returns &quot;+00-00.+&quot;</div>
 <div class="line"><span class="comment">// Uses only 3 non-zero digits: + at position 5, - at position 2, + at position 0</span></div>
 <div class="ttc" id="agroup__csd__functions_html_ga8fad601144936444dd4832746d49296f"><div class="ttname"><a href="group__csd__functions.html#ga8fad601144936444dd4832746d49296f">csd::to_csdnnz</a></div><div class="ttdeci">auto to_csdnnz(double decimal_value, unsigned int nnz) -&gt; std::string</div><div class="ttdoc">Convert a floating-point number to CSD with limited non-zero digits.</div></div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+</div><!-- fragment --><p class="formulaDsp">
+\[
+    x \approx \sum_{i} s_i 2^i, \quad |\{i : s_i \ne 0\}| \le \mathrm{nnz}
+\]
+</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">decimal_value</td><td>The number to convert to CSD format. Can be positive, negative, or zero. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">nnz</td><td>The maximum number of non-zero digits allowed in the CSD representation. Must be at least 1. Larger values produce more accurate representations.</td></tr>
@@ -304,7 +325,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="group__csd__functions.html#ga8e5245e01d6827ecdcd6e9802365591f" title="Convert an integer to CSD with limited non-zero digits.">to_csdnnz_i()</a> for integer version </dd>
 <dd>
-<a class="el" href="group__csd__functions.html#gae675b6458aee63f9ec4acc709e95b4d2" title="Convert a floating-point number to CSD representation.">to_csd()</a> for unlimited non-zero digits </dd></dl>
+<a class="el" href="group__csd__functions.html#gae675b6458aee63f9ec4acc709e95b4d2">to_csd()</a> for unlimited non-zero digits </dd></dl>
 
 </div>
 </div>
@@ -348,7 +369,12 @@ Variables</h2></td></tr>
 <p>Example: </p><div class="fragment"><div class="line"><a class="code hl_function" href="group__csd__functions.html#ga8e5245e01d6827ecdcd6e9802365591f">to_csdnnz_i</a>(28, 2) returns &quot;+00-00&quot;</div>
 <div class="line"><span class="comment">// Uses only 2 non-zero digits: + at position 5, - at position 2</span></div>
 <div class="ttc" id="agroup__csd__functions_html_ga8e5245e01d6827ecdcd6e9802365591f"><div class="ttname"><a href="group__csd__functions.html#ga8e5245e01d6827ecdcd6e9802365591f">csd::to_csdnnz_i</a></div><div class="ttdeci">auto to_csdnnz_i(int decimal_value, unsigned int nnz) -&gt; std::string</div><div class="ttdoc">Convert an integer to CSD with limited non-zero digits.</div></div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+</div><!-- fragment --><p class="formulaDsp">
+\[
+    n \approx \sum_{i} s_i 2^i, \quad |\{i : s_i \ne 0\}| \le \mathrm{nnz}
+\]
+</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">decimal_value</td><td>The integer to convert to CSD format. Can be positive, negative, or zero. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">nnz</td><td>The maximum number of non-zero digits allowed in the CSD representation. Must be at least 1.</td></tr>
@@ -364,7 +390,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="group__csd__functions.html#ga8fad601144936444dd4832746d49296f" title="Convert a floating-point number to CSD with limited non-zero digits.">to_csdnnz()</a> for floating-point version </dd>
 <dd>
-<a class="el" href="group__csd__functions.html#ga867fa1175a61f1c1f7b1ea17b7a7c5d4" title="Convert an integer to CSD representation.">to_csd_i()</a> for unlimited non-zero digits </dd></dl>
+<a class="el" href="group__csd__functions.html#ga867fa1175a61f1c1f7b1ea17b7a7c5d4">to_csd_i()</a> for unlimited non-zero digits </dd></dl>
 
 </div>
 </div>
@@ -389,6 +415,14 @@ Variables</h2></td></tr>
 <p>The integral part is processed first, multiplying the value by 2 for each '0' and adding/subtracting 1 for '+'/'-'.</p>
 <p>Then the fractional part is processed, starting with a scale of 0.5 and adding/ subtracting fractions of that scale based on the '+/-' digits.</p>
 <p>The function throws an exception if any invalid characters are encountered.</p>
+<p class="formulaDsp">
+\[
+    v = \sum_{i} s_i 2^i + \sum_{j} s_j 2^{-(j+1)}, \quad s_i, s_j \in \{-1, 0, 1\}
+\]
+</p>
+<div class="dotgraph">
+<img src="dot_inline_dotgraph_3.png" alt="dot_inline_dotgraph_3.png" border="0" usemap="#dot_inline_dotgraph_3.map"/>
+</div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">csd</td><td>- Pointer to the null-terminated CSD string to convert </td></tr>
@@ -416,8 +450,13 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Convert the fractional part of a CSD string to a decimal. </p>
-<p>This function takes a pointer to a CSD string that contains a fractional part, starting after the '.' character. It iterates through the fractional digits, keeping track of a scaling factor. For each '+' it adds, and for each '-' it subtracts, a fraction of the current scale. This builds up the fractional part of the final decimal number. </p>
-
+<p>This function takes a pointer to a CSD string that contains a fractional part, starting after the '.' character. It iterates through the fractional digits, keeping track of a scaling factor. For each '+' it adds, and for each '-' it subtracts, a fraction of the current scale. This builds up the fractional part of the final decimal number.</p>
+<p class="formulaDsp">
+\[
+    v = \sum_{i} s_i 2^{-(i+1)}, \quad s_i \in \{-1, 0, 1\}
+\]
+</p>
+ 
 </div>
 </div>
 <a id="ga074473a5966090abd466c580417770f0" name="ga074473a5966090abd466c580417770f0"></a>
@@ -442,8 +481,13 @@ Variables</h2></td></tr>
 <p>Example: </p><div class="fragment"><div class="line"><a class="code hl_function" href="group__csd__functions.html#ga074473a5966090abd466c580417770f0">to_decimal_i</a>(<span class="stringliteral">&quot;+00-00&quot;</span>) returns 28</div>
 <div class="line"><a class="code hl_function" href="group__csd__functions.html#ga074473a5966090abd466c580417770f0">to_decimal_i</a>(&quot;+00-00.+&quot;) returns 28  <span class="comment">// Fractional part ignored</span></div>
 <div class="line"><a class="code hl_function" href="group__csd__functions.html#ga074473a5966090abd466c580417770f0">to_decimal_i</a>(&quot;0&quot;) returns 0</div>
-<div class="ttc" id="agroup__csd__functions_html_ga074473a5966090abd466c580417770f0"><div class="ttname"><a href="group__csd__functions.html#ga074473a5966090abd466c580417770f0">csd::to_decimal_i</a></div><div class="ttdeci">CONSTEXPR14 auto to_decimal_i(const char *csd) -&gt; int</div><div class="ttdoc">Convert CSD string to integer.</div><div class="ttdef"><b>Definition</b> csd.hpp:360</div></div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+<div class="ttc" id="agroup__csd__functions_html_ga074473a5966090abd466c580417770f0"><div class="ttname"><a href="group__csd__functions.html#ga074473a5966090abd466c580417770f0">csd::to_decimal_i</a></div><div class="ttdeci">CONSTEXPR14 auto to_decimal_i(const char *csd) -&gt; int</div><div class="ttdoc">Convert CSD string to integer.</div><div class="ttdef"><b>Definition</b> csd.hpp:444</div></div>
+</div><!-- fragment --><p class="formulaDsp">
+\[
+    n = \sum_{i} s_i 2^i, \quad s_i \in \{-1, 0, 1\}
+\]
+</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">csd</td><td>Pointer to null-terminated CSD string containing only '0', '+', '-', and optional '.' characters.</td></tr>
   </table>
@@ -456,7 +500,7 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__csd__functions.html#ga867fa1175a61f1c1f7b1ea17b7a7c5d4" title="Convert an integer to CSD representation.">to_csd_i()</a> for reverse conversion </dd>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__csd__functions.html#ga867fa1175a61f1c1f7b1ea17b7a7c5d4">to_csd_i()</a> for reverse conversion </dd>
 <dd>
 <a class="el" href="group__csd__functions.html#ga7c7f78d90b854721226d9648b25af3a4" title="Convert the CSD string to a decimal.">to_decimal()</a> for floating-point conversion </dd></dl>
 
@@ -483,6 +527,11 @@ Variables</h2></td></tr>
 <p>For each '0' digit, it multiplies the current value by 2. For each '+' digit, it multiplies the current value by 2 and adds 1. For each '-' digit, it multiplies the current value by 2 and subtracts 1.</p>
 <p>It stops when it reaches either a '.' or '\0' character, as those mark the end of the integral part.</p>
 <p>It throws an exception if any invalid character is encountered.</p>
+<p class="formulaDsp">
+\[
+    v = \sum_{i} s_i 2^i, \quad s_i \in \{-1, 0, 1\}
+\]
+</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">csd</td><td>- Pointer to the null-terminated CSD string </td></tr>
@@ -510,6 +559,11 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Converts a CSD string to a double precision decimal number using a switch statement.</p>
 <p>This is an internal implementation detail, not part of the public API.</p>
+<p class="formulaDsp">
+\[
+    v = \sum_{i} s_i 2^i, \quad s_i \in \{-1, 0, 1\}
+\]
+</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">csd</td><td>The parameter <code>csd</code> is a pointer to a character array, which represents the input string. It is assumed that the string is null-terminated. </td></tr>
