@@ -1,10 +1,9 @@
 #include <chrono>
-#include <cstdio>
 #include <csd/csd.hpp>
+#include <cstdio>
 #include <string>
 
-template <typename F>
-void bench(const char* name, F&& f, int iterations = 100000) {
+template <typename F> void bench(const char* name, F&& f, int iterations = 100000) {
     // warmup
     for (int i = 0; i < 1000; ++i) f();
     auto start = std::chrono::steady_clock::now();
