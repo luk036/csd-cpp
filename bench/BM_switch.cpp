@@ -7,59 +7,26 @@
 ///
 /// @note This benchmark is used to measure performance of different parsing strategies
 
-#include <benchmark/benchmark.h>
+#define ANKERL_NANOBENCH_IMPLEMENT
+#include <nanobench.h>
 
 #include <csd/csd.hpp>
 
 using namespace csd;
 
-// extern auto to_decimal(const std::string &csd_str) -> double;
-// extern auto to_decimal_using_switch(const std::string &csd_str) -> double;
+int main() {
+    ankerl::nanobench::Bench bench;
+    bench.title("CSD to decimal conversion methods").unit("op").warmup(1000).epochs(100).minEpochIterations(1000000);
 
-/**
- * The function `using_if_else` repeatedly measures the time it takes to convert a given string to a
- * decimal number using the `to_decimal` function.
- *
- * @param[in] state The `state` parameter in the `using_if_else` function is of type
- * `benchmark::State`. It is used by the Google Benchmark library to control the benchmarking
- * process. It provides various methods and properties to control the benchmark execution and to
- * access the benchmark results.
- */
-static void using_if_else(benchmark::State& state) {
-    // Code inside this loop is measured repeatedly
-    for (auto _ : state) {
+    bench.run("using_if_else", [&] {
         std::string test("+00-00+00+00-00+00+0-0+0+.+00+00-0++");
-
         auto result = to_decimal(test.c_str());
-        // Make sure the variable is not optimized away by compiler
-        benchmark::DoNotOptimize(result);
-    }
-}
-// Register the function as a benchmark
-BENCHMARK(using_if_else);
+        ankerl::nanobench::doNotOptimizeAway(result);
+    });
 
-/**
- * @brief Benchmark the switch-based CSD to decimal conversion
- *
- * Repeatedly measures the time it takes to convert a given string to a
- * decimal number using the `to_decimal_using_switch` function, which uses
- * a switch statement for character parsing.
- *
- * @param[in] state The `state` parameter in the `using_switch` function is of type
- * `benchmark::State`. It is used by the Google Benchmark library to control the benchmarking
- * process. It provides various methods and properties to control the benchmark execution and to
- * access the benchmark results.
- */
-static void using_switch(benchmark::State& state) {
-    // Code inside this loop is measured repeatedly
-    for (auto _ : state) {
+    bench.run("using_switch", [&] {
         std::string test("+00-00+00+00-00+00+0-0+0+.+00+00-0++");
-
         auto result = to_decimal_using_switch(test.c_str());
-        // Make sure the variable is not optimized away by compiler
-        benchmark::DoNotOptimize(result);
-    }
+        ankerl::nanobench::doNotOptimizeAway(result);
+    });
 }
-BENCHMARK(using_switch);
-
-BENCHMARK_MAIN();
