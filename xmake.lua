@@ -6,7 +6,7 @@ end
 add_requires("doctest", {alias = "doctest"})
 add_requires("fmt", {alias = "fmt"})
 add_requires("spdlog", {alias = "spdlog"})
-add_requires("benchmark", {alias = "benchmark"})
+add_requires("nanobench", {alias = "nanobench"})
 add_requires("cxxopts", {alias = "cxxopts"})
 
 if is_mode("coverage") then
@@ -46,6 +46,7 @@ target("bench_csd")
     add_deps("Csd")
     add_includedirs("include", {public = true})
     add_files("bench/bench_csd.cpp")
+    add_packages("nanobench")
 
 target("CsdLogger")
     set_languages("c++17")
@@ -91,7 +92,7 @@ target("test_switch")
     set_kind("binary")
     add_deps("Csd")
     add_files("bench/BM_switch.cpp")
-    add_packages("benchmark")
+    add_packages("nanobench")
 
 target("csd_cli")
     set_languages("c++17")
