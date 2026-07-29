@@ -16,7 +16,11 @@ using namespace csd;
 
 int main() {
     ankerl::nanobench::Bench bench;
-    bench.title("CSD to decimal conversion methods").unit("op").warmup(1000).epochs(100).minEpochIterations(1000000);
+    bench.title("CSD to decimal conversion methods")
+        .unit("op")
+        .warmup(1000)
+        .epochs(100)
+        .minEpochIterations(1000000);
 
     bench.run("using_if_else", [&] {
         std::string test("+00-00+00+00-00+00+0-0+0+.+00+00-0++");

@@ -8,7 +8,11 @@ int main() {
     // scheduler tick (~15ms). Each epoch needs >= 100ms to average out noise.
     {
         ankerl::nanobench::Bench bench;
-        bench.title("CSD Benchmarks (fast)").unit("op").warmup(10000).epochs(30).minEpochIterations(10000000);
+        bench.title("CSD Benchmarks (fast)")
+            .unit("op")
+            .warmup(10000)
+            .epochs(30)
+            .minEpochIterations(10000000);
 
         bench.run("to_decimal('+00-00.+0')", [&] {
             auto result = csd::to_decimal("+00-00.+0");
@@ -24,7 +28,11 @@ int main() {
     // Medium operations (50-200ns)
     {
         ankerl::nanobench::Bench bench;
-        bench.title("CSD Benchmarks (medium)").unit("op").warmup(5000).epochs(50).minEpochIterations(2000000);
+        bench.title("CSD Benchmarks (medium)")
+            .unit("op")
+            .warmup(5000)
+            .epochs(50)
+            .minEpochIterations(2000000);
 
         bench.run("to_csd_i(28)", [&] {
             auto result = csd::to_csd_i(28);
@@ -50,7 +58,11 @@ int main() {
     // Slow operations (>200ns) - fewer iterations suffice
     {
         ankerl::nanobench::Bench bench;
-        bench.title("CSD Benchmarks (slow)").unit("op").warmup(2000).epochs(80).minEpochIterations(500000);
+        bench.title("CSD Benchmarks (slow)")
+            .unit("op")
+            .warmup(2000)
+            .epochs(80)
+            .minEpochIterations(500000);
 
         bench.run("to_csd(28.5, 10)", [&] {
             auto result = csd::to_csd(28.5, 10);
