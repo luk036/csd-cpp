@@ -193,17 +193,9 @@ namespace csd {
         // auto p2n = int(pow(2.0, ceil(log2(abs(decimal_value) * 1.5))));
         auto temp = static_cast<uint32_t>(abs(decimal_value) * 3 / 2);
         auto p2n = static_cast<int>(highest_power_of_two_in(temp) * 2);
-        // Pre-allocate string: CSD length = log2(p2n)
+        // Pre-allocate string: CSD length = log2(p2n
         string csd{};
-        {
-            auto cap = static_cast<unsigned int>(p2n);
-            size_t estimated = 0;
-            while (cap > 1) {
-                cap >>= 1;
-                ++estimated;
-            }
-            csd.reserve(estimated);
-        }
+        csd.reserve(32);  // Reserve a reasonable size for the CSD string
 
         while (p2n > 1) {
             auto const p2n_half = p2n >> 1;

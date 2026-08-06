@@ -1,11 +1,8 @@
 cmake_minimum_required(VERSION 3.14...3.22)
 
-# ---- Project ----
-
-# Note: update this to your new project's name and version
 project(
   Csd
-  VERSION 1.1.4
+  VERSION 1.1.5
   LANGUAGES CXX
 )
 
@@ -18,32 +15,99 @@ if(PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
   )
 endif()
 
-# ---- Add dependencies via CPM ----
-# see https://github.com/TheLartians/CPM.cmake for more info
+# ---------------------------------------------------------------------------
+# Compiler warnings (as errors)
+# ---------------------------------------------------------------------------
 
-include(cmake/CPM.cmake)
-include(cmake/specific.cmake)
+function(target_enable_warnings TARGET)
+  if(MSVC)
+    target_compile_options(${TARGET} PRIVATE /W4 /WX /utf-8 /wd4819)
+  elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
+    target_compile_options(${TARGET} PRIVATE -Wall -Wextra -Wpedantic -Werror)
+  endif()
+endfunction()
+
+# ---------------------------------------------------------------------------
+# Options
+# ---------------------------------------------------------------------------
+option(CSD_BUILD_TESTS "Build tests" ON)
+option(CSD_BUILD_BENCHMARKS "Build benchmarks" OFF)
+option(CSD_BUILD_STANDALONE "Build standalone executable" ON)
+option(CSD_BUILD_DOCS "Build Doxygen documentation" OFF)
+option(CSD_ENABLE_CLANG_TIDY "Enable clang-tidy analysis" OFF)
+option(CSD_ENABLE_COVERAGE "Enable coverage reporting" OFF)
+
+# ---------------------------------------------------------------------------
+# Dependencies
+# ---------------------------------------------------------------------------
+
+# Download CPM.cmake for reproducible dependency management
+# see https://github.com/cpm-cmake/CPM.cmake for more info
+set(CPM_DOWNLOAD_VERSION 0.38.5)
+set(CPM_HASH_SUM "192aa0ccdc57dfe75bd9e4b176bf7fb5692fd2b3e3f7b09c74856fc39572b31c")
+set(CPM_DOWNLOAD_LOCATION "${CMAKE_BINARY_DIR}/cmake/CPM_${CPM_DOWNLOAD_VERSION}.cmake")
+if(NOT (EXISTS ${CPM_DOWNLOAD_LOCATION}))
+  message(STATUS "Downloading CPM.cmake to ${CPM_DOWNLOAD_LOCATION}")
+  file(
+    DOWNLOAD https://github.com/cpm-cmake/CPM.cmake/releases/download/v${CPM_DOWNLOAD_VERSION}/CPM.cmake
+             ${CPM_DOWNLOAD_LOCATION}
+    EXPECTED_HASH SHA256=${CPM_HASH_SUM}
+  )
+endif()
+include(${CPM_DOWNLOAD_LOCATION})
 
 # PackageProject.cmake will be used to make our target installable
 CPMAddPackage("gh:TheLartians/PackageProject.cmake@1.8.0")
 
-# ---- Add source files ----
+# fmt is a transitive dependency of spdlog; prefer a system-installed fmt when available.
+find_package(fmt CONFIG QUIET)
+if(fmt_FOUND)
+  message(STATUS "Found system fmt: ${fmt_DIR}")
+  set(CPM_fmt_ADDED YES)
+else()
+  CPMAddPackage(
+    NAME fmt
+    GIT_TAG 12.1.0
+    GITHUB_REPOSITORY fmtlib/fmt
+    OPTIONS "FMT_INSTALL YES" # create an installable target
+  )
+endif()
+
+# spdlog is used only by the separate logger target; prefer a system-installed spdlog when
+# available. SPDLOG_FMT_EXTERNAL is always set so spdlog uses the external fmt and avoids
+# duplicate symbols.
+find_package(spdlog CONFIG QUIET)
+if(spdlog_FOUND)
+  message(STATUS "Found system spdlog: ${spdlog_DIR}")
+  set(CPM_spdlog_ADDED YES)
+else()
+  CPMAddPackage(
+    NAME spdlog
+    GIT_TAG v1.17.0
+    GITHUB_REPOSITORY gabime/spdlog
+    OPTIONS "SPDLOG_INSTALL YES" "SPDLOG_FMT_EXTERNAL YES"
+  )
+endif()
+
+set(SPECIFIC_LIBS fmt::fmt spdlog::spdlog)
+
+# ---------------------------------------------------------------------------
+# Library target
+# ---------------------------------------------------------------------------
 
 # Note: globbing sources is considered bad practice as CMake's generators may not detect new files
 # automatically. Keep that in mind when changing files, or explicitly mention them here.
-file(GLOB_RECURSE headers CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp"
+file(GLOB_RECURSE headers CONFIGURE_DEPENDS
      "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h"
+     "${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp"
 )
-file(GLOB_RECURSE sources CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp"
+file(GLOB_RECURSE sources CONFIGURE_DEPENDS
+     "${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp"
      "${CMAKE_CURRENT_SOURCE_DIR}/source/*.tpp"
 )
 # Exclude logger from the core library; it's provided as a separate target
 list(FILTER sources EXCLUDE REGEX ".*logger\\.cpp$")
 
-# ---- Create library ----
-
-# Note: for header-only libraries change all PUBLIC flags to INTERFACE and create an interface
-# target: add_library(${PROJECT_NAME} INTERFACE)
 add_library(${PROJECT_NAME} ${headers} ${sources})
 set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 17)
 
@@ -55,13 +119,16 @@ target_include_directories(
                          $<INSTALL_INTERFACE:include/${PROJECT_NAME}-${PROJECT_VERSION}>
 )
 
-# Separate target for the logger, keeps spdlog/fmt out of the core library
+target_enable_warnings(${PROJECT_NAME})
+
+# Separate target for the logger, keeps spdlog/fmt out of the core library.
 add_library(${PROJECT_NAME}Logger STATIC source/logger.cpp)
 target_link_libraries(${PROJECT_NAME}Logger PUBLIC ${PROJECT_NAME} ${SPECIFIC_LIBS})
 target_include_directories(
   ${PROJECT_NAME}Logger PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
 )
 set_target_properties(${PROJECT_NAME}Logger PROPERTIES CXX_STANDARD 17)
+target_enable_warnings(${PROJECT_NAME}Logger)
 
 # ---- Create an installable target ----
 # this allows users to install and find the library via `find_package()`.
@@ -81,3 +148,194 @@ packageProject(
   COMPATIBILITY SameMajorVersion
   DEPENDENCIES "fmt 12.1.0"
 )
+
+# ---------------------------------------------------------------------------
+# Standalone executable
+# ---------------------------------------------------------------------------
+
+if(CSD_BUILD_STANDALONE)
+  # cxxopts is a header-only CLI parser used by the standalone example
+  CPMAddPackage(
+    GITHUB_REPOSITORY jarro2783/cxxopts
+    VERSION 3.2.1
+    OPTIONS "CXXOPTS_BUILD_EXAMPLES NO" "CXXOPTS_BUILD_TESTS NO" "CXXOPTS_ENABLE_INSTALL NO"
+  )
+  # keep third-party headers out of our -Werror scope
+  get_target_property(CXXOPTS_INCLUDE_DIRS cxxopts::cxxopts INTERFACE_INCLUDE_DIRECTORIES)
+
+  # Only include main.cpp to avoid multiple main function definitions
+  add_executable(CsdStandalone standalone/source/main.cpp)
+  set_target_properties(CsdStandalone PROPERTIES OUTPUT_NAME "Csd" CXX_STANDARD 17)
+  target_include_directories(CsdStandalone SYSTEM PRIVATE ${CXXOPTS_INCLUDE_DIRS})
+  target_link_libraries(CsdStandalone PRIVATE Csd::Csd cxxopts::cxxopts ${SPECIFIC_LIBS})
+  target_enable_warnings(CsdStandalone)
+endif()
+
+# ---------------------------------------------------------------------------
+# Tests
+# ---------------------------------------------------------------------------
+
+enable_testing()
+
+if(CSD_BUILD_TESTS)
+  # Try system-installed doctest first (Ubuntu: doctest-dev, macOS: brew install doctest, Termux:
+  # doctest)
+  find_package(doctest CONFIG QUIET)
+
+  if(NOT doctest_FOUND)
+    CPMAddPackage(
+      NAME doctest
+      GITHUB_REPOSITORY doctest/doctest
+      VERSION 2.5.2
+      OPTIONS "DOCTEST_NO_INSTALL ON" # keep the installed prefix minimal
+    )
+  endif()
+
+  # Code formatting targets (format / fix-format) via Format.cmake
+  CPMAddPackage("gh:TheLartians/Format.cmake@1.7.3")
+
+  # Property-based testing (tests only)
+  CPMAddPackage(
+    NAME rapidcheck
+    GITHUB_REPOSITORY emil-e/rapidcheck
+    GIT_TAG master
+    OPTIONS "RC_BUILD_TESTS OFF" "RC_BUILD_EXAMPLES OFF" "RC_INSTALL OFF"
+  )
+
+  file(GLOB_RECURSE TEST_SOURCES CONFIGURE_DEPENDS "test/source/*.cpp")
+  add_executable(CsdTests ${TEST_SOURCES})
+  target_link_libraries(CsdTests PRIVATE doctest::doctest Csd::Csd ${SPECIFIC_LIBS} rapidcheck)
+  target_include_directories(CsdTests PRIVATE ${rapidcheck_SOURCE_DIR}/include)
+  target_compile_definitions(CsdTests PRIVATE RAPIDCHECK_H)
+  set_target_properties(CsdTests PROPERTIES CXX_STANDARD 17)
+  target_enable_warnings(CsdTests)
+  add_test(NAME CsdAllTests COMMAND CsdTests)
+endif()
+
+# ---------------------------------------------------------------------------
+# Benchmarks (nanobench, header-only)
+# ---------------------------------------------------------------------------
+
+if(CSD_BUILD_BENCHMARKS)
+  # nanobench is a header-only benchmarking library
+  set(NANOBENCH_VERSION 4.3.11)
+  set(NANOBENCH_DIR "${CMAKE_BINARY_DIR}/_deps/nanobench")
+  set(NANOBENCH_HEADER "${NANOBENCH_DIR}/nanobench.h")
+
+  if(NOT EXISTS "${NANOBENCH_HEADER}")
+    file(MAKE_DIRECTORY "${NANOBENCH_DIR}")
+    file(
+      DOWNLOAD
+      "https://raw.githubusercontent.com/martinus/nanobench/v${NANOBENCH_VERSION}/src/include/nanobench.h"
+      "${NANOBENCH_HEADER}"
+      STATUS download_status
+    )
+    list(GET download_status 0 status_code)
+    if(NOT status_code EQUAL 0)
+      message(FATAL_ERROR "Failed to download nanobench (status ${status_code})")
+    endif()
+  endif()
+
+  add_library(nanobench INTERFACE)
+  target_include_directories(nanobench SYSTEM INTERFACE "${NANOBENCH_DIR}")
+
+  file(GLOB_RECURSE ALL_BENCH_CPP CONFIGURE_DEPENDS "bench/*.cpp")
+  foreach(ONE_BENCH_CPP ${ALL_BENCH_CPP})
+    get_filename_component(ONE_BENCH_EXEC ${ONE_BENCH_CPP} NAME_WE)
+    set(TARGET_NAME Bench_${ONE_BENCH_EXEC})
+
+    add_executable(${TARGET_NAME} ${ONE_BENCH_CPP})
+    set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME ${ONE_BENCH_EXEC} CXX_STANDARD 17)
+    target_link_libraries(${TARGET_NAME} PRIVATE nanobench Csd::Csd ${SPECIFIC_LIBS})
+    target_enable_warnings(${TARGET_NAME})
+    add_test(NAME ${ONE_BENCH_EXEC} COMMAND ${TARGET_NAME})
+  endforeach()
+endif()
+
+# ---------------------------------------------------------------------------
+# clang-tidy
+# ---------------------------------------------------------------------------
+
+if(CSD_ENABLE_CLANG_TIDY)
+  find_program(CLANG_TIDY clang-tidy)
+  if(CLANG_TIDY)
+    add_custom_target(
+      clang-tidy
+      COMMAND ${CLANG_TIDY} --extra-arg=-std=c++17
+              --extra-arg=-I${CMAKE_CURRENT_SOURCE_DIR}/include
+              ${CMAKE_CURRENT_SOURCE_DIR}/include/csd/*.hpp
+      COMMENT "Running clang-tidy static analysis"
+    )
+  else()
+    message(WARNING "clang-tidy not found - analysis target unavailable")
+  endif()
+endif()
+
+# ---------------------------------------------------------------------------
+# Doxygen documentation
+# ---------------------------------------------------------------------------
+
+if(CSD_BUILD_DOCS)
+  find_package(Doxygen QUIET)
+  if(DOXYGEN_FOUND)
+    set(DOXYGEN_PROJECT_NAME ${PROJECT_NAME})
+    set(DOXYGEN_PROJECT_VERSION ${PROJECT_VERSION})
+    set(DOXYGEN_PROJECT_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
+    set(DOXYGEN_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/doxygen")
+
+    configure_file(documentation/Doxyfile ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
+
+    add_custom_target(
+      GenerateDocs
+      COMMAND ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile"
+      COMMAND echo "Docs written to: ${DOXYGEN_OUTPUT_DIRECTORY}/html"
+      COMMENT "Generating Doxygen HTML documentation in ${DOXYGEN_OUTPUT_DIRECTORY}/html"
+      WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
+    )
+  else()
+    add_custom_target(
+      GenerateDocs COMMAND ${CMAKE_COMMAND} -E echo
+                           "Doxygen not found - skipping documentation generation"
+    )
+  endif()
+endif()
+
+# ---------------------------------------------------------------------------
+# Coverage report target (GCC/Clang only - requires gcovr)
+# ---------------------------------------------------------------------------
+
+if(CSD_ENABLE_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
+  foreach(COVERAGE_TARGET Csd CsdLogger CsdTests CsdStandalone)
+    if(TARGET ${COVERAGE_TARGET})
+      target_compile_options(${COVERAGE_TARGET} PRIVATE -O0 -g -fprofile-arcs -ftest-coverage)
+    endif()
+  endforeach()
+  foreach(COVERAGE_EXEC CsdTests CsdStandalone)
+    if(TARGET ${COVERAGE_EXEC})
+      target_link_options(${COVERAGE_EXEC} PRIVATE -fprofile-arcs -ftest-coverage)
+    endif()
+  endforeach()
+
+  find_program(GCOVR_PATH gcovr)
+  if(GCOVR_PATH)
+    set(extra_gcovr_args "")
+    if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|AppleClang")
+      find_program(LLVM_COV_PATH llvm-cov)
+      if(LLVM_COV_PATH)
+        list(APPEND extra_gcovr_args --llvm-cov-binary ${LLVM_COV_PATH})
+      endif()
+    endif()
+    add_custom_target(
+      coverage
+      COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure
+      COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/coverage
+      COMMAND ${GCOVR_PATH} --root ${PROJECT_SOURCE_DIR} --html-details
+              ${CMAKE_BINARY_DIR}/coverage/index.html --exclude test/ --exclude build/
+              ${extra_gcovr_args}
+      WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+      COMMENT "Generating coverage report in ${CMAKE_BINARY_DIR}/coverage/index.html"
+    )
+  else()
+    message(WARNING "gcovr not found - coverage target unavailable. Install with: pip install gcovr")
+  endif()
+endif()

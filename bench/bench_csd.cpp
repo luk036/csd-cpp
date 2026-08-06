@@ -1,28 +1,82 @@
-#include <chrono>
-#include <cstdio>
-#include <csd/csd.hpp>
-#include <string>
+#define ANKERL_NANOBENCH_IMPLEMENT
+#include <nanobench.h>
 
-template <typename F>
-void bench(const char* name, F&& f, int iterations = 100000) {
-    // warmup
-    for (int i = 0; i < 1000; ++i) f();
-    auto start = std::chrono::steady_clock::now();
-    for (int i = 0; i < iterations; ++i) f();
-    auto end = std::chrono::steady_clock::now();
-    auto ns = std::chrono::duration<double, std::nano>(end - start).count() / iterations;
-    std::printf("  %-30s %8.1f ns/op  (%d iters)\n", name, ns, iterations);
-}
+#include <csd/csd.hpp>
 
 int main() {
-    std::printf("=== CSD Benchmarks (C++) ===\n");
-    bench("to_csd(28.5, 10)", []() { csd::to_csd(28.5, 10); });
-    bench("to_csd_i(28)", []() { csd::to_csd_i(28); });
-    bench("to_csdnnz(28.5, 4)", []() { csd::to_csdnnz(28.5, 4); });
-    bench("to_decimal('+00-00.+0')", []() { csd::to_decimal("+00-00.+0"); });
-    bench("to_decimal_i('+00-00')", []() { csd::to_decimal_i("+00-00"); });
-    bench("to_csd(0.0, 10) [zero]", []() { csd::to_csd(0.0, 10); });
-    bench("to_csd(-28.5, 10) [neg]", []() { csd::to_csd(-28.5, 10); });
-    bench("to_csd(0.5, 10) [small]", []() { csd::to_csd(0.5, 10); });
-    bench("to_csd(1024.75, 10) [large]", []() { csd::to_csd(1024.75, 10); });
+    // Fast operations (<50ns) - need many iterations per epoch to beat Windows
+    // scheduler tick (~15ms). Each epoch needs >= 100ms to average out noise.
+    {
+        ankerl::nanobench::Bench bench;
+        bench.title("CSD Benchmarks (fast)")
+            .unit("op")
+            .warmup(10000)
+            .epochs(30)
+            .minEpochIterations(10000000);
+
+        bench.run("to_decimal('+00-00.+0')", [&] {
+            auto result = csd::to_decimal("+00-00.+0");
+            ankerl::nanobench::doNotOptimizeAway(result);
+        });
+
+        bench.run("to_decimal_i('+00-00')", [&] {
+            auto result = csd::to_decimal_i("+00-00");
+            ankerl::nanobench::doNotOptimizeAway(result);
+        });
+    }
+
+    // Medium operations (50-200ns)
+    {
+        ankerl::nanobench::Bench bench;
+        bench.title("CSD Benchmarks (medium)")
+            .unit("op")
+            .warmup(5000)
+            .epochs(50)
+            .minEpochIterations(2000000);
+
+        bench.run("to_csd_i(28)", [&] {
+            auto result = csd::to_csd_i(28);
+            ankerl::nanobench::doNotOptimizeAway(result);
+        });
+
+        bench.run("to_csdnnz(28.5, 4)", [&] {
+            auto result = csd::to_csdnnz(28.5, 4);
+            ankerl::nanobench::doNotOptimizeAway(result);
+        });
+
+        bench.run("to_csd(0.0, 10) [zero]", [&] {
+            auto result = csd::to_csd(0.0, 10);
+            ankerl::nanobench::doNotOptimizeAway(result);
+        });
+
+        bench.run("to_csd(0.5, 10) [small]", [&] {
+            auto result = csd::to_csd(0.5, 10);
+            ankerl::nanobench::doNotOptimizeAway(result);
+        });
+    }
+
+    // Slow operations (>200ns) - fewer iterations suffice
+    {
+        ankerl::nanobench::Bench bench;
+        bench.title("CSD Benchmarks (slow)")
+            .unit("op")
+            .warmup(2000)
+            .epochs(80)
+            .minEpochIterations(500000);
+
+        bench.run("to_csd(28.5, 10)", [&] {
+            auto result = csd::to_csd(28.5, 10);
+            ankerl::nanobench::doNotOptimizeAway(result);
+        });
+
+        bench.run("to_csd(-28.5, 10) [neg]", [&] {
+            auto result = csd::to_csd(-28.5, 10);
+            ankerl::nanobench::doNotOptimizeAway(result);
+        });
+
+        bench.run("to_csd(1024.75, 10) [large]", [&] {
+            auto result = csd::to_csd(1024.75, 10);
+            ankerl::nanobench::doNotOptimizeAway(result);
+        });
+    }
 }
