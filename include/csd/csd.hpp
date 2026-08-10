@@ -255,10 +255,10 @@ namespace csd {
             }
         }
         if (*csd == '\0') {
-            return double(integral);
+            return static_cast<double>(integral);
         }
         // Handle fractional part
-        auto decimal_value = double(integral);
+        auto decimal_value = static_cast<double>(integral);
         auto scale = 0.5;
         for (++csd; *csd != '\0'; ++csd) {
             switch (*csd) {
@@ -400,11 +400,11 @@ namespace csd {
         auto integral = to_decimal_integral(csd);
 
         if (*csd == '\0') {
-            return double(integral);
+            return static_cast<double>(integral);
         }
 
         auto fractional = to_decimal_fractional(csd);
-        return double(integral) + fractional;
+        return static_cast<double>(integral) + fractional;
     }
 
     /**
