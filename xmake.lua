@@ -39,6 +39,7 @@ target("check_verilog")
     add_deps("Csd")
     add_includedirs("include", {public = true})
     add_files("bench/check_verilog.cpp")
+    add_packages("fmt")
 
 target("bench_csd")
     set_languages("c++17")
