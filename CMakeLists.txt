@@ -58,10 +58,13 @@ include(${CPM_DOWNLOAD_LOCATION})
 # PackageProject.cmake will be used to make our target installable
 CPMAddPackage("gh:TheLartians/PackageProject.cmake@1.8.0")
 
-# fmt is a transitive dependency of spdlog; prefer a system-installed fmt when available.
+# fmt is a transitive dependency of spdlog; prefer a system- or consumer-provided fmt when
+# available.
 find_package(fmt CONFIG QUIET)
-if(fmt_FOUND)
-  message(STATUS "Found system fmt: ${fmt_DIR}")
+if(fmt_FOUND OR TARGET fmt::fmt)
+  if(fmt_FOUND)
+    message(STATUS "Found system fmt: ${fmt_DIR}")
+  endif()
   set(CPM_fmt_ADDED YES)
 else()
   CPMAddPackage(
@@ -72,12 +75,14 @@ else()
   )
 endif()
 
-# spdlog is used only by the separate logger target; prefer a system-installed spdlog when
-# available. SPDLOG_FMT_EXTERNAL is always set so spdlog uses the external fmt and avoids duplicate
-# symbols.
+# spdlog is used only by the separate logger target; prefer a system- or consumer-provided spdlog
+# when available. SPDLOG_FMT_EXTERNAL is always set so spdlog uses the external fmt and avoids
+# duplicate symbols.
 find_package(spdlog CONFIG QUIET)
-if(spdlog_FOUND)
-  message(STATUS "Found system spdlog: ${spdlog_DIR}")
+if(spdlog_FOUND OR TARGET spdlog::spdlog)
+  if(spdlog_FOUND)
+    message(STATUS "Found system spdlog: ${spdlog_DIR}")
+  endif()
   set(CPM_spdlog_ADDED YES)
 else()
   CPMAddPackage(
@@ -151,14 +156,21 @@ packageProject(
 # ---------------------------------------------------------------------------
 
 if(CSD_BUILD_STANDALONE)
-  # cxxopts is a header-only CLI parser used by the standalone example
-  CPMAddPackage(
-    GITHUB_REPOSITORY jarro2783/cxxopts
-    VERSION 3.2.1
-    OPTIONS "CXXOPTS_BUILD_EXAMPLES NO" "CXXOPTS_BUILD_TESTS NO" "CXXOPTS_ENABLE_INSTALL NO"
-  )
+  # cxxopts is a header-only CLI parser used by the standalone example. Prefer a consumer- or
+  # system-provided cxxopts (e.g. vcpkg/Conan or a CPM dependency); only fall back to CPM when no
+  # cxxopts target is available.
+  find_package(cxxopts CONFIG QUIET)
+  if(NOT cxxopts_FOUND AND NOT TARGET cxxopts::cxxopts)
+    CPMAddPackage(
+      GITHUB_REPOSITORY jarro2783/cxxopts
+      VERSION 3.2.1
+      OPTIONS "CXXOPTS_BUILD_EXAMPLES NO" "CXXOPTS_BUILD_TESTS NO" "CXXOPTS_ENABLE_INSTALL NO"
+    )
+  endif()
   # keep third-party headers out of our -Werror scope
-  get_target_property(CXXOPTS_INCLUDE_DIRS cxxopts::cxxopts INTERFACE_INCLUDE_DIRECTORIES)
+  if(TARGET cxxopts::cxxopts)
+    get_target_property(CXXOPTS_INCLUDE_DIRS cxxopts::cxxopts INTERFACE_INCLUDE_DIRECTORIES)
+  endif()
 
   # Only include main.cpp to avoid multiple main function definitions
   add_executable(CsdStandalone standalone/source/main.cpp)
