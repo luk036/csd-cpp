@@ -15,6 +15,20 @@
 
 using namespace csd;
 
+namespace {
+    template <typename F>
+    auto error_message_of(F&& thunk) -> std::string {
+        try {
+            thunk();
+        } catch (const std::invalid_argument& e) {
+            return e.what();
+        } catch (...) {
+            return "<wrong exception type>";
+        }
+        return "<no exception>";
+    }
+}
+
 // ---------------------------------------------------------------------------
 // Basic structural tests
 // ---------------------------------------------------------------------------
@@ -226,4 +240,30 @@ TEST_CASE("csd_multipliers all zero coefficient") {
     std::vector<MultiplierSpec> coeffs = {{"zero", "00000", 8, 4}};
     auto v = generate_csd_multipliers(coeffs);
     CHECK(v.find("zero = 0") != std::string::npos);
+}
+
+// ---------------------------------------------------------------------------
+// Shared validator error messages
+// ---------------------------------------------------------------------------
+
+TEST_CASE("csd_multiplier invalid chars reports format rule") {
+    auto const msg = error_message_of([] { generate_csd_multiplier("123", 8, 2); });
+    CHECK(msg.find("can only contain") != std::string::npos);
+}
+
+TEST_CASE("csd_multiplier invalid length reports max_power") {
+    auto const msg = error_message_of([] { generate_csd_multiplier("+0-", 8, 3); });
+    CHECK(msg.find("doesn't match max_power") != std::string::npos);
+}
+
+TEST_CASE("csd_multipliers invalid chars names the coefficient") {
+    std::vector<MultiplierSpec> coeffs = {{"a", "+0-00", 8, 4}, {"b", "12+00", 8, 4}};
+    auto const msg = error_message_of([&] { generate_csd_multipliers(coeffs); });
+    CHECK(msg.find("for coefficient 'b'") != std::string::npos);
+}
+
+TEST_CASE("csd_multipliers length mismatch names the coefficient") {
+    std::vector<MultiplierSpec> coeffs = {{"a", "+0-00", 8, 4}, {"b", "+0-0", 8, 4}};
+    auto const msg = error_message_of([&] { generate_csd_multipliers(coeffs); });
+    CHECK(msg.find("for coefficient 'b'") != std::string::npos);
 }
