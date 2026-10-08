@@ -39,6 +39,7 @@ target("check_verilog")
     add_deps("Csd")
     add_includedirs("include", {public = true})
     add_files("bench/check_verilog.cpp")
+    add_packages("fmt")
 
 target("bench_csd")
     set_languages("c++17")
@@ -64,11 +65,14 @@ target("test_csd")
     add_packages("doctest")
     add_tests("default")
 
-    -- Check if rapidcheck was downloaded by CMake (look in build_test first, then build)
+    -- rapidcheck is optionally provided by a CMake build (build_test/, build/).
+    -- Its compiled configuration must match the xmake mode, otherwise the MSVC
+    -- runtime (_ITERATOR_DEBUG_LEVEL, MD vs MDd) mismatches at link time.
+    local rapidcheck_cfg = is_mode("debug") and "Debug" or "Release"
     local rapidcheck_dir = path.join(os.projectdir(), "build_test", "_deps", "rapidcheck-src")
     local rapidcheck_lib_dir = path.join(os.projectdir(), "build_test", "_deps", "rapidcheck-build")
     if is_plat("windows") then
-        rapidcheck_lib_dir = path.join(rapidcheck_lib_dir, "Release")
+        rapidcheck_lib_dir = path.join(rapidcheck_lib_dir, rapidcheck_cfg)
     end
 
     -- Fallback to build directory if build_test doesn't exist
@@ -76,7 +80,7 @@ target("test_csd")
         rapidcheck_dir = path.join(os.projectdir(), "build", "_deps", "rapidcheck-src")
         rapidcheck_lib_dir = path.join(os.projectdir(), "build", "_deps", "rapidcheck-build")
         if is_plat("windows") then
-            rapidcheck_lib_dir = path.join(rapidcheck_lib_dir, "Release")
+            rapidcheck_lib_dir = path.join(rapidcheck_lib_dir, rapidcheck_cfg)
         end
     end
 

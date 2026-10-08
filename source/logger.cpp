@@ -14,6 +14,18 @@
 
 namespace csd {
 
+    /// @brief Create and configure the file logger
+    /// @details Extracted into a noexcept helper so the one-time static
+    ///          initialization in log_with_spdlog cannot throw.
+    /// @return The configured file logger
+    auto make_file_logger() noexcept -> std::shared_ptr<spdlog::logger> {
+        auto l = spdlog::basic_logger_mt("file_logger", "csd.log");
+        spdlog::set_default_logger(l);
+        spdlog::set_level(spdlog::level::info);
+        spdlog::flush_on(spdlog::level::info);
+        return l;
+    }
+
     /**
      * @brief Log a message using spdlog to a file
      *
@@ -26,13 +38,7 @@ namespace csd {
      */
     void log_with_spdlog(const std::string& message) {
         // One-time initialization of file logger
-        static const auto logger = []() {
-            auto l = spdlog::basic_logger_mt("file_logger", "csd.log");
-            spdlog::set_default_logger(l);
-            spdlog::set_level(spdlog::level::info);
-            spdlog::flush_on(spdlog::level::info);
-            return l;
-        }();
+        static const auto logger = make_file_logger();
 
         spdlog::info("Csd message: {}", message);
     }

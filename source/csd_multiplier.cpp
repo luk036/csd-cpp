@@ -17,6 +17,39 @@ namespace csd {
         enum class TermOp { Add, Sub };
 
         /**
+         * @brief Validate a CSD string against its declared width
+         *
+         * Single source of truth for CSD format validation. Ensures the string
+         * length matches the highest power of two and that it contains only
+         * '+', '-', or '0' characters. Shared by every multiplier generator so
+         * the format rule cannot drift between them.
+         *
+         * @param[in] csd_str CSD string to validate
+         * @param[in] max_power Highest power of two (must equal len(csd_str)-1)
+         * @param[in] context Optional suffix appended to error messages, e.g.
+         *            "for coefficient 'h0'", to make multi-coefficient failures
+         *            actionable
+         * @throws std::invalid_argument If the length mismatches or an invalid
+         *         character is found
+         */
+        void validate_csd(const std::string& csd_str, int max_power,
+                          const std::string& context = {}) {
+            auto const suffix = context.empty() ? std::string{} : " " + context;
+            auto const len = static_cast<int>(csd_str.size());
+            if (len != max_power + 1) {
+                throw std::invalid_argument(
+                    "CSD length " + std::to_string(len) + " doesn't match max_power="
+                    + std::to_string(max_power) + " (should be max_power+1)" + suffix);
+            }
+            for (auto const c : csd_str) {
+                if (c != '+' && c != '-' && c != '0') {
+                    throw std::invalid_argument("CSD string can only contain '+', '-', or '0'"
+                                                + suffix);
+                }
+            }
+        }
+
+        /**
          * @brief Parse CSD string into (power, operation) pairs
          *
          * Iterates through the CSD string and extracts each non-zero digit as a
@@ -25,9 +58,9 @@ namespace csd {
          * silently dropped.
          *
          * @param[in] csd_str CSD string containing '+', '-', '0' characters
+         *            (must be pre-validated with validate_csd)
          * @param[in] max_power Highest power of two in the CSD representation
          * @return Vector of (power, operation) pairs for non-zero digits
-         * @throws std::invalid_argument If invalid characters are encountered
          */
         auto parse_terms(const std::string& csd_str, int max_power)
             -> std::vector<std::pair<int, TermOp>> {
@@ -42,10 +75,8 @@ namespace csd {
                     case '-':
                         terms.emplace_back(power, TermOp::Sub);
                         break;
-                    case '0':
-                        break;
                     default:
-                        throw std::invalid_argument("CSD string can only contain '+', '-', or '0'");
+                        break;
                 }
             }
             return terms;
@@ -174,20 +205,7 @@ namespace csd {
 
     auto generate_csd_multiplier(const std::string& csd_str, int input_width, int max_power)
         -> std::string {
-        // --- validation ---
-        auto const len = static_cast<int>(csd_str.size());
-        if (len != max_power + 1) {
-            throw std::invalid_argument("CSD length " + std::to_string(len)
-                                        + " doesn't match max_power=" + std::to_string(max_power)
-                                        + " (should be max_power+1)");
-        }
-
-        // Validate characters (allows early error)
-        for (auto const c : csd_str) {
-            if (c != '+' && c != '-' && c != '0') {
-                throw std::invalid_argument("CSD string can only contain '+', '-', or '0'");
-            }
-        }
+        validate_csd(csd_str, max_power);
 
         auto const terms = parse_terms(csd_str, max_power);
         auto const output_width = input_width + max_power;
@@ -386,15 +404,7 @@ namespace csd {
                     "All coefficients must share the same input_width and max_power "
                     "for cross-CSE. Pad narrower CSDs with leading '0'.");
             }
-            auto const len = static_cast<int>(spec.csd.size());
-            if (len != max_power + 1) {
-                throw std::invalid_argument("CSD length mismatch for '" + spec.name + "'");
-            }
-            for (auto c : spec.csd) {
-                if (c != '+' && c != '-' && c != '0') {
-                    throw std::invalid_argument("CSD string can only contain '+', '-', or '0'");
-                }
-            }
+            validate_csd(spec.csd, max_power, "for coefficient '" + spec.name + "'");
         }
 
         auto const output_width = input_width + max_power;
