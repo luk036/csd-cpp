@@ -16,8 +16,7 @@
 using namespace csd;
 
 namespace {
-    template <typename F>
-    auto error_message_of(F&& thunk) -> std::string {
+    template <typename F> auto error_message_of(F&& thunk) -> std::string {
         try {
             thunk();
         } catch (const std::invalid_argument& e) {
@@ -27,7 +26,7 @@ namespace {
         }
         return "<no exception>";
     }
-}
+}  // namespace
 
 // ---------------------------------------------------------------------------
 // Basic structural tests

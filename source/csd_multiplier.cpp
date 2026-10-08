@@ -37,9 +37,9 @@ namespace csd {
             auto const suffix = context.empty() ? std::string{} : " " + context;
             auto const len = static_cast<int>(csd_str.size());
             if (len != max_power + 1) {
-                throw std::invalid_argument("CSD length " + std::to_string(len)
-                                            + " doesn't match max_power=" + std::to_string(max_power)
-                                            + " (should be max_power+1)" + suffix);
+                throw std::invalid_argument(
+                    "CSD length " + std::to_string(len) + " doesn't match max_power="
+                    + std::to_string(max_power) + " (should be max_power+1)" + suffix);
             }
             for (auto const c : csd_str) {
                 if (c != '+' && c != '-' && c != '0') {
