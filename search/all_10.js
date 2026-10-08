@@ -16,6 +16,5 @@ var searchData=
   ['to_5fdecimal_5fi_13',['to_decimal_i',['../group__csd__functions.html#ga074473a5966090abd466c580417770f0',1,'csd']]],
   ['to_5fdecimal_5fintegral_14',['to_decimal_integral',['../group__csd__functions.html#ga7714e178bca81658c4562364112406fb',1,'csd']]],
   ['to_5fdecimal_5fusing_5fswitch_15',['to_decimal_using_switch',['../group__csd__functions.html#ga40ee1446e4a25bc4dc32099f8112dbd3',1,'csd']]],
-  ['todo_16',['Star History (todo)',['../index.html#autotoc_md17',1,'']]],
-  ['tools_17',['Additional tools',['../index.html#autotoc_md11',1,'']]]
+  ['todo_16',['Star History (todo)',['../index.html#autotoc_md14',1,'']]]
 ];

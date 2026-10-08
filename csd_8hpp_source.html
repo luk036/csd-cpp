@@ -28,7 +28,7 @@ MathJax.Hub.Config({
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Csd<span id="projectnumber">&#160;1.1.5</span>
+   <div id="projectname">Csd<span id="projectnumber">&#160;1.1.6</span>
    </div>
   </td>
  </tr>
@@ -143,10 +143,10 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>            }</div>
 <div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>        }</div>
 <div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>        <span class="keywordflow">if</span> (*<a class="code hl_namespace" href="namespacecsd.html">csd</a> == <span class="charliteral">&#39;\0&#39;</span>) {</div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>            <span class="keywordflow">return</span> double(integral);</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>            <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(integral);</div>
 <div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>        }</div>
 <div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>        <span class="comment">// Handle fractional part</span></div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>        <span class="keyword">auto</span> decimal_value = double(integral);</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>        <span class="keyword">auto</span> decimal_value = <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(integral);</div>
 <div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>        <span class="keyword">auto</span> scale = 0.5;</div>
 <div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>        <span class="keywordflow">for</span> (++<a class="code hl_namespace" href="namespacecsd.html">csd</a>; *<a class="code hl_namespace" href="namespacecsd.html">csd</a> != <span class="charliteral">&#39;\0&#39;</span>; ++<a class="code hl_namespace" href="namespacecsd.html">csd</a>) {</div>
 <div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>            <span class="keywordflow">switch</span> (*<a class="code hl_namespace" href="namespacecsd.html">csd</a>) {</div>
@@ -219,11 +219,11 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>        <span class="keyword">auto</span> integral = <a class="code hl_function" href="group__csd__functions.html#ga7714e178bca81658c4562364112406fb">to_decimal_integral</a>(<a class="code hl_namespace" href="namespacecsd.html">csd</a>);</div>
 <div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span> </div>
 <div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span>        <span class="keywordflow">if</span> (*<a class="code hl_namespace" href="namespacecsd.html">csd</a> == <span class="charliteral">&#39;\0&#39;</span>) {</div>
-<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span>            <span class="keywordflow">return</span> double(integral);</div>
+<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span>            <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(integral);</div>
 <div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span>        }</div>
 <div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span> </div>
 <div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span>        <span class="keyword">auto</span> fractional = <a class="code hl_function" href="group__csd__functions.html#gae77977890d8fc7c48be7bdf38c7a617d">to_decimal_fractional</a>(<a class="code hl_namespace" href="namespacecsd.html">csd</a>);</div>
-<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span>        <span class="keywordflow">return</span> double(integral) + fractional;</div>
+<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span>        <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(integral) + fractional;</div>
 <div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span>    }</div>
 </div>
 <div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span> </div>
