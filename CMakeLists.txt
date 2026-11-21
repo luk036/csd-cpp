@@ -166,11 +166,11 @@ if(CSD_BUILD_STANDALONE)
   # cxxopts is a header-only CLI parser used by the standalone example. Prefer a consumer- or
   # system-provided cxxopts (e.g. vcpkg/Conan or a CPM dependency); only fall back to CPM when no
   # cxxopts target is available.
-  find_package(cxxopts CONFIG QUIET)
+  find_package(cxxopts 3.3 CONFIG QUIET)
   if(NOT cxxopts_FOUND AND NOT TARGET cxxopts::cxxopts)
     CPMAddPackage(
       GITHUB_REPOSITORY jarro2783/cxxopts
-      VERSION 3.2.1
+      VERSION 3.3.1
       OPTIONS "CXXOPTS_BUILD_EXAMPLES NO" "CXXOPTS_BUILD_TESTS NO" "CXXOPTS_ENABLE_INSTALL NO"
     )
   endif()
