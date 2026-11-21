@@ -1,7 +1,7 @@
 <map id="csd/csd_multiplier.hpp" name="csd/csd_multiplier.hpp">
-<area shape="rect" id="Node000001" title="Generate Verilog code for CSD multiplier." alt="" coords="5,5,172,31"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="17,79,75,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="84,32,62,68,58,66,79,30"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="100,79,163,104"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="98,30,120,66,115,68,93,32"/>
+<area shape="rect" id="Node000001" title="Generate Verilog code for CSD multiplier." alt="" coords="5,5,172,33"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="18,81,76,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="83,32,64,69,60,66,79,35"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="100,81,162,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="97,31,119,68,113,68,95,36"/>
 </map>

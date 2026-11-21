@@ -1,7 +1,7 @@
 <map id="csd/csd.hpp" name="csd/csd.hpp">
-<area shape="rect" id="Node000001" title="Canonical Signed Digit (CSD) representation library." alt="" coords="47,5,146,31"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,92,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="91,33,66,69,62,66,87,30"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="117,79,175,104"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="107,29,132,66,128,69,103,33"/>
+<area shape="rect" id="Node000001" title="Canonical Signed Digit (CSD) representation library." alt="" coords="47,5,145,33"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,81,91,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="90,32,67,70,63,66,85,35"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="115,81,173,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="106,31,130,68,125,68,103,36"/>
 </map>
