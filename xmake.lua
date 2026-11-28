@@ -1,13 +1,12 @@
 add_rules("mode.debug", "mode.release", "mode.coverage")
+add_requires("doctest", "fmt", "spdlog", "nanobench", "cxxopts")
+
+set_languages("c++17")
+add_includedirs("include")
 
 if is_mode("release") then
     set_optimize("fastest")
 end
-add_requires("doctest", {alias = "doctest"})
-add_requires("fmt", {alias = "fmt"})
-add_requires("spdlog", {alias = "spdlog"})
-add_requires("nanobench", {alias = "nanobench"})
-add_requires("cxxopts", {alias = "cxxopts"})
 
 if is_mode("coverage") then
     add_cxflags("-ftest-coverage", "-fprofile-arcs", {force = true})
@@ -15,51 +14,37 @@ end
 
 if is_plat("linux") then
     set_warnings("all", "error")
-    -- add_cxflags("-Wconversion", {force = true})
-    -- Check if we're on Termux/Android
-    local termux_prefix = os.getenv("PREFIX")
-    if termux_prefix then
+    -- Termux/Android ships its libc++ headers under $PREFIX
+    local prefix = os.getenv("PREFIX")
+    if prefix then
         add_cxflags("-Wno-unused-command-line-argument", {force = true})
-        add_sysincludedirs(termux_prefix .. "/include/c++/v1", {public = true})
-        add_sysincludedirs(termux_prefix .. "/include", {public = true})
+        add_sysincludedirs(prefix .. "/include/c++/v1", prefix .. "/include", {public = true})
     end
 elseif is_plat("windows") then
     add_cxflags("/EHsc /W4 /WX /wd4702", {force = true})
 end
 
 target("Csd")
-    set_languages("c++17")
     set_kind("static")
-    add_includedirs("include", {public = true})
     add_files("source/csd.cpp", "source/lcsre.cpp", "source/csd_multiplier.cpp")
 
 target("check_verilog")
-    set_languages("c++17")
-    set_kind("binary")
     add_deps("Csd")
-    add_includedirs("include", {public = true})
     add_files("bench/check_verilog.cpp")
     add_packages("fmt")
 
 target("bench_csd")
-    set_languages("c++17")
-    set_kind("binary")
     add_deps("Csd")
-    add_includedirs("include", {public = true})
     add_files("bench/bench_csd.cpp")
     add_packages("nanobench")
 
 target("CsdLogger")
-    set_languages("c++17")
     set_kind("static")
     add_deps("Csd")
-    add_includedirs("include", {public = true})
     add_files("source/logger.cpp")
     add_packages("spdlog")
 
 target("test_csd")
-    set_languages("c++17")
-    set_kind("binary")
     add_deps("Csd")
     add_files("test/source/*.cpp")
     add_packages("doctest")
@@ -92,93 +77,16 @@ target("test_csd")
     end
 
 target("test_switch")
-    set_languages("c++17")
-    set_kind("binary")
     add_deps("Csd")
     add_files("bench/BM_switch.cpp")
     add_packages("nanobench")
 
 target("csd_cli")
-    set_languages("c++17")
-    set_kind("binary")
     add_deps("Csd")
     add_files("standalone/source/main.cpp")
     add_packages("cxxopts")
 
 target("csd_cli_spdlog")
-    set_languages("c++17")
-    set_kind("binary")
     add_deps("CsdLogger")
     add_files("standalone/source/main_with_spdlog.cpp")
-    add_packages("cxxopts")
-    add_packages("spdlog")
-
-
--- If you want to known more usage about xmake, please see https://xmake.io
---
--- ## FAQ
---
--- You can enter the project directory firstly before building project.
---
---   $ cd projectdir
---
--- 1. How to build project?
---
---   $ xmake
---
--- 2. How to configure project?
---
---   $ xmake f -p [macosx|linux|iphoneos ..] -a [x86_64|i386|arm64 ..] -m [debug|release]
---
--- 3. Where is the build output directory?
---
---   The default output directory is `./build` and you can configure the output directory.
---
---   $ xmake f -o outputdir
---   $ xmake
---
--- 4. How to run and debug target after building project?
---
---   $ xmake run [targetname]
---   $ xmake run -d [targetname]
---
--- 5. How to install target to the system directory or other output directory?
---
---   $ xmake install
---   $ xmake install -o installdir
---
--- 6. Add some frequently-used compilation flags in xmake.lua
---
--- @code
---    -- add debug and release modes
---    add_rules("mode.debug", "mode.release")
---
---    -- add macro defination
---    add_defines("NDEBUG", "_GNU_SOURCE=1")
---
---    -- set warning all as error
---    set_warnings("all", "error")
---
---    -- set language: c99, c++11
---    set_languages("c99", "c++11")
---
---    -- set optimization: none, faster, fastest, smallest
---    set_optimize("fastest")
---
---    -- add include search directories
---    add_includedirs("/usr/include", "/usr/local/include")
---
---    -- add link libraries and search directories
---    add_links("tbox")
---    add_linkdirs("/usr/local/lib", "/usr/lib")
---
---    -- add system link libraries
---    add_syslinks("z", "pthread")
---
---    -- add compilation and link flags
---    add_cxflags("-stdnolib", "-fno-strict-aliasing")
---    add_ldflags("-L/usr/local/lib", "-lpthread", {force = true})
---
--- @endcode
---
-
+    add_packages("cxxopts", "spdlog")
